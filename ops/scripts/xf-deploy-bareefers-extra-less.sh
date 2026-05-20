@@ -2,9 +2,9 @@
 # Push xf-restore-extra-less-aurora16.py + xf-set-template-from-file.php and run restore on bareefers.
 # Uses SSH host bareefers (~/.ssh/config). Interactive shell: ssh bareefers
 #
-# From Windows (Cursor/Git Bash often cannot resolve bareefers): use WSL from repo root:
-#   wsl bash xenforo/scripts/xf-deploy-bareefers-extra-less.sh
-# From WSL or Linux: bash xenforo/scripts/xf-deploy-bareefers-extra-less.sh
+# From bar-new-forum repo root (Windows: use WSL if bareefers SSH host is in WSL config):
+#   wsl bash ops/scripts/xf-deploy-bareefers-extra-less.sh
+# Legacy barcode path: xenforo/scripts/xf-deploy-bareefers-extra-less.sh (same script)
 #
 # Requires: passwordless sudo on server for www-data + redis (as used by xf-restore-extra-less-aurora16.py).
 #

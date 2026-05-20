@@ -1,50 +1,64 @@
-# bareefers.org XenForo — bar-new-forum
+# bareefers.org forum — [bar-new-forum](https://github.com/bareefers/bar-new-forum)
 
-This file is a template copied into the GitHub repo root during initial publish.
+Version-controlled **XenForo 2.3.10** application tree and **ops** for [bareefers.org](https://bareefers.org/forum/).
 
-## What this repo is
+| | |
+|--|--|
+| **Production forum (live)** | `/var/www/bareefers.org/forum` on host `bareefers` |
+| **This git clone on server** | `/var/www/bareefers.org/bar-new-forum` |
+| **GitHub** | https://github.com/bareefers/bar-new-forum |
 
-Snapshot of **production XenForo** at `/var/www/bareefers.org/forum` (bareefers server), plus **ops** (scripts, nginx, docs) from the barcode workspace.
+New developers: start with **[docs/TEAM-SETUP.md](docs/TEAM-SETUP.md)** and **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
-**Live XenForo version:** 2.3.10 (`src/XF.php` `$versionId = 2031070`).
-
-## Layout
+## Repository layout
 
 | Path | Purpose |
 |------|---------|
-| `forum/` | Application tree synced from server (PHP, `src/`, `js/`, `styles/`, `library/`, addons). |
-| `ops/scripts/` | Operator scripts (`xf-*`, LESS deploy, backups, PayPal replay, etc.). |
-| `ops/docs/` | Runbooks and reference docs. |
-| `ops/nginx/` | nginx snippets for bareefers.org. |
-| `config.php.example` | Starter config — copy to `forum/src/config.php` on the server (never commit real secrets). |
+| `forum/` | XenForo PHP app: `src/` (core + addons), `js/`, `styles/`, `library/`, root entrypoints |
+| `ops/scripts/` | Deploy, backup, repair, LESS/CSS, cutover helpers (`xf-*`, `bar-*`) |
+| `ops/docs/` | Operator runbooks (layout, migration, style backup, etc.) |
+| `ops/nginx/` | nginx snippets for bareefers.org |
+| `config.php.example` | Template only — **never** commit real `forum/src/config.php` |
 
-## Intentionally NOT in git
+## Not in git (by design)
 
-| Excluded | Why |
-|----------|-----|
-| `forum/internal_data/` | Cache, compiled templates, code cache — regenerated on server. |
-| `forum/data/` | User uploads and attachments (~GB). |
-| `forum/src/config.php` | DB passwords, Redis, API keys. |
-| `*.zip` | Install archives and exports. |
-| `error_log`, `*.bak` | Runtime / backup noise. |
+- `forum/internal_data/` — cache, compiled templates (rebuilt on server)
+- `forum/data/` — user uploads / attachments
+- `forum/src/config.php` — DB, Redis, payment secrets
+- `*.zip`, dumps, `error_log`, credential files
 
-Database state (templates, phrases, `extra.less`, options) lives in **MySQL** — back up with mysqldump; use `ops/scripts/xf-backup-bar-style16-visual.sh` for style snapshots.
+**Theme/CSS and templates** also live in **MySQL** (`xf_template`, `extra.less`, etc.). File changes here are not enough for full theme work without deploy scripts or ACP.
 
-## Deploy workflow (going forward)
+## Team workflow (summary)
 
-1. Change code or ops in this repo → PR → merge to `main`.
-2. On server: `git pull` in `/var/www/bareefers.org/bar-new-forum` (or rsync `forum/` + run scripts from `ops/scripts/`).
-3. For theme/CSS: edit `ops/scripts/extra-less-aurora16-source.less`, run `ops/scripts/xf-deploy-bareefers-extra-less.sh` (see `ops/docs/BAR-THREAD-LIST-LAYOUT.md`).
-4. For addons: deploy `forum/src/addons/BAR/` (and other addons as needed), rebuild in ACP.
-
-## Server clone path (suggested)
+1. Get **GitHub access** to the `bareefers` org / this repo (see [docs/TEAM-SETUP.md](docs/TEAM-SETUP.md)).
+2. Clone locally, create a branch, open a **pull request** to `main`.
+3. After merge, an operator updates the server git clone and deploys to live (see [docs/DEPLOY.md](docs/DEPLOY.md)).
 
 ```bash
-sudo mkdir -p /var/www/bareefers.org/bar-new-forum
-sudo git clone https://github.com/bareefers/bar-new-forum.git /var/www/bareefers.org/bar-new-forum
-# Symlink or rsync forum/ → /var/www/bareefers.org/forum as you adopt git-based deploy
+git clone https://github.com/bareefers/bar-new-forum.git
+cd bar-new-forum
 ```
 
-## Initial publish
+## Common tasks
 
-Populated from bareefers via `rsync` + barcode `xenforo/` ops (May 2026).
+| Task | Where |
+|------|--------|
+| Edit forum CSS (extra.less source) | `ops/scripts/extra-less-aurora16-source.less` → deploy via `ops/scripts/xf-deploy-bareefers-extra-less.sh` |
+| BAR custom addon | `forum/src/addons/BAR/` |
+| Pull latest on server | `sudo bash /var/www/bareefers.org/bar-new-forum/ops/scripts/bar-forum-git-pull.sh` |
+| Thread list layout notes | `ops/docs/BAR-THREAD-LIST-LAYOUT.md` |
+
+## Live vs git (important)
+
+Production still runs from **`/var/www/bareefers.org/forum`**. This repo is the **source of truth going forward**; deploying to live is **explicit** (scripts in `ops/scripts/`, not automatic on `git pull`). See [docs/DEPLOY.md](docs/DEPLOY.md).
+
+## SSH / server
+
+- SSH config host: **`bareefers`** (operators maintain `~/.ssh/config`; keys are not in this repo).
+- Forum root on server: **`/var/www/bareefers.org/forum`**
+- Git working copy: **`/var/www/bareefers.org/bar-new-forum`**
+
+## Security
+
+Read **[SECURITY.md](SECURITY.md)** before your first commit. No production secrets in git.
