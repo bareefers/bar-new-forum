@@ -8,9 +8,9 @@
 
 ## Branching
 
-- **`main`** — matches what operators deploy from; keep it deployable.
-- Work on **`feature/short-description`** or **`fix/issue-description`** branches.
-- Open a **pull request** into `main`; do not push directly to `main` unless your team lead has agreed (prefer PRs).
+- **`main`** is **protected**: changes must go through a **pull request** (at least **1 approval**, conversations resolved). No force-push.
+- Work on **`feature/short-description`** or **`fix/issue-description`** branches, then open a PR into `main`.
+- Org/repo **admins** can bypass in emergencies; everyone else must use PRs.
 
 ## Pull request checklist
 
