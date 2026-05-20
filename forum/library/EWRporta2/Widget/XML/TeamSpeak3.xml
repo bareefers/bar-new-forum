@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="TeamSpeak3" widget_title="TeamSpeak3 Server" widget_desc="Displays a widget for a TeamSpeak 3 server" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="teamspeak3_server" edit_format="textbox" data_type="string" display_order="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Server IP/Host</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="teamspeak3_port" edit_format="textbox" data_type="unsigned_integer" display_order="2">
+      <default_value>9987</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Port</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="teamspeak3_query" edit_format="textbox" data_type="unsigned_integer" display_order="3">
+      <default_value>10011</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Query Port</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="teamspeak3_display" edit_format="onoff" data_type="boolean" display_order="4">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Display Server IP/Port</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="teamspeak3_font" edit_format="spinbox" data_type="unsigned_integer" display_order="5">
+      <default_value>12</default_value>
+      <edit_format_params>min=8</edit_format_params>
+      <sub_options></sub_options>
+      <title>Font Size</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_TeamSpeak3"><![CDATA[<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+    <div class="secondaryContent">
+        <h3>{$wTitle}</h3>
+        
+        <span id="its{$wWidlink}{$wWidlink}"><a href="http://www.teamspeak3.com/">teamspeak</a> Hosting by TeamSpeak3.com</span>
+	<script type="text/javascript" src="http://view.light-speed.com/teamspeak3.php?IP={$wOptions.teamspeak3_server}&PORT={$wOptions.teamspeak3_port}&QUERY={$wOptions.teamspeak3_query}&UID={$wWidlink}{$wWidlink}&display={xen:if $wOptions.teamspeak3_display, 'block', 'none'}&font={$wOptions.teamspeak3_font}px"></script>
+        
+	</div>
+</div>]]></template>
+  </templates>
+</widget>

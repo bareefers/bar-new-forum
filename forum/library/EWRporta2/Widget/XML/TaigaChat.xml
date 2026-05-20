@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="TaigaChat" widget_title="TaigaChat (by Luke Foreman)" widget_desc="Displays a widget for TaigaChat Pro" widget_string="1" widget_version="1" widget_url="https://xenforo.com/community/resources/taigachat-pro-realtime-chat-shoutbox.1224/" widget_install_class="EWRporta2_Widget_Install_TaigaChat" widget_install_method="installCode" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="taigachat_room" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>1</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Room</title>
+      <explain><![CDATA[TaigaChat supports multi-room! (1 is the default room)]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_TaigaChat"><![CDATA[<xen:if is="{$wScale} == 'full'">
+	<xen:set var="$wUncached.taigachat.alt">1</xen:set>
+</xen:if>
+
+<xen:set var="$wUncached.taigachat.room">{$wOptions.taigachat_room}</xen:set>
+
+<xen:include template="dark_taigachat_mapped">
+	<xen:map from="$wUncached.taigachat" to="$taigachat" />
+</xen:include>]]></template>
+  </templates>
+</widget>

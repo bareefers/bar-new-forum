@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<code_event_listeners>
+    <listener event_id="controller_post_dispatch" execute_order="10"
+              callback_class="Tapatalk\Listener\ControllerPostDispatch" callback_method="postDispatchListener"
+              active="1" hint="" description=""/>
+    <listener event_id="mailer_setup" execute_order="10" callback_class="Tapatalk\Listener\LoadClassMail"
+              callback_method="loadClassMailListener" active="1" hint="" description=""/>
+    <listener event_id="templater_template_pre_render" execute_order="0" callback_class="Tapatalk\Listener\Hook"
+              callback_method="templateHook" active="1" hint="" description="Adding app prompt js in head template"/>
+    <listener event_id="templater_template_post_render" execute_order="10"
+              callback_class="Tapatalk\Listener\TemplatePostRender" callback_method="template_post_render" active="1"
+              hint="" description=""/>
+</code_event_listeners>

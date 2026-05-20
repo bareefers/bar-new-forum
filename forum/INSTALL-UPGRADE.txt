@@ -1,0 +1,34 @@
+Thank you for purchasing XenForo.
+
+To install XenForo, you will need to extract the zip and upload all the files
+from the contained upload directory onto your web server. You may upload into 
+your web root, or any folder within the web root. This shall be referred to
+as your XenForo Directory.
+
+Having uploaded the necessary files, you should direct your web browser to the
+URL that corresponds to your XenForo Directory and add '/install' to the address
+(eg: http://www.example.com/xenforo/install). This will trigger the installation
+process, which will guide you through the necessary steps to get a working XenForo
+installation running on your server.
+
+Please note that the installation routine will direct you to ensure that the data 
+and internal_data directories within your XenForo Directory are writeable by the 
+webserver (ie: chmod 0777).
+
+UPGRADING XENFORO
+-----------------
+
+To upgrade an existing XenForo installation, you will need to extract the zip and
+upload all files within the upload directory to your existing XenForo Directory,
+overwriting all files.
+
+Note that you should ensure that the data and internal_data directories remain
+writable by the webserver (ie: chmod 0777). In most cases, they should remain writable
+and you should not need to take action. You should always ensure that the contents of
+the data and internal_data directories are maintained when upgrading.
+
+Once the files are uploaded, your XenForo installation will automatically be closed
+until the upgrade is complete. To begin the upgrade, go to the URL that corresponds
+to <your XenForo Directory>/install (eg: http://www.example.com/xenforo/install).
+You will be instructed to login as an administrator and guided through the steps.
+Once the upgrade is complete, your XenForo installation will automatically be reopened.

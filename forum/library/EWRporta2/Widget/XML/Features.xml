@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="Features" widget_title="Features (Main)" widget_desc="Emulates the slider located on articles list pages" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="features_category" edit_format="callback" data_type="array" display_order="1">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_CategoryChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Category</title>
+      <explain><![CDATA[Only features from the selected category will be searched. (unspecify to select all)]]></explain>
+    </option>
+    <option option_id="features_author" edit_format="callback" data_type="array" display_order="2">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_AuthorChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Author</title>
+      <explain><![CDATA[Only features from the selected author will be searched. (unspecify to select all)]]></explain>
+    </option>
+    <option option_id="features_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Feature Limit</title>
+      <explain><![CDATA[The maximum number of features to display on the widget.]]></explain>
+    </option>
+    <option option_id="features_relocate" edit_format="textbox" data_type="string" display_order="4">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Relocate Slider</title>
+      <explain><![CDATA[You can define a CSS element here and the slider will be detached and inserted before it.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_Features"><![CDATA[<div class="section featuresGrid widget_{$wWidget}" id="widget_{$wWidlink}">
+	<xen:include template="EWRporta2_Features">
+		<xen:set var="$feature_id">widget_{$wWidlink}</xen:set>
+		<xen:set var="$relocate">{$wOptions.features_relocate}</xen:set>
+		<xen:map from="$wUncached" to="$features" />
+	</xen:include>
+</div>]]></template>
+  </templates>
+</widget>

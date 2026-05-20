@@ -1,0 +1,2 @@
+Use AcSingle:
+<input type="text" name="username" id="ctrl_new_user" class="textCtrl AutoComplete AcSingle" />

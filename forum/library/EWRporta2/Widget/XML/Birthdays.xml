@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="Birthdays" widget_title="Today's Birthdays" widget_desc="Displays members who have a birthday" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 hours">
+  <listeners/>
+  <options>
+    <option option_id="birthdays_cutoff" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>6</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Activity Cutoff</title>
+      <explain><![CDATA[If a user has not been active in the past X months, they will not be listed for birthdays.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_Birthdays"><![CDATA[<xen:if hascontent="true">
+<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent avatarHeap">
+		<h3>{$wTitle}</h3>
+		
+		<ol>
+			<xen:contentcheck>
+			<xen:foreach loop="$wCached" value="$user">
+				<li><xen:avatar user="$user" size="s" class="Tooltip" text="{$user.username}{xen:if '{$user.age}', ' ({$user.age})'}" title="{$user.username}{xen:if '{$user.age}', ', {xen:phrase age}: {$user.age}'}" /></li>
+			</xen:foreach>
+			</xen:contentcheck>
+		</ol>
+	</div>
+</div>
+</xen:if>]]></template>
+  </templates>
+</widget>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="LoLFree" widget_title="League Rotation" widget_desc="Displays the current free champions in rotation" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 hours">
+  <listeners/>
+  <options>
+    <option option_id="lolfree_apikey" edit_format="textbox" data_type="string" display_order="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>API Key</title>
+      <explain><![CDATA[Riot Development API Key. You must <a href="https://developer.riotgames.com/" target="_blank">sign up as a developer</a> on the Riot API to get your own key.]]></explain>
+    </option>
+    <option option_id="lolfree_region" edit_format="select" data_type="string" display_order="2">
+      <default_value>na</default_value>
+      <edit_format_params>na=North America
+euw=EU West
+eune=EU Nordic &amp; East
+lan=Latin America North
+las=Latin America South
+br=Brazil
+tr=Turkey
+ru=Russia
+oce=Oceania
+kr=Korea</edit_format_params>
+      <sub_options></sub_options>
+      <title>Region</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_LoLFree"><![CDATA[<xen:if is="{$wCached}">
+	<xen:require css="EWRwidget_LoLFree.css" />
+	
+	<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+		<div class="secondaryContent">
+			<h3>{$wTitle}</h3>
+			
+			<ul class="champIcons">
+				<xen:foreach loop="$wCached" value="$champ">
+					<li><img class="Tooltip" src="http://ddragon.leagueoflegends.com/cdn/4.20.1/img/champion/{$champ.image}" title="{$champ.name}"></li>
+				</xen:foreach>
+			</ul>
+		</div>
+	</div>
+</xen:if>]]></template>
+    <template title="EWRwidget_LoLFree.css"><![CDATA[.widget_LoLFree h3 { text-align: center; }
+.widget_LoLFree .champIcons { text-align: center; }
+.widget_LoLFree .champIcons li { display: inline-block; }
+.widget_LoLFree .champIcons li img { position: relative; z-index: 1; width: 64px; height: 64px; }
+.widget_LoLFree .champIcons li img:hover
+{
+	z-index: 2;
+	transform:		scale(1.5);
+	transition:		all 0.3s ease-in-out 0s;
+}]]></template>
+  </templates>
+</widget>

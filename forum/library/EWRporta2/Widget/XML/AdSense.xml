@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="AdSense" widget_title="Google AdSense" widget_desc="Displays a Google AdSense block" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="adsense_client" edit_format="textbox" data_type="string" display_order="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Publisher ID</title>
+      <explain><![CDATA[The unique publisher ID of your Google AdSense account.]]></explain>
+    </option>
+    <option option_id="adsense_adslot" edit_format="textbox" data_type="string" display_order="2">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Ad Slot ID</title>
+      <explain><![CDATA[The ad unit ID of the specific ad unit you want to display.]]></explain>
+    </option>
+    <option option_id="adsense_width" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>0</default_value>
+      <edit_format_params>min=0</edit_format_params>
+      <sub_options></sub_options>
+      <title>Width</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="adsense_height" edit_format="spinbox" data_type="unsigned_integer" display_order="4">
+      <default_value>0</default_value>
+      <edit_format_params>min=0</edit_format_params>
+      <sub_options></sub_options>
+      <title>Height</title>
+      <explain><![CDATA[Setting height and width to 0 will force the "responsive" ad setting.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_AdSense"><![CDATA[<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+    <div class="secondaryContent">
+        <h3>{$wTitle}</h3>
+
+	<div style="text-align: center;">
+		<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+		<xen:if is="{$wOptions.adsense_width} || {$wOptions.adsense_height}">
+			<ins class="adsbygoogle"
+				 style="display:inline-block;width:{$wOptions.adsense_width}px;height:{$wOptions.adsense_height}px"
+				 data-ad-client="{$wOptions.adsense_client}"
+				 data-ad-slot="{$wOptions.adsense_adslot}"></ins>
+		<xen:else/>
+			<ins class="adsbygoogle"
+				 style="display:block"
+				 data-ad-client="{$wOptions.adsense_client}"
+				 data-ad-slot="{$wOptions.adsense_adslot}"
+				 data-ad-format="auto"></ins>
+		</xen:if>
+		<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+	</div>
+    </div>
+</div>]]></template>
+  </templates>
+</widget>

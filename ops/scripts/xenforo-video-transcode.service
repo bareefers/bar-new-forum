@@ -1,0 +1,16 @@
+[Unit]
+Description=BAR XenForo video transcode worker
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/barcode/server
+EnvironmentFile=/etc/default/barcode-xf-video
+ExecStart=/usr/bin/node xenforo-video-transcode/cli.js worker
+Restart=always
+RestartSec=5
+User=www-data
+Group=www-data
+
+[Install]
+WantedBy=multi-user.target

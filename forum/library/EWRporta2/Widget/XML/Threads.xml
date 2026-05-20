@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="Threads" widget_title="Threads Recent" widget_desc="Displays a list of most recently active threads" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="threads_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Limit</title>
+      <explain><![CDATA[The maximum number of threads to display on the widget.]]></explain>
+    </option>
+    <option option_id="threads_cutoff" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>7</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Age Cutoff</title>
+      <explain><![CDATA[Limits the search to only display threads updated within X days.]]></explain>
+    </option>
+    <option option_id="threads_source" edit_format="callback" data_type="array" display_order="3">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Source Forums</title>
+      <explain><![CDATA[Only selected forums will be searched. (unspecify to select all)]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_Threads"><![CDATA[<xen:if is="{$wScale} == 'full'">
+	<xen:require css="discussion_list.css" />
+	<xen:require css="inline_mod.css" />
+	<xen:require js="js/xenforo/discussion_list.js" />
+
+	<div class="section sectionMain widget_{$wWidget}" id="widget_{$wWidlink}">
+		<form action="{xen:link inline-mod/thread/switch}" method="post"
+			class="discussionList DiscussionList InlineModForm"
+			data-cookieName="threads"
+			data-controls="#InlineModControls"
+			data-imodOptions="#ModerationSelect option">
+					
+			<dl class="sectionHeaders">
+				<dt class="posterAvatar"><a><span>{xen:phrase sort_by}:</span></a></dt>
+				<dd class="main">
+					<a class="title"><span>{xen:phrase title}</span></a>
+					<a class="postDate"><span>{xen:phrase start_date}</span></a>
+				</dd>
+				<dd class="stats">
+					<a class="major"><span>{xen:phrase replies}</span></a>
+					<a class="minor"><span>{xen:phrase views}</span></a>
+				</dd>
+				<dd class="lastPost"><a><span>{xen:phrase last_message}</span></a></dd>
+			</dl>
+			
+			<ol class="discussionListItems">
+				<xen:if is="{$wUncached}">
+					<xen:foreach loop="$wUncached" value="$thread">
+						<xen:include template="thread_list_item">
+							<xen:map from="$thread.showForumLink" to="$showForumLink" />
+						</xen:include>
+					</xen:foreach>
+				<xen:else />
+					<li class="primaryContent">{xen:phrase there_no_threads_to_display}</li>
+				</xen:if>
+			</ol>
+			
+			<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+		</form>
+	</div>
+<xen:else/>
+	<xen:require css="profile_post_list_simple.css" />
+	
+	<div class="section profilePostList widget_{$wWidget}" id="widget_{$wWidlink}">
+		<div class="secondaryContent">
+			<h3>{xen:phrase new_posts}</h3>
+
+			<ul>
+				<xen:foreach loop="$wUncached" value="$thread">
+					<li class="profilePostListItem">
+						<xen:avatar user="$thread" size="s" img="true" />
+						
+						<div class="messageInfo">
+							<div class="messageContent">
+								<a href="{xen:link "threads{xen:if '{$thread.isNew} AND {$thread.haveReadData}', '/unread'}", $thread}"
+									title="{xen:if '{$thread.isNew} AND {$thread.haveReadData}', {xen:phrase go_to_first_unread_message}}"
+									class="{xen:if $thread.hasPreview, PreviewTooltip}"
+									data-previewUrl="{xen:if $thread.hasPreview, {xen:link threads/preview, $thread}}">{xen:helper snippet, $thread.title, 50}</a>
+							</div>
+							
+							<div class="messageMeta muted">
+								<a href="{xen:link members, $thread.lastPostInfo}">{$thread.lastPostInfo.username}</a> :
+								<a href="{xen:link 'posts', $thread.lastPostInfo}" title="{xen:phrase go_to_last_message}" class="dateTime"><xen:datetime time="$thread.lastPostInfo.post_date" /></a>
+							</div>
+						</div>
+					</li>
+				</xen:foreach>
+			</ul>
+		</div>
+	</div>
+</xen:if>
+
+<xen:include template="preview_tooltip" />]]></template>
+  </templates>
+</widget>

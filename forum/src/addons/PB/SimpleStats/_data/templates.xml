@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="pb_ss_macros" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:macro name="user_state" arg-options="!">
+	<xf:checkboxrow name="options[user_state]" label="{{ phrase('user_state') }}">
+		<xf:option value="valid" selected="in_array('valid', $options.user_state)">{{ phrase('valid') }}</xf:option>
+		<xf:option value="email_confirm" selected="in_array('email_confirm', $options.user_state)">{{ phrase('awaiting_email_confirmation') }}</xf:option>
+		<xf:option value="email_confirm_edit" selected="in_array('email_confirm_edit', $options.user_state)">{{ phrase('awaiting_email_confirmation_from_edit') }}</xf:option>
+		<xf:option value="email_bounce" selected="in_array('email_bounce', $options.user_state)">{{ phrase('email_invalid_bounced') }}</xf:option>
+		<xf:option value="moderated" selected="in_array('moderated', $options.user_state)">{{ phrase('awaiting_moderation') }}</xf:option>
+		<xf:option value="rejected" selected="in_array('rejected', $options.user_state)">{{ phrase('rejected') }}</xf:option>
+		<xf:option value="disabled" selected="in_array('disabled', $options.user_state)">{{ phrase('disabled') }}</xf:option>
+	</xf:checkboxrow>
+</xf:macro>
+
+<xf:macro name="message_count" arg-options="!">
+	<xf:formrow rowtype="input" label="{{ phrase('pb_ss_whole_message_count_between') }}" explain="{{ phrase('use_negative_one_specify_no_max') }}">
+		<div class="inputGroup">
+			<xf:numberbox name="options[message_count][start]" value="{$options.message_count.start}" min="0" />
+			<span class="inputGroup-text">-</span>
+			<xf:numberbox name="options[message_count][end]" value="{$options.message_count.end}" min="-1" />
+		</div>
+	</xf:formrow>
+</xf:macro>
+
+<xf:macro name="node_list" arg-options="!" arg-forums="!">
+	<xf:selectrow name="options[node_ids]" label="{{ phrase('forum') }}" multiple="true" size="8">
+		<xf:option value="" selected="!{$options.node_ids}"></xf:option>
+		<xf:foreach loop="$forums" value="$forum">
+			<xf:option value="{$forum.value}" label="{$forum.label}" disabled="{$forum.disabled}"
+					   selected="{{ in_array($forum.value, $options.node_ids) }}" />
+		</xf:foreach>
+	</xf:selectrow>
+</xf:macro>
+
+<xf:macro name="content_types" arg-options="!" arg-contentTypes="!">
+	<xf:selectrow name="options[content_types]" label="{{ phrase('content_type') }}" multiple="true" size="8">
+		<xf:option value="" selected="!{$options.content_types}">{{ phrase('any') }}</xf:option>
+		<xf:foreach loop="$contentTypes" key="$contentType" value="$title">
+			<xf:option value="{$contentType}" label="{$title}"
+					   selected="{{ in_array($contentType, $options.content_types) }}" />
+		</xf:foreach>
+	</xf:selectrow>
+</xf:macro>
+
+<xf:macro name="reactions" arg-options="!" arg-reactionsCache="!">
+	<xf:checkboxrow name="options[reaction_ids]"
+				 label="{{ phrase('reactions') }}"
+				 listclass="listColumns">
+
+		<xf:foreach loop="$reactionsCache" key="$reactionId" value="$reaction">
+			<xf:option value="{$reactionId}" selected="in_array($reactionId, $options.reaction_ids)">
+				<xf:html>
+					<xf:reaction id="{$reactionId}" small="true" showtitle="true" />
+				</xf:html>
+			</xf:option>
+		</xf:foreach>
+
+	</xf:checkboxrow>
+</xf:macro>]]></template>
+  <template type="admin" title="pb_ss_options_node" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:extension name="before"></xf:extension>
+
+<xf:extension name="node_list">
+	<xf:macro name="pb_ss_macros::node_list" arg-options="{$options}" arg-forums="{$forums}" />
+</xf:extension>
+
+<xf:extension name="after"></xf:extension>]]></template>
+  <template type="admin" title="pb_ss_options_post_reaction_count" version_id="2000001" version_string="2.0.0 1"><![CDATA[<xf:extension name="before"></xf:extension>
+
+<xf:extension name="reactions">
+	<xf:macro name="pb_ss_macros::reactions" arg-options="{$options}" arg-reactionsCache="{$reactionsCache}" />
+</xf:extension>
+
+<xf:extension name="display_message">
+	<xf:checkboxrow standalone="true">
+		<xf:option name="options[display_message]" selected="{{ $options.display_message }}">
+			{{ phrase('pb_ss_display_message') }}
+		</xf:option>
+	</xf:checkboxrow>
+</xf:extension>
+
+<xf:extension name="after"></xf:extension>]]></template>
+  <template type="admin" title="pb_ss_options_reaction" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:extension name="before"></xf:extension>
+
+<xf:extension name="reactions">
+	<xf:macro name="pb_ss_macros::reactions" arg-options="{$options}" arg-reactionsCache="{$reactionsCache}" />
+</xf:extension>
+
+<xf:extension name="content_types">
+	<xf:macro name="pb_ss_macros::content_types" arg-options="{$options}" arg-contentTypes="{$contentTypes}" />
+</xf:extension>
+
+<xf:extension name="after"></xf:extension>]]></template>
+  <template type="admin" title="pb_ss_options_report" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:extension name="before"></xf:extension>
+
+<xf:extension name="content_types">
+	<xf:macro name="pb_ss_macros::content_types" arg-options="{$options}" arg-contentTypes="{$contentTypes}" />
+</xf:extension>
+
+<xf:extension name="report_states">
+	<xf:checkboxrow name="options[report_states]" label="{{ phrase('status') }}" listclass="listColumns">
+		<xf:foreach loop="$reportStates" key="$reportState" value="$title">
+			<xf:option value="{$reportState}" selected="in_array($reportState, $options.report_states)">
+				{$title}
+			</xf:option>
+		</xf:foreach>
+	</xf:checkboxrow>
+</xf:extension>
+
+<xf:extension name="after"></xf:extension>]]></template>
+  <template type="admin" title="pb_ss_options_user" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:extension name="before"></xf:extension>
+
+<xf:extension name="user_state">
+	<xf:macro name="pb_ss_macros::user_state" arg-options="{$options}" />
+</xf:extension>
+
+<xf:extension name="message_count">
+	<xf:macro name="pb_ss_macros::message_count" arg-options="{$options}" />
+</xf:extension>	
+
+<xf:extension name="after"></xf:extension>]]></template>
+  <template type="admin" title="pb_ss_options_user_node" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:extends template="pb_ss_options_user" />
+
+<xf:extension name="after">
+	<xf:macro name="pb_ss_macros::node_list" arg-options="{$options}" arg-forums="{$forums}" />
+</xf:extension>]]></template>
+  <template type="admin" title="pb_ss_options_user_reaction" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:extends template="pb_ss_options_user" />
+
+<xf:extension name="after">
+	<xf:macro name="pb_ss_macros::reactions" arg-options="{$options}" arg-reactionsCache="{$reactionsCache}" />
+	<xf:macro name="pb_ss_macros::content_types" arg-options="{$options}" arg-contentTypes="{$contentTypes}" />
+</xf:extension>]]></template>
+  <template type="admin" title="pb_ss_options_warning" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:extension name="before"></xf:extension>
+
+<xf:extension name="content_types">
+	<xf:macro name="pb_ss_macros::content_types" arg-options="{$options}" arg-contentTypes="{$contentTypes}" />
+</xf:extension>
+
+<xf:extension name="is_expired">
+	<xf:checkboxrow name="options[is_expired]" label="{{ phrase('expired') }}" listclass="listColumns">
+		<xf:option value="-1" selected="1">{{ phrase('all') }}</xf:option>
+		<xf:option value="0">{{ phrase('no') }}</xf:option>
+		<xf:option value="1">{{ phrase('yes') }}</xf:option>
+	</xf:checkboxrow>
+</xf:extension>
+
+<xf:extension name="after"></xf:extension>]]></template>
+  <template type="admin" title="pb_ss_stat_export_bbcode" version_id="2000001" version_string="2.0.0 1"><![CDATA[<xf:title>{{ phrase('pb_ss_stat_export_bbcode') }}</xf:title>
+
+<xf:if is="$stats is not empty">
+	<div class="block">
+		<div class="block-container">
+
+			<xf:macro name="stat_list_bb" 
+				  arg-stats="{$stats}"
+				  arg-statColumns="{$statColumns}"
+				  arg-link="{$link}"
+				  arg-linkParams="{$linkParams}" />
+
+		</div>
+	</div>
+<xf:else/>
+		<div class="blockMessage">{{ phrase('no_items_have_been_created_yet') }}</div>
+</xf:if>
+
+<xf:macro name="stat_list_bb"
+		  arg-stats="!"
+		  arg-statColumns="!"
+		  arg-link="!"
+		  arg-linkParams="!">
+
+<xf:set var="$bbcode">
+[TABLE]
+	[TR]
+		<xf:foreach loop="$statColumns" key="$key" value="$column" if="!$column.hide">[TH]{$column.title}[/TH]</xf:foreach>
+	[/TR]
+	<xf:foreach loop="$stats" value="$stat">
+	[TR]
+		<xf:foreach loop="$statColumns" key="$key" value="$column" if="!$column.hide">[TD]<xf:trim>
+				<xf:if is="{$stat.urls.{$key}}">[URL="{{ {$stat.urls.{$key}}|raw }}"]{$stat.{$key}}[/URL]<xf:else />{$stat.{$key}}</xf:if>
+			</xf:trim>[/TD]
+		</xf:foreach>
+	[/TR]
+	</xf:foreach>
+[/TABLE]
+</xf:set>
+
+	<xf:textarearow rowtype="fullWidth" name="message" autosize="true" autofocus="autofocus" value="{$bbcode}"/>
+
+</xf:macro>]]></template>
+  <template type="admin" title="pb_ss_stat_list" version_id="2000000" version_string="2.0.0"><![CDATA[<xf:title>{{ phrase('pb_ss_stat_title') }}</xf:title>
+
+<xf:js prod="pb/simplestats/form.min.js" dev="pb/simplestats/form.js" addon="PB/SimpleStats" />
+
+<xf:form class="block" action="{$link}">
+	<div class="block-container">
+		<div class="block-body">
+
+			<xf:if is="$availableQueries">
+
+				<xf:selectrow name="query" label="{{ phrase('content_type') }}" value="{{ $conditions.query ?: '' }}"
+							  data-xf-init="pb-ss-options" data-url="{{ link('simplestats/options') }}">
+					
+					<xf:option value="">{{ phrase('none') }}</xf:option>
+
+					<xf:foreach loop="$availableQueries" key="$addonId" value="$queryGroup">
+
+						<xf:optgroup listclass="listColumns" label="{{ $addonId ? $addonId : phrase('ungrouped') }}">
+
+							<xf:foreach loop="{$availableQueries.{$addonId}}" key="$prefixId" value="$prefix">
+								<xf:option value="{$prefixId}">
+									{$prefix.title}
+								</xf:option>
+							</xf:foreach>
+
+						</xf:optgroup>
+					</xf:foreach>
+
+				</xf:selectrow>
+			</xf:if>	
+
+			<xf:selectrow name="direction" value="{{ $conditions.direction ?: '' }}" label="{{ phrase('sort_direction') }}" >
+				<xf:option value="desc">{{ phrase('descending') }}</xf:option>
+				<xf:option value="asc">{{ phrase('ascending') }}</xf:option>
+			</xf:selectrow>
+			
+			<xf:numberboxrow name="limit" min="1" value="{{ $conditions.limit ?: 10 }}" label="{{ phrase('maximum_entries') }}" />
+
+			<xf:formrow rowtype="input" label="{{ phrase('date_range') }}">
+				<div class="inputGroup">
+					<xf:dateinput name="start_date" value="{{ $conditions.start_date ? date($conditions.start_date, 'Y-m-d') : date('Y-01-01', $xf.time) }}" />
+
+					<span class="inputGroup-text">-</span>
+					<xf:dateinput name="end_date" value="{{ $conditions.end_date ? date($conditions.end_date, 'Y-m-d') : date('Y-m-d', $xf.time) }}" />
+				</div>	
+			</xf:formrow>
+			
+			<h3 class="block-formSectionHeader">
+				<span class="collapseTrigger collapseTrigger--block is-active" data-xf-click="toggle" data-target="< :up:next">
+					<span class="block-formSectionHeader-aligner">{{ phrase('advanced_options') }}</span>
+				</span>
+			</h3>
+			<div class="block-body block-body--collapsible is-active">
+				<div class="js-pbSSOptions">
+					{$options|raw}
+				</div>
+
+				<xf:checkboxrow standalone="true">
+					<xf:option name="options[display_id]" selected="{{ $conditions.options.display_id }}">
+						{{ phrase('pb_ss_display_content_id') }}
+					</xf:option>
+				</xf:checkboxrow>
+			</div>
+			
+		</div>
+		
+		<xf:submitrow rowtype="simple" icon="search" />
+	</div>
+</xf:form>
+	
+<xf:if is="$stats is not empty">
+	<div class="block">
+		
+		<div class="block-outer">
+			<div class="block-outer-opposite">
+				<xf:button href="{{ link('simplestats', null, $conditions + {'export': 1}) }}" class="button--link" data-xf-click="overlay" aria-expanded="false" aria-haspopup="true">
+					{{ phrase('export...') }}
+				</xf:button>
+			</div>
+		</div>
+
+		<div class="block-container">
+
+			<xf:macro name="stat_list"
+					  arg-stats="{$stats}"
+					  arg-statColumns="{$statColumns}"
+					  arg-link="{$link}"
+					  arg-linkParams="{$linkParams}" />
+
+		</div>
+	</div>
+<xf:else/>
+		<div class="blockMessage">{{ phrase('no_items_have_been_created_yet') }}</div>
+</xf:if>
+
+<xf:macro name="stat_list"
+		  arg-stats="!"
+		  arg-statColumns="!"
+		  arg-link="!"
+		  arg-linkParams="!">
+
+			<xf:datalist>
+				<xf:datarow rowtype="header">
+					<xf:foreach loop="$statColumns" key="$key" value="$column" if="!$column.hide">
+						<xf:cell class="{$column.class}">{$column.title}</xf:cell>
+					</xf:foreach>
+				</xf:datarow>
+
+				<xf:foreach loop="$stats" value="$stat">
+					<xf:datarow rowclass="dataList-row--noHover">
+						<xf:foreach loop="$statColumns" key="$key" value="$column" if="!$column.hide">
+							<xf:cell class="{$column.class}" href="{{ $stat.urls.{$key} ?: null }}">
+								{$stat.{$key}}
+							</xf:cell>
+						</xf:foreach>
+					</xf:datarow>
+				</xf:foreach>
+
+	</xf:datalist>
+
+</xf:macro>]]></template>
+</templates>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="UsersActive" widget_title="Users Active Today" widget_desc="Displays a list of active users" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 hours">
+  <listeners/>
+  <options>
+    <option option_id="usersactive_cutoff" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>24</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Cutoff</title>
+      <explain><![CDATA[The time cutoff (in hours) for a user to be considered active.]]></explain>
+    </option>
+    <option option_id="usersactive_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>250</default_value>
+      <edit_format_params>min=50
+step=50</edit_format_params>
+      <sub_options></sub_options>
+      <title>Limit</title>
+      <explain><![CDATA[The maximum number of users to display before showing a "more" link.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_UsersActive"><![CDATA[<xen:require js="js/8wayrun/EWRporta2_ajax.js" />
+
+<div class="section userList widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3>{$wTitle}</h3>
+
+		<ol class="listInline">
+			<xen:foreach loop="$wUncached.seen" value="$user" i="$i"><li><xen:if is="{$i} != 1">, </xen:if><xen:include template="EWRwidget_UsersActive_Bit" /></li></xen:foreach><span
+				id="moreUsersActive"><xen:foreach loop="$wUncached.unseen" value="$user" i="$i"><li>, <xen:include template="EWRwidget_UsersActive_Bit" /></li></xen:foreach></span>
+	
+			<xen:if is="{$wUncached.unseen}">
+				<li class="moreLink ShowMoreLink" data-target="moreUsersActive">... <a href="{xen:link online}" title="{xen:phrase see_all_visitors}">{xen:phrase and_x_more, 'count={xen:count $wUncached.unseen}'}</a></li>
+			</xen:if>
+		</ol>
+		
+		<div class="footnote">
+			{xen:phrase porta2_total_x_users_within_y_hours, 'total={xen:number $wUncached.total}', 'time={xen:number $wOptions.usersactive_cutoff}'}
+		</div>
+	</div>
+</div>]]></template>
+    <template title="EWRwidget_UsersActive_Bit"><![CDATA[<a href="{xen:link members, $user}" title="{xen:datetime $user.last_activity}"
+	class="Tooltip username{xen:if '!{$user.visible}', ' invisible'}{xen:if {$user.followed}, ' followed'}">{$user.username}</a>]]></template>
+  </templates>
+</widget>

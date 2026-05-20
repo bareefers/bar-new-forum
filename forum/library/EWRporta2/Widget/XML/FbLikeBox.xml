@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="FbLikeBox" widget_title="Facebook Like Box" widget_desc="Displays a Like Box from Facebook" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="fblikebox_page" edit_format="textbox" data_type="string" display_order="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Page URL</title>
+      <explain><![CDATA[This is the URL to the Facebook page to which this Like Box will belong.]]></explain>
+    </option>
+    <option option_id="fblikebox_width" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>232</default_value>
+      <edit_format_params>min=200</edit_format_params>
+      <sub_options></sub_options>
+      <title>Width</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="fblikebox_height" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>300</default_value>
+      <edit_format_params>min=200</edit_format_params>
+      <sub_options></sub_options>
+      <title>Height</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="fblikebox_options" edit_format="checkbox" data_type="array" display_order="4">
+      <default_value>a:4:{s:5:"faces";s:1:"1";s:5:"posts";b:0;s:6:"header";s:1:"1";s:6:"border";s:1:"1";}</default_value>
+      <edit_format_params>faces=Show Friends' Faces
+posts=Show Posts
+header=Show Header
+border=Show Border</edit_format_params>
+      <sub_options>faces
+posts
+header
+border</sub_options>
+      <title>Options</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_FbLikeBox"><![CDATA[<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3>{$wTitle}</h3>
+		<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>
+		
+		<div class="widgetFbLikeBox" style="margin: -5px 0 0 -2px;">
+			<div class="fb-like-box" data-href="{$wOptions.fblikebox_page}" data-colorscheme="{xen:property fbColorScheme}"
+				data-width="{$wOptions.fblikebox_width}" data-height="{$wOptions.fblikebox_height}"
+				data-show-faces="{xen:if $wOptions.fblikebox_options.faces, 'true', 'false'}"
+				data-header="{xen:if $wOptions.fblikebox_options.header, 'true', 'false'}"
+				data-stream="{xen:if $wOptions.fblikebox_options.stream, 'true', 'false'}"
+				data-show-border="{xen:if $wOptions.fblikebox_options.border, 'true', 'false'}"></div>
+		</div>
+	</div>
+</div>]]></template>
+  </templates>
+</widget>

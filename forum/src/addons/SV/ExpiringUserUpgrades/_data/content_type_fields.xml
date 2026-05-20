@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="exup" field_name="alert_handler_class">SV\ExpiringUserUpgrades\Alert\ExpiringUserUpgrade</field>
+  <field content_type="sv_up_expired_expirying" field_name="email_stop_class">SV\ExpiringUserUpgrades\EmailStop\ExpiringAndExpiredUpgrade</field>
+  <field content_type="sv_up_expired_expirying" field_name="entity">XF:UserUpgrade</field>
+  <field content_type="user_upgrade_purchased" field_name="email_stop_class">SV\ExpiringUserUpgrades\EmailStop\PurchasedUpgrade</field>
+  <field content_type="user_upgrade_purchased" field_name="entity">XF:UserUpgrade</field>
+  <field content_type="user_upgrade_reversed" field_name="email_stop_class">SV\ExpiringUserUpgrades\EmailStop\ReversedUpgrade</field>
+  <field content_type="user_upgrade_reversed" field_name="entity">XF:UserUpgrade</field>
+</content_type_fields>

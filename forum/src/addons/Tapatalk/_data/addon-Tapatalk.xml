@@ -1,0 +1,720 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="tapatalk" title="Tapatalk" version_string="3.1.19" version_id="122" url=""
+       install_callback_class="Tapatalk_Installer" install_callback_method="install"
+       uninstall_callback_class="Tapatalk_Installer" uninstall_callback_method="uninstall">
+    <admin_navigation/>
+    <admin_permissions/>
+    <admin_style_properties/>
+    <admin_templates>
+        <template title="tapatalk_option_multi_forum_select"><![CDATA[<xen:selectunit label="{$preparedOption.title}" name="{$fieldPrefix}[{$preparedOption.option_id}]" multiple="true" hint="{$preparedOption.hint}" size="7">
+    <xen:options source="$formatParams" />
+    <xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+    <xen:html>
+        <input type="hidden" name="{$listedFieldName}" multiple="{$preparedOption.option_id}" />
+        {xen:raw $editLink}
+    </xen:html>
+</xen:selectunit>]]></template>
+        <template title="tapatalk_option_multi_group_select"><![CDATA[<xen:selectunit label="{$preparedOption.title}" name="{$fieldPrefix}[{$preparedOption.option_id}]" multiple="true" hint="{$preparedOption.hint}" size="7">
+    <xen:options source="$formatParams" />
+    <xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+    <xen:html>
+        <input type="hidden" name="{$listedFieldName}" multiple="{$preparedOption.option_id}" />
+        {xen:raw $editLink}
+    </xen:html>
+</xen:selectunit>]]></template>
+    </admin_templates>
+    <admin_template_modifications/>
+    <code_events/>
+    <code_event_listeners>
+        <listener event_id="controller_post_dispatch" execute_order="10"
+                  callback_class="Tapatalk_Listener_ControllerPostDispatch" callback_method="postDispatchListener"
+                  active="1" hint="" description=""/>
+        <listener event_id="load_class_datawriter" execute_order="10" callback_class="Tapatalk_Push_PushControl"
+                  callback_method="push_control" active="1" hint="" description="Listens for XenForo_DataWriter class"/>
+        <listener event_id="load_class_mail" execute_order="10" callback_class="Tapatalk_Listener_LoadClassMail"
+                  callback_method="loadClassMailListener" active="1" hint="" description=""/>
+        <listener event_id="load_class_model" execute_order="9" callback_class="Tapatalk_Listener_LoadClassModel"
+                  callback_method="loadClassListener" active="1" hint=""
+                  description="Listens for XenForo_Model_Node class"/>
+        <listener event_id="template_hook" execute_order="0" callback_class="Tapatalk_EventListener_Hook"
+                  callback_method="templateHook" active="1" hint=""
+                  description="Adding app prompt js in head template"/>
+        <listener event_id="template_post_render" execute_order="10"
+                  callback_class="Tapatalk_Listener_TemplatePostRender" callback_method="template_post_render"
+                  active="1" hint="" description=""/>
+        <listener event_id="load_class_controller" execute_order="10" callback_class="Tapatalk_Listener_LoadClassModel"
+                  callback_method="loadClassListener" active="1" description=""/>
+    </code_event_listeners>
+    <cron/>
+    <email_templates/>
+    <email_template_modifications/>
+    <optiongroups>
+        <!--<group group_id="tapatalkDeepLinkOptions" display_order="2" debug_only="0"/>-->
+        <group group_id="tapatalkOptions" display_order="1" debug_only="0"/>
+        <option option_id="Tag_Function_Open" edit_format="onoff" data_type="boolean" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="14"/>
+        </option>
+        <option option_id="ads_disabled_for_group" edit_format="callback" data_type="array" can_backup="1">
+            <default_value>a:1:{i:0;i:0;}</default_value>
+            <edit_format_params>Tapatalk_Option_adsDisabledForGroup::renderOption</edit_format_params>
+            <sub_options>*</sub_options>
+            <relation group_id="tapatalkOptions" display_order="5"/>
+        </option>
+        <option option_id="advanced_delete" edit_format="onoff" data_type="boolean" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="13"/>
+        </option>
+        <option option_id="auto_approval_tp_user" edit_format="onoff" data_type="boolean" can_backup="1">
+            <default_value>true</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="3"/>
+        </option>
+        <option option_id="tapatalk_banner_control" edit_format="template" data_type="string" can_backup="1">
+            <default_value></default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="1"/>
+        </option>
+        <option option_id="tapatalk_banner_update" edit_format="template" data_type="unsigned_integer" can_backup="1">
+            <default_value>0</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="1"/>
+        </option>
+        <option option_id="custom_tapatalkdetect" edit_format="template" data_type="string" can_backup="1">
+            <default_value></default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="1"/>
+        </option>
+
+        <option option_id="hideForums" edit_format="callback" data_type="array" can_backup="1">
+            <default_value>a:1:{i:0;i:0;}</default_value>
+            <edit_format_params>Tapatalk_Option_ListForums::renderOption</edit_format_params>
+            <sub_options>*</sub_options>
+            <relation group_id="tapatalkOptions" display_order="7"/>
+        </option>
+        <option option_id="push_slug" edit_format="template" data_type="string" can_backup="1">
+            <default_value>a:0:{}</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="1"/>
+        </option>
+        <option option_id="tapatalk_forum_id" edit_format="template" data_type="string" can_backup="1">
+            <default_value></default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="1"/>
+        </option>
+        <option option_id="readonlyForums" edit_format="callback" data_type="array" can_backup="1">
+            <default_value>a:1:{i:0;i:0;}</default_value>
+            <edit_format_params>Tapatalk_Option_ListForums::renderOption</edit_format_params>
+            <sub_options>*</sub_options>
+            <relation group_id="tapatalkOptions" display_order="8"/>
+        </option>
+        <option option_id="tapatalk_custom_replacement" edit_format="textbox" data_type="string" can_backup="1">
+            <default_value># For each sample blow, remove the '#' ahead to test
+                # More infor: http://support.tapatalk.com/threads/advanced-plugin-usage.17106/
+
+                # Sample 1, replace all string 'abc' in post content to 'xyz'
+                # '/abc/', 'xyz'
+
+                # Sample 2, replace [JAVA] BBCODE to [QUOTE] for better display in tapatalk
+                # '/\[java\](.*?)\[\/java\]/si', '[quote]$1[/quote]'
+            </default_value>
+            <edit_format_params>rows=2</edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="9"/>
+        </option>
+        <option option_id="tapatalk_push_notifications" edit_format="radio" data_type="unsigned_integer" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params>0=Basic Message
+                1=Rich Message
+            </edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="15"/>
+        </option>
+        <option option_id="tapatalk_reg_type" edit_format="radio" data_type="unsigned_integer" can_backup="1">
+            <default_value>0</default_value>
+            <edit_format_params>0=Yes
+                1=No
+            </edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="2"/>
+        </option>
+        <option option_id="tapatalk_reg_ug" edit_format="textbox" data_type="integer" can_backup="1">
+            <default_value></default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="4"/>
+        </option>
+        <option option_id="tapatalk_settings" edit_format="template" data_type="string" can_backup="1">
+            <default_value>0</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="1"/>
+        </option>
+        <!--<option option_id="tp_android_url" edit_format="textbox" data_type="string" can_backup="1">
+          <default_value></default_value>
+          <edit_format_params></edit_format_params>
+          <sub_options></sub_options>
+          <relation group_id="tapatalkBYOOptions" display_order="2"/>
+        </option>
+        <option option_id="tp_app_banner_msg" edit_format="textbox" data_type="string" can_backup="1">
+          <default_value></default_value>
+          <edit_format_params></edit_format_params>
+          <sub_options></sub_options>
+          <relation group_id="tapatalkBYOOptions" display_order="4"/>
+        </option>
+        <option option_id="tp_app_ios_id" edit_format="textbox" data_type="string" can_backup="1">
+          <default_value></default_value>
+          <edit_format_params></edit_format_params>
+          <sub_options></sub_options>
+          <relation group_id="tapatalkBYOOptions" display_order="1"/>
+        </option>-->
+        <option option_id="tp_directory" edit_format="textbox" data_type="string" can_backup="1">
+            <default_value>mobiquo</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="6"/>
+        </option>
+        <option option_id="tp_push_key" edit_format="textbox" data_type="string" can_backup="1">
+            <default_value></default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="1"/>
+        </option>
+        <option option_id="deep_link_in_sub_emails" edit_format="radio" data_type="unsigned_integer" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params>
+                2=Enable
+                1=Enable to Tapatalk users only
+                0=Disable
+            </edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="16"/>
+        </option>
+        <option option_id="TT_2fa_enabled" edit_format="radio" data_type="unsigned_integer" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params>
+                1=Enforced
+                0=Bypass
+            </edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkOptions" display_order="16"/>
+        </option>
+        <!--<option option_id="full_banner" edit_format="onoff" data_type="boolean" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkDeepLinkOptions" display_order="1"/>
+        </option>
+        <option option_id="google_indexing_enabled" edit_format="onoff" data_type="boolean" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkDeepLinkOptions" display_order="2"/>
+        </option>
+        <option option_id="facebook_indexing_enabled" edit_format="onoff" data_type="boolean" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkDeepLinkOptions" display_order="3"/>
+        </option>
+        <option option_id="twitter_indexing_enabled" edit_format="onoff" data_type="boolean" can_backup="1">
+            <default_value>1</default_value>
+            <edit_format_params></edit_format_params>
+            <sub_options></sub_options>
+            <relation group_id="tapatalkDeepLinkOptions" display_order="4"/>
+        </option>-->
+
+    </optiongroups>
+    <permissions>
+        <permission_groups/>
+        <permissions/>
+        <interface_groups/>
+    </permissions>
+    <phrases>
+        <phrase title="byo_favorites" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Managing account details]]></phrase>
+        <phrase title="byo_get_conversation" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Engaged in conversation]]></phrase>
+        <phrase title="byo_get_conversations" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Engaged in conversation]]></phrase>
+        <phrase title="byo_get_forum" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Viewing forum list]]></phrase>
+        <phrase title="byo_get_forum_list" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Viewing forum list]]></phrase>
+        <phrase title="byo_get_online_users" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Viewing list of online members]]></phrase>
+        <phrase title="byo_get_thread" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Viewing thread]]></phrase>
+        <phrase title="byo_get_topic" version_id="15" version_string="1.5.2"><![CDATA[[On App]Viewing forum]]></phrase>
+        <phrase title="byo_get_user_info" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Viewing member profile ]]></phrase>
+        <phrase title="byo_latest" version_id="15" version_string="1.5.2">
+            <![CDATA[[On App]Viewing latest content]]></phrase>
+        <phrase title="byo_link" version_id="15" version_string="1.5.2">
+            <![CDATA[<a href="http://tapatalk.com">]]></phrase>
+        <phrase title="byo_search" version_id="15" version_string="1.5.2"><![CDATA[[On App]Searching]]></phrase>
+        <phrase title="dark_first_last_inverted" version_id="1" version_string="1.0.0">
+            <![CDATA[First and last indexes are inverted!]]></phrase>
+        <phrase title="dark_forum_subscriptions_not_supported" version_id="1" version_string="1.0.0">
+            <![CDATA[Forum subscriptions are not currently supported by XenForo.]]></phrase>
+        <phrase title="dark_in_tapatalk" version_id="12" version_string="1.4.0"><![CDATA[On Tapatalk]]></phrase>
+        <phrase title="dark_passworded_forums_not_supported" version_id="1" version_string="1.0.0">
+            <![CDATA[Password protected forums are not currently supported by XenForo]]></phrase>
+        <phrase title="dark_thread_is_redirect" version_id="1" version_string="1.0.0">
+            <![CDATA[Thread is a redirect]]></phrase>
+        <phrase title="on_byo" version_id="15" version_string="1.5.2"><![CDATA[On Tapatalk(*)]]></phrase>
+        <phrase title="on_tapatalk" version_id="15" version_string="1.5.2"><![CDATA[On Tapatalk]]></phrase>
+        <phrase title="option_ads_disabled_for_group" version_id="60" version_string="2.4.2">
+            <![CDATA[Disable Ads for Group]]></phrase>
+        <phrase title="option_ads_disabled_for_group_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[This option will prevent Tapatalk from displaying advertisements. Users in the selected groups will not be served ads when using the Tapatalk app.]]></phrase>
+        <phrase title="option_advanced_delete" version_id="60" version_string="2.4.2"><![CDATA[Hard Delete]]></phrase>
+        <phrase title="option_advanced_delete_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Enable/Disable "Hard Delete" moderation using Tapatalk]]></phrase>
+        <phrase title="option_auto_approval_tp_user" version_id="60" version_string="2.4.2">
+            <![CDATA[Automatically Approve Verified Tapatalk Members]]></phrase>
+        <phrase title="option_auto_approval_tp_user_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[This option automatically approve verified Tapatalk member without the need of moderation or other additional steps.]]></phrase>
+        <phrase title="option_banner_control" version_id="11" version_string="2.4.2"><![CDATA[banner_control]]></phrase>
+        <phrase title="option_banner_control_explain" version_id="11" version_string="2.4.2">
+            <![CDATA[banner_control]]></phrase>
+        <phrase title="option_banner_last_check" version_id="11" version_string="2.4.2">
+            <![CDATA[banner_last_check]]></phrase>
+        <phrase title="option_banner_last_check_explain" version_id="11" version_string="2.4.2">
+            <![CDATA[banner_last_check]]></phrase>
+        <phrase title="option_custom_tapatalkdetect" version_id="11" version_string="1.3.0">
+            <![CDATA[custom_tapatalkdetect]]></phrase>
+        <phrase title="option_custom_tapatalkdetect_explain" version_id="11" version_string="1.3.0">
+            <![CDATA[test]]></phrase>
+        <phrase title="option_deep_link_in_sub_emails" version_id="63" version_string="2.4.4">
+            <![CDATA[Deep-linking in Subscription Emails]]></phrase>
+        <phrase title="option_deep_link_in_sub_emails_explain" version_id="63" version_string="2.4.4">
+            <![CDATA[Allow Tapatalk users to open thread directly from forum topic subscription email. A "View On Tapatalk" button will be added next to existing "View Thread" button.]]></phrase>
+        <phrase title="option_group_tapatalkDeepLinkOptions" version_id="12" version_string="1.4.0">
+            <![CDATA[Tapatalk - Mobile App Deep Linking (BYO Branded App and Tapatalk)]]></phrase>
+        <phrase title="option_group_tapatalkDeepLinkOptions_description" version_id="12" version_string="1.4.0">
+            <![CDATA[Additional options of your forums are available in Tapatalk Forum Owner Area.]]></phrase>
+        <phrase title="option_group_tapatalkBYOOptions" version_id="12" version_string="1.4.0">
+            <![CDATA[Tapatalk - Build Your Own - Options]]></phrase>
+        <phrase title="option_group_tapatalkBYOOptions_description" version_id="12" version_string="1.4.0">
+            <![CDATA[Options for <a href="http://tapatalk.com/build.php" target="_blank"><u>Tapatalk BYO Customers</u></a> to modify Smart App Banner behaviour.]]></phrase>
+        <phrase title="option_group_tapatalkOptions" version_id="60" version_string="2.4.2">
+            <![CDATA[Tapatalk - Options]]></phrase>
+        <phrase title="option_group_tapatalkOptions_description" version_id="60" version_string="2.4.2">
+            <![CDATA[Additional options of your forums are available in Tapatalk Forum Owner Area]]></phrase>
+        <phrase title="option_hideForums" version_id="60" version_string="2.4.2"><![CDATA[Hide Forums]]></phrase>
+        <phrase title="option_hideForums_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Hide forums and sub-forums you do not wish to be listed in Tapatalk]]></phrase>
+        <phrase title="option_push_slug" version_id="15" version_string="1.5.2"><![CDATA[Push Slug]]></phrase>
+        <phrase title="option_push_slug_explain" version_id="15" version_string="1.5.2">
+            <![CDATA[Push Slug can stick push request when push failed several times in short time(cannot connect to push server).]]></phrase>
+        <phrase title="option_readonlyForums" version_id="60" version_string="2.4.2">
+            <![CDATA[Disable New Topic]]></phrase>
+        <phrase title="option_readonlyForums_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Prevent Tapatalk users from creating new topics in the selected sub-forums. This feature is useful for forums that require additional information or credentials that Tapatalk does not yet support.]]></phrase>
+        <phrase title="option_Tag_Function_Open" version_id="60" version_string="2.4.2">
+            <![CDATA[Open Tag Function]]></phrase>
+        <phrase title="option_Tag_Function_Open_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Enable support for Open Tagging (@). With this feature enabled, users can input "@username" to tag someone. Tagged users will receive alerts in their web browser and a push notification on their mobile device. To successfully tag someone, there must be one space before and after the "@username".]]></phrase>
+        <phrase title="option_tapatalk_custom_replacement" version_id="60" version_string="2.4.2">
+            <![CDATA[Thread Content Replacement (Advanced)]]></phrase>
+        <phrase title="option_tapatalk_custom_replacement_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Ability to match and replace thread content using PHP preg_replace function(http://www.php.net/manual/en/function.preg-replace.php). E.g. "'pattern', 'replacement'" . You can define more than one replace rule on each line.]]></phrase>
+        <phrase title="option_tapatalk_push_notifications" version_id="60" version_string="2.4.2">
+            <![CDATA[Push Notifications]]></phrase>
+        <phrase title="option_tapatalk_push_notifications_explain" version_id="60" version_string="2.4.2"><![CDATA[<b>Basic Message</b> - Do not include post content and images preview in Push Notifications<br>
+<b>Rich Message</b>  - Includes post content and images preview in Push Notifications]]></phrase>
+        <phrase title="option_tapatalk_reg_type" version_id="60" version_string="2.4.2">
+            <![CDATA[In-App Registration]]></phrase>
+        <phrase title="option_tapatalk_reg_type_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Verified Tapatalk users signed in from Facebook, Google or verified email address can register your forum natively in-app. Addition custom fields are also supported, although we strongly recommend to keep the custom fields to absolute minimal to make registration easier on mobile.]]></phrase>
+        <phrase title="option_tapatalk_reg_ug" version_id="60" version_string="2.4.2">
+            <![CDATA[User Group Assignment]]></phrase>
+        <phrase title="option_tapatalk_reg_ug_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[By filling a usergroup ID, you can assign new users registered from Tapatalk to a specific secondary usergroup.]]></phrase>
+        <phrase title="option_tapatalk_settings" version_id="11" version_string="2.4.2">
+            <![CDATA[tapatalk_settings]]></phrase>
+        <phrase title="option_tapatalk_settings_explain" version_id="11" version_string="2.4.2">
+            <![CDATA[tapatalk_settings]]></phrase>
+        <phrase title="option_tp_android_url" version_id="15" version_string="1.5.2">
+            <![CDATA[Android Product URL]]></phrase>
+        <phrase title="option_tp_android_url_explain" version_id="15" version_string="1.5.2">
+            <![CDATA[Enter your BYO App URL from Google Play, to be used on Android device]]></phrase>
+        <phrase title="option_tp_app_banner_msg" version_id="15" version_string="1.5.2">
+            <![CDATA[BYO App Banner Message]]></phrase>
+        <phrase title="option_tp_app_banner_msg_explain" version_id="15" version_string="1.5.2">
+            <![CDATA[E.g. "Follow {your_forum_name} with {app_name} for [os_platform]". Do not change the [os_platform] tag as it is displayed dynamically based on user's device platform.]]></phrase>
+        <phrase title="option_tp_app_ios_id" version_id="15" version_string="1.5.2"><![CDATA[BYO iOS App ID]]></phrase>
+        <phrase title="option_tp_app_ios_id_explain" version_id="15" version_string="1.5.2">
+            <![CDATA[Enter your product ID in Apple App Store, to be used on iPhone device]]></phrase>
+        <phrase title="option_tp_directory" version_id="60" version_string="2.4.2">
+            <![CDATA[Tapatalk Plugin Directory]]></phrase>
+        <phrase title="option_tp_directory_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[This setting is for advanced users. If you installed the Tapatalk plug-in into a custom folder by manually changing the name of the default "mobiquo" folder, you must specify the custom folder name here. You will also need to specify the custom folder name in your <a href="https://tapatalk.com/v2/landing/index" target="_blank">Tapatalk forum owner account</a> as well.]]></phrase>
+        <phrase title="option_tp_push_key" version_id="60" version_string="2.4.2"><![CDATA[Tapatalk Key]]></phrase>
+        <phrase title="option_tp_push_key_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[This field is mandatory. The Tapatalk API key allows us to verify the origin of push notification requests from your server. Please input the key provided in your forum owner account. Inputting this key will insure that push notifications like Private Messages and Subscription activity can be delivered to your members' mobile devices.]]></phrase>
+        <phrase title="option_full_banner" version_id="60" version_string="2.4.2"><![CDATA[Smart App Banner]]></phrase>
+        <phrase title="option_full_banner_explain" version_id="60" version_string="2.4.2"><![CDATA[]]></phrase>
+        <phrase title="option_google_indexing_enabled" version_id="60" version_string="2.4.2">
+            <![CDATA[Google App Indexing]]></phrase>
+        <phrase title="option_google_indexing_enabled_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Deep-Linking Thread from Google Search Result.]]></phrase>
+        <phrase title="option_facebook_indexing_enabled" version_id="60" version_string="2.4.2">
+            <![CDATA[Facebook]]></phrase>
+        <phrase title="option_facebook_indexing_enabled_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Deep-Linking Thread from Link in Facebook App.]]></phrase>
+        <phrase title="option_twitter_indexing_enabled" version_id="60" version_string="2.4.2">
+            <![CDATA[Twitter]]></phrase>
+        <phrase title="option_twitter_indexing_enabled_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[Deep-Linking Thread from Link in Twitter App.]]></phrase>
+        <phrase title="option_TT_2fa_enabled" version_id="60" version_string="2.4.2">
+            <![CDATA[Two Factor Authentication for Tapatalk users]]></phrase>
+        <phrase title="option_TT_2fa_enabled_explain" version_id="60" version_string="2.4.2">
+            <![CDATA[<b>Enforced</b> - If you set this option to Enforced then authentication attempts from the Tapatalk application will have to comply with any Two Factor Authentication requirements of the forum, requiring application users to enter a challenge code when prompted.<br>
+<b>Bypass</b> - If set to Bypass then users will be able to login with the Tapatalk application bypassing any Two Factor Authentication policies or requirements set on the forum.]]>
+        </phrase>
+        <!--<phrase title="option_tapatalk_ttid_oauth" version_id="60" version_string="3.0.0"><![CDATA[Tapatalk Connect]]></phrase>
+        <phrase title="option_tapatalk_ttid_oauth_explain" version_id="60" version_string="3.0.0"><![CDATA[This option allow user to register and login in your site with his Tapatalk ID credentials]]></phrase>
+        <phrase title="option_tapatalk_mobilesite" version_id="0" version_string=""><![CDATA[Use Tapatalk mobile site]]></phrase>
+        <phrase title="option_tapatalk_mobilesite_explain" version_id="0" version_string=""><![CDATA[with this option enabled, your mobile users will browse your site with the enhanced mobile site experience]]></phrase>-->
+        <phrase title="tapatalk_favorites" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Managing account details]]></phrase>
+        <phrase title="tapatalk_get_conversation" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Engaged in conversation]]></phrase>
+        <phrase title="tapatalk_get_conversations" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Engaged in conversation]]></phrase>
+        <phrase title="tapatalk_get_forum" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Viewing forum list]]></phrase>
+        <phrase title="tapatalk_get_forum_list" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Viewing forum list]]></phrase>
+        <phrase title="tapatalk_get_online_users" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Viewing list of online members]]></phrase>
+        <phrase title="tapatalk_get_thread" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Viewing thread]]></phrase>
+        <phrase title="tapatalk_get_topic" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Viewing forum]]></phrase>
+        <phrase title="tapatalk_get_user_info" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Viewing member profile ]]></phrase>
+        <phrase title="tapatalk_latest" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Viewing latest content]]></phrase>
+        <phrase title="tapatalk_search" version_id="15" version_string="1.5.2">
+            <![CDATA[[On Tapatalk]Searching]]></phrase>
+        <phrase title="view_on_tapatalk" version_id="60" version_string="2.4.2"><![CDATA[View in App]]></phrase>
+        <phrase title="x_taged_you_in_post_in_thread_y" global_cache="1" version_id="8" version_string="1.1.4">
+            <![CDATA[{name} mentioned you in the post {title}.]]></phrase>
+    </phrases>
+    <route_prefixes/>
+    <style_properties/>
+    <templates>
+        <template title="tapatalk_account_provider" version_id="1" version_string="Beta 1">
+            <![CDATA[<xen:title>{xen:phrase tapatalk_provider_integration, 'provider={$providerName}'}</xen:title>
+
+<xen:if is="{$profile}">
+	<form action="{xen:link 'account/{$provider}'}" method="post" class="xenForm">
+		
+		<xen:hook name="account_provider_associated">
+		<dl class="ctrlUnit">
+			<dt>{xen:phrase tapatalk_associated_provider_account, 'provider={$providerName}'}:</dt>
+			<dd>
+				<xen:if is="{$profile.avatar_url}"><a href="{$profile.profile_url}" class="avatar NoOverlay"><img src="{$profile.avatar_url}" alt="" width="100px" /></a></xen:if>
+				<a href="{$profile.profile_url}"><xen:if is="{$profile.username}">{$profile.username}<xen:elseif is="{$profile.email}"/>{$profile.email}<xen:else/>{xen:phrase unknown_account}</xen:if></a>
+			</dd>
+		</dl>
+		</xen:hook>
+		
+		<dl class="ctrlUnit submitUnit">
+			<dt></dt>
+			<dd><ul>
+				<li>
+					<label><input type="checkbox" name="disassociate" value="1" id="ctrl_disassociate" class="Disabler" /> {xen:phrase social_disassociate_provider_account, 'provider={$providerName}'}</label>
+					<ul id="ctrl_disassociate_Disabler">
+						<li><input type="submit" class="button" name="disassociate_confirm" value="{xen:phrase confirm_disassociation}" /></li>
+					</ul>
+					<xen:if is="!{$hasPassword}">
+						<p class="explain">{xen:phrase tapatalk_disassociating_with_provider_will_cause_password_generated_emailed_x, 'email={$visitor.email}', 'provider={$providerName}'}</p>
+					</xen:if>
+				</li>
+			</ul></dd>
+		</dl>
+	
+		<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+		<input type="hidden" name="_xfConfirm" value="1" />
+	</form>
+<xen:else />
+	<form action="{xen:link account}" method="post" class="xenForm">
+	
+		<xen:hook name="account_provider_not_associated">
+		<dl class="ctrlUnit">
+			<dt></dt>
+			<dd>{xen:string nl2br, {xen:phrase tapatalk_your_account_is_not_currently_associated_with_provider_account, 'provider={$providerName}'}}</dd>
+		</dl>
+		</xen:hook>
+		
+		<dl class="ctrlUnit submitUnit">
+			<dt></dt>
+			<dd><a href="{xen:link 'register/{$provider}', '', 'reg=1', 'assoc=1'}" class="button primary">{xen:phrase tapatalk_associate_with_provider, 'provider={$providerName}'}</a></dd>
+		</dl>		
+	</form>
+</xen:if>]]>
+        </template>
+        <template title="tapatalk_login_buttons.css" version_id="1" version_string="Beta 1">
+            <![CDATA[
+a.tapatalkLogin,
+#loginBar a.tapatalkLogin
+{
+	display: inline-block;
+	width: 180px;
+	height: 22px;
+	-webkit-box-sizing: border-box; -moz-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box;
+	cursor: pointer;
+	
+	background: #20b8d3 url('styles/tapatalk/tapatalk.png');
+	background-repeat: no-repeat;
+	-webkit-border-radius: 3px; -moz-border-radius: 3px; -khtml-border-radius: 3px; border-radius: 3px;
+	padding: 0px 0px 0px 1px;
+	outline: none;
+	
+	text-decoration: none;
+	color: white;
+	font-weight: bold;
+	font-size: 11px;
+	line-height: 14px;
+}
+
+a.tapatalkLogin:active,
+#loginBar a.tapatalkLogin:active
+{
+	
+}
+
+a.tapatalkLogin:hover,
+#loginBar a.tapatalkLogin:hover
+{
+	text-decoration: none;
+}
+
+	a.tapatalkLogin span
+	{
+		background: #20b8d3;
+		border-top: solid 1px #20b8d3;
+		border-bottom: solid 1px #20b8d3;
+		display: block;
+		padding: 2px 4px 3px;
+		margin: 1px 1px 0px 21px;
+		text-shadow: none;
+		white-space: nowrap;
+		overflow: hidden;
+	}
+
+	a.tapatalkLogin:active span
+	{
+		border-bottom: solid 1px #20b8d3;
+		border-top: solid 1px #20b8d3;
+		background: #20b8d3;
+		text-shadow: none;
+	}
+
+]]>
+        </template>
+        <template title="tapatalk_register_provider" version_id="0" version_string="">
+            <![CDATA[<xen:title>{xen:phrase tapatalk_sign_up_with_provider, 'provider={$providerName}'}</xen:title>
+	
+<form action="{xen:link 'register/{$provider}-register'}" method="post" class="xenForm AutoValidator"
+	data-fieldValidatorUrl="{xen:link register/validate-field}"
+	data-OptInOut="OptIn"
+	data-normalSubmit="1">
+
+<ul class="tabs Tabs" data-panes="#ProviderTabs > li">
+	<xen:if is="!{$associateOnly}"><li><a>{xen:phrase create_new_account}</a></li></xen:if>
+	<li><a>{xen:phrase associate_existing_account}</a></li>
+</ul>
+
+<ul id="ProviderTabs">
+	
+	<xen:if is="!{$associateOnly}">
+	<li>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_username">{xen:phrase name}:</label></dt>
+			<dd>
+				<input type="text" name="username" value="{$profile.username}" class="textCtrl OptIn" id="ctrl_username" autofocus="true" autocomplete="off" />
+				<p class="explain">{xen:phrase this_is_name_that_will_be_shown_with_your_messages}</p>
+			</dd>
+		</dl>
+	
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_email">{xen:phrase email}:</label></dt>
+			<dd>
+				<input type="text" name="email" value="{$profile.email}" class="textCtrl OptIn" id="ctrl_email" autofocus="true" />	
+			</dd>
+		</dl>
+		
+		<xen:include template="custom_fields_edit" />
+	
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_timezone">{xen:phrase time_zone}:</label></dt>
+			<dd>
+				<select name="timezone" class="textCtrl AutoTimeZone OptOut" id="ctrl_timezone">
+					<xen:foreach loop="$timeZones" key="$identifier" value="$name">
+						<option value="{$identifier}" {xen:selected "{$identifier} == {$xenOptions.guestTimeZone}"}>{$name}</option>
+					</xen:foreach>
+				</select>
+			</dd>
+		</dl>
+
+                <xen:if is="{$dobRequired}">
+		<dl class="ctrlUnit OptOut">
+			<dt>{xen:phrase date_of_birth}:</dt>
+			<dd>
+				<xen:include template="helper_birthday_input">
+					<xen:map from="$fields" to="$user" />
+				</xen:include>
+				<p class="explain">{xen:phrase your_date_of_birth_is_required}</p>
+			</dd>
+		</dl>
+                </xen:if>
+		
+		<dl class="ctrlUnit submitUnit">
+			<dt></dt>
+			<dd>
+				<xen:if is="{$tosUrl}">
+					<ul>
+						<li>
+							{xen:phrase i_agree_to_terms_and_rules, 'checkbox=<input type="checkbox" name="agree" value="1" id="ctrl_agree" class="Disabler" />', 'terms_attributes=href="{$tosUrl}" target="_blank"'}
+							<ul id="ctrl_agree_Disabler">
+								<li><input type="submit" value="{xen:phrase sign_up}" accesskey="s" class="button primary" /></li>
+							</ul>						
+						</li>
+					</ul>
+				<xen:else />
+					<input type="submit" value="{xen:phrase sign_up}" accesskey="s" class="button primary" />
+				</xen:if>
+				
+				<p class="explain" style="margin-top: 10px">{xen:phrase will_automatically_associate_profile_picture_home_page_etc}</p>
+			</dd>
+		</dl>
+	
+	</li>
+	</xen:if>
+
+	<li>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_associate_login">{xen:phrase associate_with}:</label></dt>
+			<dd>
+				<xen:if is="{$existingUser}">
+					{$existingUser.username}
+					<input type="hidden" name="associate_login" value="{$existingUser.username}" />
+					<input type="hidden" name="force_assoc" value="1" />
+				<xen:else />
+					<input type="text" name="associate_login" class="textCtrl" id="ctrl_associate_login" />
+				</xen:if>
+			</dd>
+		</dl>
+		
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_associate_password">{xen:phrase password}:</label></dt>
+			<dd>
+				<input type="password" name="associate_password" class="textCtrl" id="ctrl_associate_password" />
+				<p class="explain">{xen:phrase password_of_x_account_wish_to_associate_with_not_provider, 'provider={$providerName}', 'board_title={$xenOptions.boardTitle}'}</p>
+			</dd>
+		</dl>
+		
+		<dl class="ctrlUnit submitUnit">
+			<dt></dt>
+			<dd><input type="submit" value="{xen:phrase associate_account}" name="associate" accesskey="a" class="button primary" /></dd>
+		</dl>
+	</li>
+
+</ul>
+
+<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+<input type="hidden" name="redirect" value="{$redirect}" />
+</form>]]>
+        </template>
+    </templates>
+    <public_template_modifications>
+        <!--<modification description="Add Tapatalk Connect log in to the sidebar_visitor_panel" action="str_replace" enabled="1" execution_order="10" modification_key="tapatalk_oauth_sidebar_visitor_panel" template="sidebar_visitor_panel">
+            <find>
+              <![CDATA[</label>]]>
+            </find>
+            <replace>
+              <![CDATA[$0
+        <xen:require css="tapatalk_login_buttons.css" />
+        <xen:if is="{$xenOptions.tapatalk_ttid_oauth}">
+              <li><a href="{xen:link register/tapatalk, '', 'reg=1'}" class="tapatalkLogin"><span>{xen:phrase tapatalk_login_with_tapatalk}</span></a></li>
+          </xen:if>]]>
+            </replace>
+          </modification>-->
+        <modification description="Add Tapatalk Connect log in to the helper_login_form" action="str_replace"
+                      enabled="1" execute_order="10" modification_key="tapatalk_oauth_helper_login_form"
+                      template="helper_login_form">
+            <find><![CDATA[<input type="hidden" name="cookie_check" value="1" />]]></find>
+            <replace>
+                <![CDATA[
+<xen:if is="{$xenOptions.tapatalk_ttid_oauth}">
+	  <xen:require css="tapatalk_login_buttons.css" />
+  	<dl class="ctrlUnit">
+			<dt></dt>
+			<dd><a href="{xen:link register/tapatalk, '', 'reg=1'}" class="tapatalkLogin"><span>{xen:phrase tapatalk_login_with_tapatalk}</span></a></dd>
+		</dl>
+	</xen:if>
+  $0
+ ]]>
+            </replace>
+        </modification>
+        <modification description="Add Tapatalk Connect log in to the login_bar_form" action="str_replace" enabled="1"
+                      execute_order="10" modification_key="tapatalk_oauth_login_bar_form" template="login_bar_form">
+            <find><![CDATA[<xen:hook name="login_bar_eauth_items">]]></find>
+            <replace>
+                <![CDATA[
+        $0
+        <xen:if is="{$xenOptions.tapatalk_ttid_oauth}">
+          <xen:require css="tapatalk_login_buttons.css" />
+  				<li><a href="{xen:link register/tapatalk, '', 'reg=1'}" class="tapatalkLogin"><span>{xen:phrase tapatalk_login_with_tapatalk}</span></a></li>
+				</xen:if>
+ ]]>
+            </replace>
+        </modification>
+        <!--    <modification title="tapatalk_account_wrapper_sidebar_settings" template_title="account_wrapper" execute_order="10" modification_type="preg_replace" callback_class="" callback_method="" description="" version_id="0" version_string="" active="1">
+          <search_value><![CDATA[#{xen:phrase facebook_integration}</a></li></xen:if>#s]]></search_value>
+          <replace_value>
+            <![CDATA[$0
+    <xen:if is="{$xenOptions.tp_push_key}"><li><a
+        class="{xen:if "{$selectedKey} == 'account/tapatalk'", 'secondaryContent', 'primaryContent'}"
+        href="{xen:link account/tapatalk}">{xen:phrase tapatalk_tapatalk_integration}</a></li></xen:if>]]>
+          </replace_value>
+        </modification>
+        <modification title="tapatalk_login_bar_item" template_title="login_bar_form" execute_order="10" modification_type="preg_replace" callback_class="" callback_method="" description="" version_id="0" version_string="" active="1">
+          <search_value><![CDATA[#<xen:hook name="login_bar_eauth_set">.*<xen:if is="{\$xenOptions.facebookAppId}">(.*?<xen:hook name="login_bar_eauth_items">.*?)(</xen:hook>)#s]]></search_value>
+          <replace_value>
+            <![CDATA[<xen:hook name="login_bar_eauth_set"><xen:if is="{$xenOptions.facebookAppId} or {$xenOptions.tp_push_key}">
+    $1
+        <xen:require css="tapatalk_login_buttons.css" />
+
+        <xen:if is="{$xenOptions.tp_push_key}">
+            <li><a href="{xen:link register/tapatalk, '', 'reg=1'}" class="tapatalkLogin"><span>{xen:phrase tapatalk_login_with_tapatalk}</span></a></li>
+        </xen:if>
+    $2]]>
+          </replace_value>
+        </modification>
+        <modification title="tapatalk_navigation_visitor_tab_link" template_title="navigation_visitor_tab" execute_order="10" modification_type="preg_replace" callback_class="" callback_method="" description="" version_id="0" version_string="" active="1">
+          <search_value><![CDATA[#<xen:if is="{\$xenOptions.facebookAppId}">.*?</xen:if>#s]]></search_value>
+          <replace_value>
+            <![CDATA[$0
+    <xen:if is="{$xenOptions.tp_push_key}"><li><a href="{xen:link account/tapatalk}">{xen:phrase tapatalk_tapatalk_integration}</a></li></xen:if>]]>
+          </replace_value>
+        </modification>-->
+    </public_template_modifications>
+    <bb_code_media_sites/>
+    <bb_codes/>
+</addon>

@@ -1,0 +1,48 @@
+# Secrets and local config
+forum/src/config.php
+config.php
+.env
+.env.*
+*.local
+
+# Runtime / cache / uploads (never version)
+forum/internal_data/
+forum/data/
+forum/internal_data/**
+forum/data/**
+
+# Large archives and exports
+*.zip
+*.tar
+*.tar.gz
+*.sql
+*.sql.gz
+
+# Logs and backups
+error_log
+*.log
+forum/error_log
+config.php.bak*
+config.php.debugprobe*
+*~
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Node probe tooling (local only)
+.pw-probe/
+node_modules/
+
+# Credentials (never commit)
+**/id_ed25519
+**/id_rsa
+**/*password*.txt
+docs/new-server-root-password.txt
+
+# Optional huge migration bundles
+BAR_xenforo_Update/
+**/BAR_xenforo_Update/**

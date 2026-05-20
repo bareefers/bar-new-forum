@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="ArticlesMain" widget_title="Articles (Main)" widget_desc="Emulates the articles located on articles list pages" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners>
+    <listener description="EWRwidget_ArticlesMain_controller" event_id="load_class_controller" execute_order="10" callback_class="EWRporta2_Widget_Listener_ArticlesMain" callback_method="controller" active="1"/>
+  </listeners>
+  <options>
+    <option option_id="articlesmain_category" edit_format="callback" data_type="array" display_order="1">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_CategoryChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Category</title>
+      <explain><![CDATA[Only articles from the selected category will be searched. (unspecify to select all)]]></explain>
+    </option>
+    <option option_id="articlesmain_author" edit_format="callback" data_type="array" display_order="2">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_AuthorChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Author</title>
+      <explain><![CDATA[Only articles from the selected author will be searched. (unspecify to select all)]]></explain>
+    </option>
+    <option option_id="articlesmain_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Articles Limit</title>
+      <explain><![CDATA[The maximum number of articles to display on the widget.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_ArticlesMain"><![CDATA[<xen:require css="message_user_info.css" />
+<xen:require css="EWRporta2.css" />
+<xen:require css="EWRporta2_ArticleList.css" />
+<xen:require css="EWRwidget_ArticlesMain.css" />
+<xen:require js="js/8wayrun/EWRporta2_ajax.js" />
+
+<xen:if is="{$xenOptions.EWRporta2_articles_masonry}">
+	<xen:set var="$masonry">1</xen:set>
+	<xen:require js="js/8wayrun/EWRporta2_images.js" />
+	<xen:require js="js/8wayrun/EWRporta2_masonry.js" />
+</xen:if>
+
+<xen:if is="{$xenOptions.EWRporta2_articles_scroll}">
+	<xen:set var="$infinite">1</xen:set>
+	<xen:require js="js/8wayrun/EWRporta2_infinite.js" />
+</xen:if>
+
+<div id="articlesGrid" class="articlesGrid {xen:if '{$masonry}', 'ArticlesMason'} {xen:if '{$infinite}', 'InfiniteScroll'}"
+	data-masonry="{$masonry}" data-items=".articleItem" data-nav=".articlePager" data-next=".articlePager a:last" data-control=".articleControl">
+		<xen:foreach loop="$wUncached" value="$article"><xen:include template="EWRporta2_ArticleList_Bit" /></xen:foreach>
+</div>
+
+<xen:if is="{$infinite}">
+	<div class="sectionMain articleControl InfiniteControl" data-target=".articlesGrid" data-pager=".articlePager">
+		<div class="button pause">{xen:phrase porta2_pause_infinite_scrolling}</div>
+		<div class="button resume">{xen:phrase porta2_resume_infinite_scrolling}</div>
+	</div>
+</xen:if>
+
+<xen:if is="{$wOptions.count} > {$wOptions.articlesmain_limit}">
+	<div class="articlePager"><a href="{xen:link widgets/ArticlesMain, '', 'wid={$wWidlink}', 'page=2'}"></a></div>
+</xen:if>]]></template>
+    <template title="EWRwidget_ArticlesMain.css"><![CDATA[.sidebar .articlesGrid { font-size: 13px; }]]></template>
+  </templates>
+</widget>

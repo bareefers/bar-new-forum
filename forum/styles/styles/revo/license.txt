@@ -1,0 +1,53 @@
+License for XenForo style "Revo" and its variations
+--------------------------------------------------------------
+
+This Agreement constitutes a non-exclusive license for You, the end-user and Artodia.com / Vjacheslav Trushkin (referred to as “Seller” in this document), to use the enclosed product consisting of a forum design (“Product”) and accompanying documentation. The Product is licensed, not sold, to you for your own use under the terms and conditions of this agreement.
+
+
+The license
+-----------
+
+You may use the Product on a single XenForo installation. You are also allowed to use the Product on additional XenForo installation for testing purposes that cannot be accessed by anyone other than you.
+
+You are expressly prohibited from diffusing or commercialising the Product either alone or as part of another product.
+
+You may not sell, distribute, sublicense, rent or lease or otherwise transfer or assign the right to use Product, either as whole or in part, without a specific license from Seller to do so.
+
+
+Termination
+-----------
+
+This Agreement remains in effect until it is terminated. You may terminate the Agreement at any time by destroying Product and all copies of it. Seller may terminate the agreement without notice following breach of any part of Agreement. Upon termination, you must destroy the Product and all copies of it.
+
+Under no circumstances will Seller be liable for reimbursing the price of the Product or any other damages.
+
+
+Limited Warranty
+----------------
+
+Although Seller has tested the Product, the Product is sold “AS IS”, without any warranty; expressed or implied, as to its conformity to or fitness for any particular purpose, or that the Product will perform uninterrupted and without errors. Seller disclaims all other warranties, expressed or implied.
+
+In no event shall Seller be liable for any damages whatsoever, including but not limited to damages from lost income, business interruption, loss of business information, or other pecuniary loss, arising from the use or misuse of the Product, even if Seller or its employees, resellers, or agents have been advised of the possibility of such damages.
+
+
+General Conditions
+------------------
+
+Support for the Product is limited to fixing bugs in Product that are not caused by use of other products or customisation of Product.
+
+This Agreement DOES NOT give you the right to all upgrades to Software. Agreement gives you right to upgrades that do not change major version number of Product, released within a year of purchase of Product.
+
+Refunds will only be issued if the problem could not have been foreseen. Refunds will only be granted if Seller has been given a chance to fix the issue that was caused by Seller and Seller was unable to fix the issue. Exchanges will NOT be granted. Make sure BEFORE you finish your payment that you have ordered the correct item. You must ensure before purchasing that you are happy with the Product on the live demo, and have tested it in all areas you wish for it to work in.
+
+
+Inquiries
+---------
+
+All inquiries regarding this Agreement should be directed to cyberalien@gmail.com
+
+
+Licence
+-------
+
+This product is licensed to admin@bareefers.org
+Downloaded: Sat, 07 Mar 2015 21:11:43 +0000

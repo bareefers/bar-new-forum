@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="PollBlock" widget_title="Poll Block" widget_desc="Displays a poll block widget" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 hours">
+  <listeners/>
+  <options>
+    <option option_id="pollblock_poll" edit_format="callback" data_type="integer" display_order="1">
+      <default_value>0</default_value>
+      <edit_format_params>EWRporta2_Widget_Option_PollBlock::renderOption</edit_format_params>
+      <sub_options></sub_options>
+      <title>Poll</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_PollBlock"><![CDATA[<xen:if is="{$wUncached}">
+	<xen:require css="polls.css" />
+	<xen:require js="js/xenforo/discussion.js" />
+	<xen:require css="EWRwidget_PollBlock.css" />
+
+	<div class="sectionMain NoAutoHeader PollContainer {xen:if "{$wScale} == 'tiny'", 'sidePoll'} widget_{$wWidget}" id="widget_{$wWidlink}">
+		<form action="{xen:link threads/poll/vote, $wCached.thread}" method="post" class="pollBlock AutoValidator PollVoteForm" data-max-votes="{$wUncached.max_votes}">
+		
+			<div class="secondaryContent">	
+				<div class="pollContent">
+					<div class="questionMark">?</div>
+				
+					<div class="question">
+						<h2 class="questionText"><a href="{xen:link threads, $wCached.thread}">{$wUncached.question}</a></h2>
+						<xen:if is="{$wUncached.canEdit}"><a href="{xen:link threads/poll/edit, $wCached.thread}" class="editLink">{xen:phrase edit}</a></xen:if>
+						
+						<xen:if is="{$wUncached.close_date}">
+							<div class="pollNotes closeDate muted">
+								<xen:if is="{$wUncached.open}">
+									{xen:phrase this_poll_will_close_on_x, 'close_date={xen:datetime $wUncached.close_date, absolute}'}
+								<xen:else />
+									{xen:phrase this_poll_closed_on_x, 'close_date={xen:datetime $wUncached.close_date}'}
+								</xen:if>
+							</div>
+						</xen:if>
+					</div>
+						
+					<xen:if is="{$wUncached.canVote} AND !{$wUncached.hasVoted}">
+						<xen:include template="poll_block_vote">
+							<xen:map from="$wUncached" to="$poll" />
+							<xen:map from="$wCached.thread" to="$thread" />
+						</xen:include>
+					<xen:else />
+						<xen:include template="poll_block_result">
+							<xen:map from="$wUncached" to="$poll" />
+							<xen:map from="$wCached.thread" to="$thread" />
+						</xen:include>
+					</xen:if>
+				</div>
+			</div>
+		
+			<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+		</form>
+	</div>
+</xen:if>]]></template>
+    <template title="EWRwidget_PollBlock.css"><![CDATA[.sidePoll .pollBlock .questionMark { display: none; }
+.sidePoll .pollBlock .pollContent { padding-left: 0; }
+.sidePoll .overlayScroll.pollResultsOverlay { padding-right: 0; }
+.sidePoll .pollBlock .pollOptions,
+.sidePoll .pollBlock .pollResults { width: auto; }]]></template>
+  </templates>
+</widget>

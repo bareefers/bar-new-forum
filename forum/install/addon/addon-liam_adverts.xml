@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="liam_adverts" title="Advertisement Manager" version_string="1.2.1" version_id="4" url="http://xenforo.com/community/resources/advertisement-manager.2053/" install_callback_class="LiamAds_Addon" install_callback_method="install" uninstall_callback_class="LiamAds_Addon" uninstall_callback_method="uninstall">
+  <admin_navigation>
+    <navigation navigation_id="liam_adverts" parent_navigation_id="options" display_order="200" link="adverts" admin_permission_id="liam_ads_manageads" debug_only="0" hide_no_children="0"/>
+  </admin_navigation>
+  <admin_permissions>
+    <admin_permission admin_permission_id="liam_ads_manageads" display_order="1"/>
+  </admin_permissions>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="liamads_delete"><![CDATA[<xen:title>{xen:phrase liamads_delete_confirm}: {$advert.advert_name}</xen:title>
+<xen:h1>{xen:phrase liamads_delete_confirm}</xen:h1>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:adminlink 'adverts/edit', $advert}">{$advert.advert_name}</xen:breadcrumb>
+</xen:navigation>
+
+<xen:require css="public:delete_confirmation.css" />
+
+<xen:form action="{xen:adminlink 'adverts/delete', $advert}" class="deleteConfirmForm">
+	<p>{xen:phrase liamads_please_confirm_that_you_want_to_delete_following_advert}:</p>
+	<strong><a href="{xen:adminlink 'adverts/edit', $advert}">{$advert.advert_name}</a></strong>
+
+	<xen:submitunit save="{xen:phrase liamads_delete_advert}" />
+
+	<input type="hidden" name="_xfConfirm" value="1" />
+</xen:form>]]></template>
+    <template title="liamads_list"><![CDATA[<xen:title>{xen:phrase liamads_adverts}</xen:title>
+
+<xen:topctrl>
+	<a href="{xen:adminlink 'adverts/new'}" class="button">+ {xen:phrase liamads_add_new_advert}</a>
+</xen:topctrl>
+
+<xen:require css="filter_list.css" />
+<xen:require js="js/xenforo/filter_list.js" />
+
+<xen:form action="{xen:adminlink adverts}" class="section">
+
+	<xen:if is="{$adverts}">
+
+		<h2 class="subHeading">
+		<xen:include template="filter_list_controls" />
+			{xen:phrase liamads_adverts}
+		</h2>
+
+		<ol class="FilterList">
+		<xen:foreach loop="$adverts" value="$advert">
+			<xen:listitem
+				id="{$advert.advert_id}"
+				label="{$advert.advert_name}"
+				href="{xen:adminlink adverts/edit, $advert}"
+				
+				delete="{xen:adminlink adverts/delete, $advert}"
+			/>
+		</xen:foreach>
+		</ol>
+
+		<p class="sectionFooter">{xen:phrase showing_x_of_y_items, 'count=<span class="FilterListCount">{xen:count $adverts}</span>', 'total={xen:count $adverts}'}</p>
+	
+	<xen:else />
+		<div class="noResults">{xen:phrase liamads_no_adverts_have_been_defined_yet}</div>
+	</xen:if>
+</xen:form>]]></template>
+    <template title="liamads_modify"><![CDATA[<xen:title><xen:if is="!{$advert}">{xen:phrase liamads_new_ad}<xen:else />{xen:phrase liamads_edit_ad}: {$advert.advert_name}</xen:if></xen:title>
+
+<xen:form action="{xen:adminlink adverts/save, $advert}" class="AutoValidator">
+	
+	<ul class="tabs Tabs" data-panes="#advertPanes > li">
+		<li class="active"><a>{xen:phrase liamads_advert_options}</a></li>
+		<li><a title="{xen:phrase liamads_display_advert_if_user}" class="Tooltip">{xen:phrase user_criteria}</a></li>
+		<li><a title="{xen:phrase liamads_display_advert_if_page}" class="Tooltip">{xen:phrase page_criteria}</a></li>
+	</ul>
+	
+	<ul id="advertPanes">
+		<li>
+			<xen:textboxunit label="{xen:phrase liamads_ad_name}:" name="advert_name" value="{$advert.advert_name}" data-livetitletemplate="{xen:if {$advert.advert_name},
+		'{xen:phrase liamads_edit_ad}: <em>%s</em>',
+		'{xen:phrase liamads_new_ad}: <em>%s</em>'}" >
+				<xen:explain>{xen:phrase liamads_explain_name}</xen:explain>
+			</xen:textboxunit>
+			<xen:textboxunit label="{xen:phrase liamads_ad_code}:" name="advert_code" value="{$advert.advert_code}" rows="5">
+				<xen:explain>{xen:phrase liamads_exact_code}</xen:explain>
+			</xen:textboxunit>
+			
+			<dl class="ctrlUnit">
+				<dt>
+					<label for="ctrl_advert_location">Advertisement location:</label>
+				</dt>
+				<dd>
+					<select name="advert_location" class="textCtrl" id="ctrl_advert_location">
+						<xen:foreach loop="$defaulthooks" value="$hook">
+							<option name="{$hook}" value="{$hook}" <xen:if is="!in_array({$array.array_location}, {$defaulthooks})">selected</xen:if>>{$hook}</option>
+						</xen:foreach>
+					</select>
+				</dd>
+			</dl>
+			<xen:textboxunit label="{xen:phrase other}:" name="advert_location_other" id="location_other" value="{$advert.advert_location}" display="none;">
+					<xen:explain>{xen:phrase liamads_ad_location_explain}</xen:explain>
+			</xen:textboxunit>
+			<!-- <xen:checkboxunit label="{xen:phrase liamads_disable_mass_click}"><xen:option name="mass_click" value="1" selected="{$advert.mass_click}" /></xen:checkboxunit> -->
+		</li>
+		<li><xen:include template="helper_criteria_user" /></li>
+		<li><xen:include template="helper_criteria_page" /></li>	
+	</ul>
+		
+		
+	<xen:submitunit save="{xen:phrase save}" />
+			
+</xen:form>]]></template>
+  </admin_templates>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="template_hook" execute_order="10" callback_class="LiamAds_Addon" callback_method="hook" active="1" hint="" description="Ads in the ads :P"/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <email_template_modifications/>
+  <optiongroups/>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="admin_navigation_liam_adverts" version_id="1" version_string="1.0"><![CDATA[Advertisements]]></phrase>
+    <phrase title="admin_permission_liam_ads_manageads" version_id="1" version_string="1.0"><![CDATA[Manage ads]]></phrase>
+    <phrase title="liamads_add_new_advert" version_id="1" version_string="1.0"><![CDATA[Add New Advertisement]]></phrase>
+    <phrase title="liamads_adverts" version_id="1" version_string="1.0"><![CDATA[Advertisements]]></phrase>
+    <phrase title="liamads_advert_options" version_id="1" version_string="1.0"><![CDATA[Advertisement Options]]></phrase>
+    <phrase title="liamads_ad_code" version_id="1" version_string="1.0"><![CDATA[Advertisement code]]></phrase>
+    <phrase title="liamads_ad_location" version_id="1" version_string="1.0"><![CDATA[Advertisement location]]></phrase>
+    <phrase title="liamads_ad_location_explain" version_id="1" version_string="1.0"><![CDATA[Enter the name of the template hook where you want this advert to appear]]></phrase>
+    <phrase title="liamads_ad_name" version_id="1" version_string="1.0"><![CDATA[Advert name]]></phrase>
+    <phrase title="liamads_code_required" version_id="1" version_string="1.0"><![CDATA[Please enter the advert code...]]></phrase>
+    <phrase title="liamads_delete_advert" version_id="1" version_string="1.0"><![CDATA[Delete Advertisement]]></phrase>
+    <phrase title="liamads_delete_confirm" version_id="1" version_string="1.0"><![CDATA[Confirm deletion of advertisement]]></phrase>
+    <phrase title="liamads_disable_mass_click" version_id="1" version_string="1.0"><![CDATA[Disable mass clicking on this ad]]></phrase>
+    <phrase title="liamads_display_advert_if_page" version_id="1" version_string="1.0"><![CDATA[Display advert if page...]]></phrase>
+    <phrase title="liamads_display_advert_if_user" version_id="1" version_string="1.0"><![CDATA[Display advert if user...]]></phrase>
+    <phrase title="liamads_edit_ad" version_id="1" version_string="1.0"><![CDATA[Edit Advertisement]]></phrase>
+    <phrase title="liamads_exact_code" version_id="1" version_string="1.0"><![CDATA[Exact advertisement code as provided by your advertisement provider]]></phrase>
+    <phrase title="liamads_explain_name" version_id="1" version_string="1.0"><![CDATA[Internal use only. May contain only A-Z, a-z, 0-9 and underscores.]]></phrase>
+    <phrase title="liamads_invalid_name" version_id="1" version_string="1.0"><![CDATA[Please enter a valid advertisement name!]]></phrase>
+    <phrase title="liamads_location_required" version_id="1" version_string="1.0"><![CDATA[Please specify a valid location...]]></phrase>
+    <phrase title="liamads_name_required" version_id="1" version_string="1.0"><![CDATA[Please enter an advert name...]]></phrase>
+    <phrase title="liamads_new_ad" version_id="1" version_string="1.0"><![CDATA[New Advert]]></phrase>
+    <phrase title="liamads_no_adverts_have_been_defined_yet" version_id="1" version_string="1.0"><![CDATA[No adverts have been defined yet...]]></phrase>
+    <phrase title="liamads_please_confirm_that_you_want_to_delete_following_advert" version_id="1" version_string="1.0"><![CDATA[Please confirm that you want to delete the following advert]]></phrase>
+    <phrase title="liamads_show_all" version_id="1" version_string="1.0"><![CDATA[Show advert to all users?]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="admin">
+      <prefix original_prefix="adverts" class="LiamAds_Route_PrefixAdmin_Adverts" build_link="data_only"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties/>
+  <templates/>
+  <public_template_modifications/>
+  <bb_code_media_sites/>
+</addon>

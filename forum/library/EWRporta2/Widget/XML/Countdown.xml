@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="Countdown" widget_title="Countdown Timer" widget_desc="Displays a countdown clock to a date" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="countdown_month" edit_format="select" data_type="unsigned_integer" display_order="2">
+      <default_value></default_value>
+      <edit_format_params>1=January
+2=February
+3=March
+4=April
+5=May
+6=June
+7=July
+8=August
+9=September
+10=October
+11=November
+12=December</edit_format_params>
+      <sub_options></sub_options>
+      <title>Month</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="countdown_day" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>1</default_value>
+      <edit_format_params>min=1
+max=31</edit_format_params>
+      <sub_options></sub_options>
+      <title>Day</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="countdown_year" edit_format="spinbox" data_type="unsigned_integer" display_order="4">
+      <default_value></default_value>
+      <edit_format_params>min=2015</edit_format_params>
+      <sub_options></sub_options>
+      <title>Year</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="countdown_hour" edit_format="spinbox" data_type="unsigned_integer" display_order="5">
+      <default_value></default_value>
+      <edit_format_params>min=0
+max=23</edit_format_params>
+      <sub_options></sub_options>
+      <title>Hour</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="countdown_minute" edit_format="spinbox" data_type="unsigned_integer" display_order="6">
+      <default_value></default_value>
+      <edit_format_params>min=0
+max=59
+step=15</edit_format_params>
+      <sub_options></sub_options>
+      <title>Minute</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="countdown_second" edit_format="spinbox" data_type="unsigned_integer" display_order="7">
+      <default_value></default_value>
+      <edit_format_params>min=0
+max=59
+step=30</edit_format_params>
+      <sub_options></sub_options>
+      <title>Second</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="countdown_utc" edit_format="onoff" data_type="boolean" display_order="8">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Sync with UTC</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_Countdown"><![CDATA[<xen:require css="EWRwidget_Countdown.css" />
+<xen:require js="js/8wayrun/EWRporta2_lwtcd.js" />
+
+<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+
+	<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$('#widget_{$wWidlink} #cd_{$wWidlink}').countDown({
+			targetDate: {
+				'day':		{$wOptions.countdown_day},
+				'month':	{$wOptions.countdown_month},
+				'year':		{$wOptions.countdown_year},
+				'hour':		{$wOptions.countdown_hour},
+				'min':		{$wOptions.countdown_minute},
+				'sec':		{$wOptions.countdown_second},
+				'utc':		{$wOptions.countdown_utc}
+			}
+		});
+	});
+	</script>
+
+	<div class="secondaryContent">
+		<h3>{$wTitle}</h3>
+		
+		<div id="cd_{$wWidlink}" class="countdown">
+			<div>
+				<div class="dash weeks_dash first">
+					<div class="digit d1">0</div>
+					<div class="digit d2">0</div>
+					<div class="dash_title">WEEKS</div>
+				</div>
+			</div><div>
+				<div class="dash days_dash">
+					<div class="digit d1">0</div>
+					<div class="digit d2">0</div>
+					<div class="dash_title">DAYS</div>
+				</div>
+			</div><div>
+				<div class="dash hours_dash">
+					<div class="digit d1">0</div>
+					<div class="digit d2">0</div>
+					<div class="dash_title">HOURS</div>
+				</div>
+			</div><div>
+				<div class="dash minutes_dash">
+					<div class="digit d1">0</div>
+					<div class="digit d2">0</div>
+					<div class="dash_title">MINS</div>
+				</div>
+			</div><div>
+				<div class="dash seconds_dash">
+					<div class="digit d1">0</div>
+					<div class="digit d2">0</div>
+					<div class="dash_title">SECS</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>]]></template>
+    <template title="EWRwidget_Countdown.css"><![CDATA[.countdown>div { display: inline-block; width: 20%; }
+.countdown .dash { margin: 0 1px; background-color: {xen:property contentBackground}; }
+
+.countdown .dash .digit
+{
+	color: {xen:property primaryLightish};
+	font-family: Arial, sans-serif;
+	font-size: 26px;
+	font-weight: bold;
+	
+	float: left;
+	width: 50%;
+	height: 32px;
+}
+.countdown .dash .digit.d1 { text-align: right; }
+.countdown .dash .digit.d2 { text-align: left; }
+
+.countdown .dash_title
+{
+	color: {xen:property mutedTextColor};
+	font-family: Arial, sans-serif;
+	font-size: 9px;
+	text-align: center;
+	clear: both;
+}]]></template>
+  </templates>
+</widget>

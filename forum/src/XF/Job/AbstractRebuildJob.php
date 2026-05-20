@@ -1,0 +1,96 @@
+<?php
+
+namespace XF\Job;
+
+abstract class AbstractRebuildJob extends AbstractJob
+{
+	/**
+	 * @var array{
+	 *     steps: int,
+	 *     start: int,
+	 *     batch: int,
+	 * }
+	 */
+	protected $rebuildDefaultData = [
+		'steps' => 0,
+		'start' => 0,
+		'batch' => 100,
+	];
+
+	/**
+	 * @param int $start
+	 * @param int $batch
+	 *
+	 * @return list<int>
+	 */
+	abstract protected function getNextIds($start, $batch);
+
+	/**
+	 * @param int $id
+	 *
+	 * @return void
+	 */
+	abstract protected function rebuildById($id);
+
+	/**
+	 * @return string|\Stringable
+	 */
+	abstract protected function getStatusType();
+
+	protected function setupData(array $data)
+	{
+		$this->defaultData = array_merge($this->rebuildDefaultData, $this->defaultData);
+
+		return parent::setupData($data);
+	}
+
+	public function run($maxRunTime)
+	{
+		$startTime = microtime(true);
+
+		$this->data['steps']++;
+
+		$ids = $this->getNextIds($this->data['start'], $this->data['batch']);
+		if (!$ids)
+		{
+			return $this->complete();
+		}
+
+		$done = 0;
+
+		foreach ($ids AS $id)
+		{
+			$this->data['start'] = $id;
+
+			$this->rebuildById($id);
+
+			$done++;
+
+			if (microtime(true) - $startTime >= $maxRunTime)
+			{
+				break;
+			}
+		}
+
+		$this->data['batch'] = $this->calculateOptimalBatch($this->data['batch'], $done, $startTime, $maxRunTime, 1000);
+
+		return $this->resume();
+	}
+
+	public function getStatusMessage()
+	{
+		$actionPhrase = \XF::phrase('rebuilding');
+		$typePhrase = $this->getStatusType();
+		return sprintf('%s... %s (%s)', $actionPhrase, $typePhrase, $this->data['start']);
+	}
+
+	public function canCancel()
+	{
+		return true;
+	}
+
+	public function canTriggerByChoice()
+	{
+		return true;
+	}
+}

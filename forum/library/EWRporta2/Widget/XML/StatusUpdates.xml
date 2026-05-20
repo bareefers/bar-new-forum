@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="StatusUpdates" widget_title="Status Updates" widget_desc="Displays the most recent status updates" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="statusupdates_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Limit</title>
+      <explain><![CDATA[The maximum number of status updates to display.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_StatusUpdates"><![CDATA[<div class="section profilePostList widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3>{xen:phrase new_profile_posts}</h3>
+		
+		<xen:include template="sidebar_profile_post_list">
+			<xen:map from="$wUncached" to="$profilePosts" />
+			<xen:set var="$canUpdateStatus">{$visitor.permissions.profilePost.post}</xen:set>
+		</xen:include>
+	</div>
+</div>]]></template>
+  </templates>
+</widget>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="helper_js_global" modification_key="svStandardLib_helper_js_global" description="Add time related phrases required relative time handler" execution_order="7915" enabled="1" action="preg_replace">
+    <find><![CDATA[#(^[\s]*jQuery\.extend\(XF\.phrases, {.*?)(}\);$)#sim]]></find>
+    <replace><![CDATA[$1,
+			"svStandardLib_time.day": "{{ phrase('time.day')|escape('json') }}",
+			"svStandardLib_time.days": "{{ phrase('time.days')|escape('json') }}",
+			"svStandardLib_time.hour": "{{ phrase('time.hour')|escape('json') }}",
+			"svStandardLib_time.hours": "{{ phrase('time.hours')|escape('json') }}",
+			"svStandardLib_time.minute": "{{ phrase('time.minutes')|escape('json') }}",
+			"svStandardLib_time.minutes": "{{ phrase('time.minutes')|escape('json') }}",
+			"svStandardLib_time.month": "{{ phrase('time.month')|escape('json') }}",
+			"svStandardLib_time.months": "{{ phrase('time.months')|escape('json') }}",
+			"svStandardLib_time.second": "{{ phrase('time.second')|escape('json') }}",
+			"svStandardLib_time.seconds": "{{ phrase('time.seconds')|escape('json') }}",
+			"svStandardLib_time.week": "{{ phrase('time.week')|escape('json') }}",
+			"svStandardLib_time.weeks": "{{ phrase('time.weeks')|escape('json') }}",
+			"svStandardLib_time.year": "{{ phrase('time.year')|escape('json') }}",
+			"svStandardLib_time.years": "{{ phrase('time.years')|escape('json') }}"
+
+		$2]]></replace>
+  </modification>
+  <modification type="admin" template="template_edit" modification_key="svStandardLib_template_edit" description="Add &quot;View X template modifications&quot; link" execution_order="7915" enabled="1" action="preg_replace">
+    <find><![CDATA[#[\t ]*<xf:codeeditorrow name="template"#]]></find>
+    <replace><![CDATA[<xf:if is="1 || $svModificationCount > 0">
+	<xf:formrow rowtype="fullWidth">
+		<a href="{{ link('templates/view-modifications', $template, {'style_id': $style.style_id}) }}" target="_blank">{{ phrase('svStandardLib_view_x_template_modifications', {'count': $svModificationCount|number}) }}</a>
+	</xf:formrow>
+</xf:if>
+$0]]></replace>
+  </modification>
+</template_modifications>

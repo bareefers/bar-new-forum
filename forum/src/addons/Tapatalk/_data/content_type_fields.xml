@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<content_type_fields>
+  <field content_type="tapatalk_users" field_name="entity">Tapatalk:TapatalkUsers</field>
+</content_type_fields>

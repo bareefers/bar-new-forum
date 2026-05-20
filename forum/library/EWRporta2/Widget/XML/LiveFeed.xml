@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="LiveFeed" widget_title="Live Feed (by Milano)" widget_desc="Displays a live feed using the modification from Milano" widget_string="1" widget_version="1" widget_url="https://xenforo.com/community/resources/live-feed.2901/" widget_install_class="EWRporta2_Widget_Install_LiveFeed" widget_install_method="installCode" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options/>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_LiveFeed"><![CDATA[<xen:include template="LiveFeed_widget" />]]></template>
+  </templates>
+</widget>

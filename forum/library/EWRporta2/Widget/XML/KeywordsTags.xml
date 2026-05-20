@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="KeywordsTags" widget_title="Keywords (Tag Cloud)" widget_desc="Displays a cloud of keywords for article tags" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 hours">
+  <listeners/>
+  <options>
+    <option option_id="keywordstags_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>50</default_value>
+      <edit_format_params>min=10</edit_format_params>
+      <sub_options></sub_options>
+      <title>Keyword Limit</title>
+      <explain><![CDATA[The maximum number of keywords to display in the cloud.]]></explain>
+    </option>
+    <option option_id="keywordstags_min" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>8</default_value>
+      <edit_format_params>min=4</edit_format_params>
+      <sub_options></sub_options>
+      <title>Minimum Size</title>
+      <explain><![CDATA[The minimum size for the least common keyword.]]></explain>
+    </option>
+    <option option_id="keywordstags_max" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>18</default_value>
+      <edit_format_params>min=12</edit_format_params>
+      <sub_options></sub_options>
+      <title>Maximum Size</title>
+      <explain><![CDATA[The maximum size of the most common keyword.]]></explain>
+    </option>
+    <option option_id="keywordstags_animated" edit_format="onoff" data_type="boolean" display_order="4">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Show animated keyword cloud</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_KeywordsTags"><![CDATA[<xen:require css="EWRwidget_KeywordsTags.css" />
+
+<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3>{$wTitle}</h3>
+		
+		<div class="keywordsText" id="keywords_{$wWidlink}">
+			<ul>
+			<xen:foreach loop="$wCached.tags" value="$_tag">
+				<li style="font-size:{$_tag.size}px;" title="{$_tag.count}">
+					<a href="{xen:link articles/category, $_tag}">{$_tag.category_name}</a>
+				</li>
+			</xen:foreach>
+			</ul>
+		</div>
+		
+		<xen:if is="{$wCached.animated}">
+			<xen:require js="js/8wayrun/swfobject.js" />
+			<script type="text/javascript">
+				var so = new SWFObject("styles/8wayrun/tagcloud.swf", "tagcloud", "100%", "240", "7");
+				so.addParam("wmode", "transparent");
+				so.addVariable("tcolor", "0x000000");
+				so.addVariable("tcolor2", "0x1061B3");
+				so.addVariable("hicolor", "0xFF0000");
+				so.addVariable("mode", "tags");
+				so.addVariable("distr", "true");
+				so.addVariable("tspeed", "200");
+				so.addVariable("tagcloud", "<tags>{$wCached.animated}</tags>");
+				so.write("keywords_{$wWidlink}");
+			</script>
+		</xen:if>
+	</div>
+</div>]]></template>
+    <template title="EWRwidget_KeywordsTags.css"><![CDATA[.widget_KeywordsTags .keywordsText { margin: -25px -10px -30px; text-align: center; }
+.widget_KeywordsTags ul { margin: 30px 10px; }
+.widget_KeywordsTags ul li { display: inline-block; }]]></template>
+  </templates>
+</widget>

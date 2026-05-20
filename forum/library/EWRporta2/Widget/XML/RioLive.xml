@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="RioLive" widget_title="XenRio: Live Streams" widget_desc="Displays current live streams from XenRio" widget_string="1" widget_version="1" widget_url="https://xenforo.com/community/resources/8wayrun-com-xenrio-streams-pro.1652/" widget_install_class="EWRporta2_Widget_Install_Rio" widget_install_method="installCode" widget_uninstall_class="" widget_uninstall_method="" ctime="+5 minutes">
+  <listeners/>
+  <options>
+    <option option_id="riolive_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Top Streams Limit</title>
+      <explain><![CDATA[The maximum number of streams to display on the live streams block.]]></explain>
+    </option>
+    <option option_id="riolive_channels" edit_format="onoff" data_type="boolean" display_order="2">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Restrict by Approved Channels Only</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="riolive_games" edit_format="onoff" data_type="boolean" display_order="3">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Restrict by Approved Games Only</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="riolive_category" edit_format="callback" data_type="unsigned_integer" display_order="4">
+      <default_value>0</default_value>
+      <edit_format_params>EWRporta2_Widget_Option_RioLive::renderCategorySelect</edit_format_params>
+      <sub_options></sub_options>
+      <title>Restrict by Category</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="riolive_game" edit_format="callback" data_type="unsigned_integer" display_order="5">
+      <default_value>0</default_value>
+      <edit_format_params>EWRporta2_Widget_Option_RioLive::renderGameSelect</edit_format_params>
+      <sub_options></sub_options>
+      <title>Restrict by Game</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="riolive_featured" edit_format="onoff" data_type="boolean" display_order="6">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Restrict by Featured Streams Only</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_RioLive"><![CDATA[<xen:if is="{$wCached}">
+	<xen:require css="EWRrio.css" />
+
+	<xen:include template="EWRrio_Sidebar_Streams">
+		<xen:map from="$wCached" to="$streams" />
+	</xen:include>
+</xen:if>]]></template>
+  </templates>
+</widget>

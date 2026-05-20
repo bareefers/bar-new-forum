@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="KeywordsCats" widget_title="Keywords (Categories)" widget_desc="Displays a list of article categories" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 hours">
+  <listeners/>
+  <options/>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_KeywordsCats"><![CDATA[<xen:require css="EWRwidget_KeywordsCats.css" />
+
+<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3>{$wTitle}</h3>
+		
+		<div class="pairsJustified">
+		<xen:foreach loop="$wCached" value="$category">
+			<dl>
+				<dt><a href="{xen:link articles/category, $category}">{$category.category_name}</a>:</dt>
+				<dd>{$category.count}</dd>
+			</dl>
+		</xen:foreach>
+		</div>
+	</div>
+</div>]]></template>
+    <template title="EWRwidget_KeywordsCats.css"><![CDATA[.widget_KeywordsCats dl { font-size: 1.4em; }]]></template>
+  </templates>
+</widget>

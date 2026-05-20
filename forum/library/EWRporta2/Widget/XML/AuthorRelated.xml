@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="AuthorRelated" widget_title="Author Related" widget_desc="Displays related articles from current author" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="authorrelated_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Articles Limit</title>
+      <explain><![CDATA[The maximum number of articles to display on the widget.]]></explain>
+    </option>
+    <option option_id="authorrelated_sort" edit_format="radio" data_type="string" display_order="2">
+      <default_value>date</default_value>
+      <edit_format_params>date=Article Date
+lastpost=Last Post Date
+replies=Reply Count
+views=View Count</edit_format_params>
+      <sub_options></sub_options>
+      <title>Sort Order</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases>
+    <phrase title="EWRwidget_AuthorRelated_title"><![CDATA[More from {author}]]></phrase>
+  </phrases>
+  <templates>
+    <template title="EWRwidget_AuthorRelated"><![CDATA[<xen:if hascontent="true">
+<xen:require css="EWRwidget_AuthorRelated.css" />
+
+<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3>{xen:phrase EWRwidget_AuthorRelated_title, 'author={$tParams.author.author_name}'}</h3>
+		
+		<ul>
+		<xen:contentcheck>
+		<xen:foreach loop="$wUncached" value="$article">
+			<li>
+				<dt><a href="{xen:link threads, $article}">{$article.article_title}</a></dt>
+				<dd class="muted">{xen:datetime $article.article_date, static}</dd>
+			</li>
+		</xen:foreach>
+		</xen:contentcheck>
+		</ul>
+	</div>
+</div>
+</xen:if>]]></template>
+    <template title="EWRwidget_AuthorRelated.css"><![CDATA[.widget_AuthorRelated li { margin-top: 5px; }]]></template>
+  </templates>
+</widget>

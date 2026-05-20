@@ -1,0 +1,1161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="EWRutiles" title="[8wayRun.Com] XenUtiles (Tools)" version_string="1.2.2" version_id="22" url="http://xenforo.com/community/resources/104/" install_callback_class="EWRutiles_Install" install_callback_method="installCode" uninstall_callback_class="EWRutiles_Install" uninstall_callback_method="uninstallCode">
+  <admin_navigation>
+    <navigation navigation_id="EWRutiles" parent_navigation_id="" display_order="99" link="utiles" admin_permission_id="" debug_only="0" hide_no_children="1"/>
+    <navigation navigation_id="EWRutiles_accountspam" parent_navigation_id="EWRutiles_spam" display_order="1" link="utiles/account-spam" admin_permission_id="user" debug_only="0" hide_no_children="0"/>
+    <navigation navigation_id="EWRutiles_bannedips" parent_navigation_id="EWRutiles_discipline" display_order="2" link="banning/ips" admin_permission_id="ban" debug_only="0" hide_no_children="0"/>
+    <navigation navigation_id="EWRutiles_bannedusers" parent_navigation_id="EWRutiles_discipline" display_order="1" link="banning/users" admin_permission_id="ban" debug_only="0" hide_no_children="0"/>
+    <navigation navigation_id="EWRutiles_discipline" parent_navigation_id="EWRutiles" display_order="30" link="" admin_permission_id="" debug_only="0" hide_no_children="1"/>
+    <navigation navigation_id="EWRutiles_genopts" parent_navigation_id="EWRutiles_options" display_order="1" link="options/list/EWRutiles" admin_permission_id="option" debug_only="0" hide_no_children="0"/>
+    <navigation navigation_id="EWRutiles_options" parent_navigation_id="EWRutiles" display_order="10" link="" admin_permission_id="" debug_only="0" hide_no_children="1"/>
+    <navigation navigation_id="EWRutiles_profilespam" parent_navigation_id="EWRutiles_spam" display_order="2" link="utiles/profile-spam" admin_permission_id="user" debug_only="0" hide_no_children="0"/>
+    <navigation navigation_id="EWRutiles_spam" parent_navigation_id="EWRutiles" display_order="20" link="" admin_permission_id="" debug_only="0" hide_no_children="1"/>
+    <navigation navigation_id="EWRutiles_spamlogs" parent_navigation_id="EWRutiles_spam" display_order="9" link="utiles/spamlogs" admin_permission_id="viewLogs" debug_only="0" hide_no_children="0"/>
+    <navigation navigation_id="EWRutiles_spamopts" parent_navigation_id="EWRutiles_options" display_order="2" link="options/list/EWRutiles_Spam" admin_permission_id="option" debug_only="0" hide_no_children="0"/>
+  </admin_navigation>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="EWRutiles.css"><![CDATA[.FilterList .allow span { background-image: url('{xen:property imagePath}/xenforo/permissions/allow.png') !important; }
+.FilterList .revoke span { background-image: url('{xen:property imagePath}/xenforo/permissions/revoke.png') !important; }
+.FilterList a .spamDate { padding-top: 3px; float: right; text-align: right; }
+.FilterList .passed h4 { background-color: {xen:property secondaryLightest}; }
+
+.spamHint { font-size: 11px; color: #969696; margin-left: 10px; margin-top: 2px; }]]></template>
+    <template title="EWRutiles_AccountSpam"><![CDATA[<xen:title>{xen:phrase account_spam_finder}</xen:title>
+
+<xen:require css="filter_list.css" />
+<xen:require css="EWRutiles.css" />
+
+<div class="section">
+	<h2 class="subHeading">{xen:phrase account_spam_finder}</h2>
+
+	<ol class="FilterList">
+	<xen:foreach loop="$users" value="$entry">
+		<li class="listItem primaryContent">
+			<div class="delete secondaryContent revoke" title="{xen:phrase submit_spammer}">
+				<a href="{xen:adminlink utiles/user/submit, $entry}" class="OverlayTrigger" data-cacheOverlay="false"><span>{xen:phrase submit}</span></a>
+			</div>
+
+			<a href="{xen:adminlink utiles/user/delete-account-spam, $entry}" class="delete OverlayTrigger secondaryContent" title="{xen:phrase delete}..."><span>{xen:phrase delete}...</span></a>
+
+			<xen:if is="{$entry.is_banned}">
+				<a href="{xen:adminlink banning/users/lift, $entry}" class="secondaryContent OverlayTrigger liftCtrl">{xen:phrase lift_ban}...</a>
+			<xen:else />
+				<a href="{xen:adminlink banning/users/add, $entry}" class="secondaryContent OverlayTrigger banCtrl">{xen:phrase ban_user}...</a>
+			</xen:if>
+
+			<span class="secondaryContent" title="{xen:phrase likes}">{$entry.like_count}</span>
+			<span class="secondaryContent" title="{xen:phrase posts}">{$entry.message_count}</span>
+
+			<h4>
+				<a href="{xen:adminlink 'users/edit', $entry}">
+					<dfn class="spamDate"><xen:datetime time="{$entry.register_date}" /></dfn>
+					<dfn>{$entry.user_id}</dfn>
+					<em>{$entry.username}</em>
+					<dfn>{$entry.homepage}</dfn>
+				</a>
+			</h4>
+
+			<xen:if is="{$entry.signature}"><span class="secondaryContent">{$entry.signature}</span></xen:if>
+			<xen:if is="{$entry.about}"><span class="secondaryContent">{$entry.about}</span></xen:if>
+		</li>
+	</xen:foreach>
+	</ol>
+
+	<p class="sectionFooter">{xen:phrase showing_x_of_y_items, 'count=<span class="FilterListCount">{xen:count $users}</span>', 'total={xen:number $count}'}</p>
+</div>
+
+{xen:adminpagenav $stop, $count, $start, utiles/account-spam}]]></template>
+    <template title="EWRutiles_Banning"><![CDATA[<xen:title>{xen:phrase banned_ips}</xen:title>
+
+<xen:form action="{xen:adminlink 'utiles/banning/delete'}">
+	<h3 class="subHeading">{xen:phrase banned_ips}</h3>
+	
+	<xen:if is="{$bannedIps}">
+		<ul class="threeColumnList primaryContent">
+			<xen:foreach loop="$bannedIps" value="$bannedIp">
+				<li><label><input type="checkbox" name="delete[]" value="{$bannedIp.ip}" /> {$bannedIp.ip}</label></li>
+			</xen:foreach>
+		</ul>
+		
+		<xen:submitunit save="{xen:phrase delete_selected_ips}" />
+	<xen:else />
+		<div class="primaryContent">{xen:phrase no_ips_have_been_banned}</div>
+	</xen:if>
+</xen:form>
+
+
+<xen:form action="{xen:adminlink 'utiles/banning/add'}">
+	<h3 class="subHeading">{xen:phrase ban_ip}</h3>
+	
+	<xen:textboxunit label="{xen:phrase ip_to_ban}:" name="ip" value="{$ipToBan}">
+		<xen:explain>{xen:phrase may_enter_partial_ip_using_star_at_end_to_ban_range}</xen:explain>
+	</xen:textboxunit>
+	
+	<xen:submitunit save="{xen:phrase ban_ip}" />
+	
+	<input type="hidden" name="_xfConfirm" value="1" />
+</xen:form>]]></template>
+    <template title="EWRutiles_DeleteSpam"><![CDATA[<xen:title>{xen:phrase confirm_deletion_of_user}: {$user.username}</xen:title>
+<xen:h1>{xen:phrase confirm_deletion_of_user}</xen:h1>
+
+<xen:require css="delete_confirmation.css" />
+
+<xen:form action="{xen:adminlink 'utiles/user/delete-{$type}-spam', $user}" class="deleteConfirmForm formOverlay">
+
+	<p>{xen:phrase please_confirm_that_you_want_to_delete_following_user}:</p>
+	<strong><a href="{xen:adminlink 'users/edit', $user}">{$user.username}</a></strong>
+
+	<p>{xen:phrase this_will_not_remove_any_content_this_user_has_already_created}</p>
+	
+	<xen:if is="{$user.is_super_admin}">
+		<xen:passwordunit label="{xen:phrase your_password}:" name="visitor_password">
+			<xen:explain>{xen:phrase you_must_enter_your_current_password_to_validate_this_request}</xen:explain>
+		</xen:passwordunit>
+	</xen:if>
+
+	<xen:submitunit save="{xen:phrase delete_user}" />
+	<input type="hidden" name="_xfConfirm" value="1" />
+	
+</xen:form>]]></template>
+    <template title="EWRutiles_Index"><![CDATA[<xen:title>[8wayRun.Com] XenUtiles (Tools)</xen:title>
+
+This is sample text.]]></template>
+    <template title="EWRutiles_ProfileSpam"><![CDATA[<xen:title>{xen:phrase profile_spam_finder}</xen:title>
+
+<xen:require css="filter_list.css" />
+<xen:require css="EWRutiles.css" />
+
+<div class="section">
+	<h2 class="subHeading">{xen:phrase profile_spam_finder}</h2>
+
+	<ol class="FilterList">
+	<xen:foreach loop="$messages" value="$entry">
+		<li class="listItem primaryContent">
+			<div class="delete secondaryContent revoke" title="{xen:phrase submit_spammer}">
+				<a href="{xen:adminlink utiles/user/submit, $entry}" class="OverlayTrigger" data-cacheOverlay="false"><span>{xen:phrase submit}</span></a>
+			</div>
+
+			<a href="{xen:adminlink utiles/user/delete-profile-spam, $entry}" class="delete OverlayTrigger secondaryContent" title="{xen:phrase delete}..."><span>{xen:phrase delete}...</span></a>
+
+			<xen:if is="{$entry.is_banned}">
+				<a href="{xen:adminlink banning/users/lift, $entry}" class="secondaryContent OverlayTrigger liftCtrl">{xen:phrase lift_ban}...</a>
+			<xen:else />
+				<a href="{xen:adminlink banning/users/add, $entry}" class="secondaryContent OverlayTrigger banCtrl">{xen:phrase ban_user}...</a>
+			</xen:if>
+
+			<span class="secondaryContent" title="{xen:phrase likes}">{$entry.like_count}</span>
+			<span class="secondaryContent" title="{xen:phrase posts}">{$entry.message_count}</span>
+
+			<h4>
+				<a href="{xen:adminlink 'users/edit', $entry}">
+					<dfn class="spamDate">{xen:phrase posted_on_xs_profile_on_y, 'profile={$entry.profile_username}', 'date={xen:date $entry.post_date}'}</dfn>
+					<dfn>{$entry.user_id}</dfn>
+					<em>{$entry.username}</em>
+				</a>
+			</h4>
+
+			<span class="secondaryContent">{$entry.message}</span>
+		</li>
+	</xen:foreach>
+	</ol>
+
+	<p class="sectionFooter">{xen:phrase showing_x_of_y_items, 'count=<span class="FilterListCount">{xen:count $users}</span>', 'total={xen:number $count}'}</p>
+</div>
+
+{xen:adminpagenav $stop, $count, $start, utiles/profile-spam}]]></template>
+    <template title="EWRutiles_SpamLogs"><![CDATA[<xen:title>{xen:phrase registration_logs}</xen:title>
+
+<xen:topctrl><a href="{xen:adminlink utiles/spamlogs/clear}" class="button OverlayTrigger">{xen:phrase clear_registration_log}</a></xen:topctrl>
+
+<xen:require css="filter_list.css" />
+<xen:require css="EWRutiles.css" />
+
+<div class="section">
+	<h2 class="subHeading">{xen:phrase registration_logs}</h2>
+
+	<ol class="FilterList">
+	<xen:foreach loop="$logs" value="$log">
+		<li class="listItem primaryContent {xen:if $log.user_id, 'passed'}">
+			<xen:if is="{$log.user_id}">
+				<div class="delete secondaryContent revoke" title="{xen:phrase submit_spammer}">
+					<a href="{xen:adminlink utiles/user/submit, $log}" class="OverlayTrigger" data-cacheOverlay="false"><span>{xen:phrase submit}</span></a>
+				</div>
+				
+				<xen:if is="{$entry.is_banned}">
+					<a href="{xen:adminlink banning/users/lift, $log}" class="secondaryContent OverlayTrigger liftCtrl">{xen:phrase lift_ban}...</a>
+				<xen:else />
+					<a href="{xen:adminlink banning/users/add, $log}" class="secondaryContent OverlayTrigger banCtrl">{xen:phrase ban_user}...</a>
+				</xen:if>
+				
+				<div class="delete secondaryContent allow" style="float: left;" title="{$log.spamlog_username}">
+					<span>{$log.spamlog_username}</span>
+				</div>
+
+				<h4>
+					<a href="{xen:adminlink 'users/edit', $log}">
+						<dfn class="spamDate"><xen:datetime time="{$log.spamlog_date}" /></dfn>
+						<em>{$log.spamlog_username}</em>
+						<dfn>{$log.spamlog_email}</dfn>
+						<em>{$log.spamlog_ip}</em>
+					</a>
+				</h4>
+			<xen:else />
+				<div class="delete secondaryContent revoke" title="{xen:phrase submit_spammer}">
+					<a href="{xen:adminlink utiles/spamlogs/submit, $log}" class="OverlayTrigger" data-cacheOverlay="false"><span>{xen:phrase submit}</span></a>
+				</div>
+
+				<span class="secondaryContent">{$log.spamlog_time}</span>
+
+				<div class="delete secondaryContent {xen:if $log.spamlog_ip_match, '', 'allow'}" title="{$log.spamlog_ip}">
+					<span>{$log.spamlog_ip}</span>
+				</div>
+				<div class="delete secondaryContent {xen:if $log.spamlog_email_match, '', 'allow'}" title="{$log.spamlog_email}">
+					<span>{$log.spamlog_email}</span>
+				</div>
+				<div class="delete secondaryContent {xen:if $log.spamlog_username_match, '', 'allow'}" title="{$log.spamlog_username}">
+					<span>{$log.spamlog_username}</span>
+				</div>
+				
+				<span class="secondaryContent">{$log.spamlog_engine}</span>
+
+				<h4>
+					<a>
+						<dfn class="spamDate"><xen:datetime time="{$log.spamlog_date}" /></dfn>
+						<em>{$log.spamlog_username}</em>
+						<dfn>{$log.spamlog_email}</dfn>
+						<em>{$log.spamlog_ip}</em>
+					</a>
+				</h4>
+			</xen:if>
+		</li>
+	</xen:foreach>
+	</ol>
+
+	<p class="sectionFooter">{xen:phrase showing_x_of_y_items, 'count=<span class="FilterListCount">{xen:count $logs}</span>', 'total={xen:number $count}'}</p>
+</div>
+
+{xen:adminpagenav $stop, $count, $start, utiles/spamlogs}]]></template>
+    <template title="EWRutiles_SpamLogs_Clear"><![CDATA[<xen:title>{xen:phrase clear_registration_log}</xen:title>
+<xen:require css="delete_confirmation.css" />
+
+<xen:form action="{xen:adminlink 'utiles/spamlogs/clear'}" class="deleteConfirmForm formOverlay">
+
+	<p>{xen:phrase sure_you_want_to_clear_registration_log}</p>
+	
+	<xen:submitunit save="{xen:phrase clear_registration_log}" />
+	
+	<input type="hidden" name="_xfConfirm" value="1" />
+</xen:form>]]></template>
+    <template title="EWRutiles_SubmitSpam"><![CDATA[<xen:title>{xen:phrase submit_spammer}</xen:title>
+
+<xen:require css="EWRutiles.css" />
+
+<xen:form action="{xen:adminlink 'utiles/submit-spam', $spam}" class="formOverlay AutoValidator">
+	<fieldset>
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_username">{xen:phrase user_name}:</label></dt>
+			<dd><input type="text" name="username" class="textCtrl" value="{$spam.username}" id="ctrl_username" />
+				<xen:if is="{$spam.spamlog_id} && !{$spam.spamlog_username_match}"><p class="hint spamHint">{xen:phrase spamlog_submit_missing}</p></xen:if>
+			</dd>
+		</dl>
+
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_email">{xen:phrase email}:</label></dt>
+			<dd><input type="text" name="email" class="textCtrl" value="{$spam.email}" id="ctrl_email" />
+				<xen:if is="{$spam.spamlog_id} && !{$spam.spamlog_email_match}"><p class="hint spamHint">{xen:phrase spamlog_submit_missing}</p></xen:if>
+			</dd>
+		</dl>
+
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_ip">{xen:phrase ip_address}:</label></dt>
+			<dd><input type="text" name="ip" class="textCtrl" value="{$spam.ip}" id="ctrl_ip" />
+				<xen:if is="{$spam.spamlog_id} && !{$spam.spamlog_ip_match}"><p class="hint spamHint">{xen:phrase spamlog_submit_missing}</p></xen:if>
+			</dd>
+		</dl>
+	</fieldset>
+	
+	<fieldset>
+		<dl class="ctrlUnit">
+			<dt>{xen:phrase submit_to_databases}:</dt>
+			<dd><ul>
+
+				<xen:if is="{$xenOptions.EWRutiles_stopforumspam_apikey}">
+				<li>
+					<label for="ctrl_stopforumspam"><input type="checkbox" name="stopforumspam" value="1" id="ctrl_stopforumspam" checked /> {xen:phrase stopforumspam}</label>
+					<p class="hint">{$xenOptions.EWRutiles_stopforumspam_apikey}</p>
+				</li>
+				</xen:if>
+
+				<li>
+					<label for="ctrl_bannedips"><input type="checkbox" name="bannedips" value="1" id="ctrl_bannedips" /> {xen:phrase banned_ip_addresses}</label>
+					<p class="hint">{xen:phrase banned_ips_hint}</p>
+				</li>
+
+			</ul></dd>
+		</dl>
+	</fieldset>
+
+	<dl class="ctrlUnit submitUnit">
+		<dt></dt>
+		<dd>
+			<input type="submit" value="{xen:phrase submit_spammer}" name="submit" accesskey="s" class="button primary" />
+		</dd>
+	</dl>
+</xen:form>]]></template>
+    <template title="option_list_option_multi_EWRutiles"><![CDATA[<xen:selectunit label="{$preparedOption.title}" name="{$fieldPrefix}[{$preparedOption.option_id}]" value="{xen:raw $preparedOption.option_value}"
+hint="{$preparedOption.hint}" size="10" multiple="true">
+	<xen:options source="$formatParams" />
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+	<xen:html>
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+</xen:selectunit>]]></template>
+    <template title="option_template_downVoteAction_EWRutiles"><![CDATA[<xen:radiounit label="{$preparedOption.title}" name="{$fieldPrefix}[{$preparedOption.option_id}][action]" value="{$preparedOption.option_value.action}">
+	
+	<xen:option value="lock" label="{xen:phrase lock_threads}" />
+
+	<xen:option value="mod" label="{xen:phrase moderate_threads}" />
+
+	<xen:option value="soft" label="{xen:phrase remove_from_public_view}" />
+	
+	<xen:option value="move" label="{xen:phrase move_to_forum}:">
+	
+		<xen:select name="{$fieldPrefix}[{$preparedOption.option_id}][node_id]" value="{$preparedOption.option_value.node_id}" inputclass="autoSize">
+			<xen:options source="$formatParams" />
+		</xen:select>
+	
+	</xen:option>
+	
+	<xen:html>
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+	
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+	
+</xen:radiounit>]]></template>
+    <template title="option_template_sitemap_EWRutiles"><![CDATA[<xen:checkboxunit label="{$preparedOption.title}">
+	<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][forums]" selected="{$preparedOption.option_value.forums}" label="{xen:phrase sitemap_build_forums}" />
+	<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][threads]" selected="{$preparedOption.option_value.threads}" label="{xen:phrase sitemap_build_threads}" />
+	<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][members]" selected="{$preparedOption.option_value.members}" label="{xen:phrase sitemap_build_members}" />
+
+	<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][media]" selected="{$preparedOption.option_value.media}" label="{xen:phrase sitemap_build_media}">
+		<xen:hint>{xen:phrase sitemap_build_media_hint}</xen:hint>
+	</xen:option>
+
+	<xen:option name="{$fieldPrefix}[{$preparedOption.option_id}][wiki]" selected="{$preparedOption.option_value.wiki}" label="{xen:phrase sitemap_build_wiki}">
+		<xen:hint>{xen:phrase sitemap_build_wiki_hint}</xen:hint>
+	</xen:option>
+
+	<xen:html>
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+</xen:checkboxunit>]]></template>
+  </admin_templates>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="load_class_bb_code" execute_order="10" callback_class="EWRutiles_Listener_BbCode" callback_method="formatter" active="1" description="BBCode"/>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="EWRutiles_Listener_Controller" callback_method="controller" active="1" description="Controller"/>
+    <listener event_id="load_class_model" execute_order="10" callback_class="EWRutiles_Listener_Model" callback_method="model" active="1" description="Model"/>
+    <listener event_id="template_hook" execute_order="100" callback_class="EWRutiles_Listener_Template" callback_method="template_hook" active="1" description="Template Hooks"/>
+    <listener event_id="template_post_render" execute_order="10" callback_class="EWRutiles_Listener_Template" callback_method="template_post_render" active="1" description="Template Post Render"/>
+  </code_event_listeners>
+  <cron>
+    <entry entry_id="EWRutiles_cleanUpDaily" cron_class="EWRutiles_CronEntry_CleanUp" cron_method="runDailyCleanUp" active="1"><![CDATA[{"day_type":"dom","dom":["-1"],"hours":["4"],"minutes":["30"]}]]></entry>
+    <entry entry_id="EWRutiles_sitemap" cron_class="EWRutiles_CronEntry_Sitemap" cron_method="build" active="1"><![CDATA[{"day_type":"dow","dow":["0"],"hours":["4"],"minutes":["0"]}]]></entry>
+  </cron>
+  <email_templates>
+    <template title="ewrutiles_admin_email_confirmation">
+      <subject><![CDATA[{xen:phrase user_email_confirmation_subject, "boardTitle={$boardTitle}"}]]></subject>
+      <body_text><![CDATA[{xen:phrase ewrutiles_admin_email_confirmation_body_text,
+	"usersOne={$unconfirmed.one}",
+	"usersTwo={$unconfirmed.two}",
+	"usersEnd={$unconfirmed.end}",
+	"usersNon={$unconfirmed.non}",
+	"daysOne={$cutoff.one}",
+	"daysTwo={$cutoff.two}",
+	"board_title={$boardTitle}"
+}]]></body_text>
+      <body_html><![CDATA[{xen:phrase ewrutiles_admin_email_confirmation_body_html,
+	"usersOne={$unconfirmed.one}",
+	"usersTwo={$unconfirmed.two}",
+	"usersEnd={$unconfirmed.end}",
+	"usersNon={$unconfirmed.non}",
+	"daysOne={$cutoff.one}",
+	"daysTwo={$cutoff.two}",
+	"board_title={$boardTitle}"
+}]]></body_html>
+    </template>
+    <template title="ewrutiles_user_email_confirmation">
+      <subject><![CDATA[{xen:phrase user_email_confirmation_subject, "boardTitle={$boardTitle}"}]]></subject>
+      <body_text><![CDATA[{xen:phrase ewrutiles_user_email_confirmation_body_text,
+	"left={$user.days_left}",
+	"days={$user.days_since}",
+	"username={$user.username}",
+	"board_title={$boardTitle}",
+	"confirm_link={xen:link 'canonical:account-confirmation/email', $user, 'c={$confirmation.confirmation_key}'}"
+}]]></body_text>
+      <body_html><![CDATA[{xen:phrase ewrutiles_user_email_confirmation_body_html,
+	"left={$user.days_left}",
+	"days={$user.days_since}",
+	"username={$user.username}",
+	"board_title={$boardTitle}",
+	"confirm_link={xen:link 'canonical:account-confirmation/email', $user, 'c={$confirmation.confirmation_key}'}"
+}]]></body_html>
+    </template>
+  </email_templates>
+  <optiongroups>
+    <group group_id="EWRutiles" display_order="20000" debug_only="0"/>
+    <group group_id="EWRutiles_Spam" display_order="20001" debug_only="0"/>
+    <option option_id="EWRutiles_botscout_apikey" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="302"/>
+    </option>
+    <option option_id="EWRutiles_botscout_checks" edit_format="select" data_type="unsigned_integer" can_backup="1">
+      <default_value>2</default_value>
+      <edit_format_params>3 = Low (3)
+2 = Medium (2)
+1 = High (1)</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="304"/>
+    </option>
+    <option option_id="EWRutiles_botscout_enable" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="301"/>
+    </option>
+    <option option_id="EWRutiles_botscout_failure" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="305"/>
+    </option>
+    <option option_id="EWRutiles_botscout_username" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="303"/>
+    </option>
+    <option option_id="EWRutiles_downvote_action" edit_format="callback" data_type="array" can_backup="1" validation_class="EWRutiles_Option_DownVoteAction" validation_method="verifyOption">
+      <default_value>a:2:{s:6:"action";s:4:"lock";s:7:"node_id";s:1:"0";}</default_value>
+      <edit_format_params>EWRutiles_Option_DownVoteAction::renderOption</edit_format_params>
+      <sub_options>action
+node_id</sub_options>
+      <relation group_id="EWRutiles" display_order="904"/>
+    </option>
+    <option option_id="EWRutiles_downvote_disable" edit_format="callback" data_type="array" can_backup="1">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRutiles_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="EWRutiles" display_order="901"/>
+    </option>
+    <option option_id="EWRutiles_downvote_expiration" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>24</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles" display_order="903"/>
+    </option>
+    <option option_id="EWRutiles_downvote_requirement" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>10</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles" display_order="902"/>
+    </option>
+    <option option_id="EWRutiles_downvote_user" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles" display_order="905"/>
+    </option>
+    <option option_id="EWRutiles_fspamlist_apikey" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="402"/>
+    </option>
+    <option option_id="EWRutiles_fspamlist_checks" edit_format="select" data_type="unsigned_integer" can_backup="1">
+      <default_value>2</default_value>
+      <edit_format_params>3 = Low (3)
+2 = Medium (2)
+1 = High (1)</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="404"/>
+    </option>
+    <option option_id="EWRutiles_fspamlist_enable" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="401"/>
+    </option>
+    <option option_id="EWRutiles_fspamlist_failure" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="405"/>
+    </option>
+    <option option_id="EWRutiles_fspamlist_username" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="403"/>
+    </option>
+    <option option_id="EWRutiles_registration_captcha" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="1"/>
+    </option>
+    <option option_id="EWRutiles_registration_immediate" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="101"/>
+    </option>
+    <option option_id="EWRutiles_registration_timefield" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>8wayrun_time</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="104"/>
+    </option>
+    <option option_id="EWRutiles_registration_timemax" edit_format="spinbox" data_type="unsigned_numeric" can_backup="1">
+      <default_value>300</default_value>
+      <edit_format_params>min=60
+max=600
+step=60</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="103"/>
+    </option>
+    <option option_id="EWRutiles_registration_timemin" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>5</default_value>
+      <edit_format_params>min=0
+max=60
+step=5</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="102"/>
+    </option>
+    <option option_id="EWRutiles_sitemap_limit" edit_format="spinbox" data_type="unsigned_numeric" can_backup="1">
+      <default_value>50000</default_value>
+      <edit_format_params>max=50000
+min=5000
+step=5000</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles" display_order="2"/>
+    </option>
+    <option option_id="EWRutiles_sitemap_options" edit_format="template" data_type="array" can_backup="1" validation_class="EWRutiles_Option_Sitemaps" validation_method="verifyOption">
+      <default_value>a:5:{s:6:"forums";s:1:"1";s:7:"threads";s:1:"1";s:7:"members";s:1:"1";s:5:"media";b:0;s:4:"wiki";b:0;}</default_value>
+      <edit_format_params>option_template_sitemap_EWRutiles</edit_format_params>
+      <sub_options>forums
+threads
+members
+media
+wiki</sub_options>
+      <relation group_id="EWRutiles" display_order="1"/>
+    </option>
+    <option option_id="EWRutiles_sitemap_ping" edit_format="checkbox" data_type="array" can_backup="1">
+      <default_value>a:2:{s:4:"bing";b:0;s:6:"google";b:0;}</default_value>
+      <edit_format_params>bing = Bing
+google = Google</edit_format_params>
+      <sub_options>bing
+google</sub_options>
+      <relation group_id="EWRutiles" display_order="3"/>
+    </option>
+    <option option_id="EWRutiles_softdelete_cutoff" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles" display_order="103"/>
+    </option>
+    <option option_id="EWRutiles_stopforumspam_apikey" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="202"/>
+    </option>
+    <option option_id="EWRutiles_stopforumspam_checks" edit_format="select" data_type="unsigned_integer" can_backup="1">
+      <default_value>2</default_value>
+      <edit_format_params>3 = Low (3)
+2 = Medium (2)
+1 = High (1)</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="204"/>
+    </option>
+    <option option_id="EWRutiles_stopforumspam_enable" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="201"/>
+    </option>
+    <option option_id="EWRutiles_stopforumspam_failure" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="205"/>
+    </option>
+    <option option_id="EWRutiles_stopforumspam_username" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles_Spam" display_order="203"/>
+    </option>
+    <option option_id="EWRutiles_unconfirmed_cutoff" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params>step=3</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles" display_order="101"/>
+    </option>
+    <option option_id="EWRutiles_unconfirmed_email" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles" display_order="102"/>
+    </option>
+    <option option_id="EWRutiles_username_change" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRutiles" display_order="104"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups>
+      <permission_group permission_group_id="EWRutiles"/>
+    </permission_groups>
+    <permissions>
+      <permission permission_group_id="EWRutiles" permission_id="canAdmin" permission_type="flag" default_value="unset" interface_group_id="EWRutiles" display_order="3"/>
+      <permission permission_group_id="EWRutiles" permission_id="canReview" permission_type="flag" default_value="unset" interface_group_id="EWRutiles" display_order="2"/>
+      <permission permission_group_id="EWRutiles" permission_id="canUsername" permission_type="integer" default_value_int="0" interface_group_id="EWRutiles" display_order="9"/>
+      <permission permission_group_id="EWRutiles" permission_id="canVote" permission_type="flag" default_value="unset" interface_group_id="EWRutiles" display_order="1"/>
+    </permissions>
+    <interface_groups>
+      <interface_group interface_group_id="EWRutiles" display_order="10000"/>
+    </interface_groups>
+  </permissions>
+  <phrases>
+    <phrase title="account_spam_finder" version_id="3" version_string="1.0.3"><![CDATA[Account Spam Finder]]></phrase>
+    <phrase title="admin_navigation_EWRutiles" version_id="20" version_string="1.2.0"><![CDATA[XenUtiles]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_accountspam" version_id="3" version_string="1.0.3"><![CDATA[Account Spam Finder]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_bannedips" version_id="21" version_string="1.2.1"><![CDATA[Banned IP Addresses]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_bannedusers" version_id="21" version_string="1.2.1"><![CDATA[Banned Users]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_discipline" version_id="21" version_string="1.2.1"><![CDATA[User Discipline]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_genopts" version_id="20" version_string="1.2.0"><![CDATA[General Options]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_options" version_id="20" version_string="1.2.0"><![CDATA[Options]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_profilespam" version_id="3" version_string="1.0.3"><![CDATA[Profile Spam Finder]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_spam" version_id="20" version_string="1.2.0"><![CDATA[Spam Tools]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_spamlogs" version_id="21" version_string="1.2.1"><![CDATA[Registration Logs]]></phrase>
+    <phrase title="admin_navigation_EWRutiles_spamopts" version_id="20" version_string="1.2.0"><![CDATA[Spam Management]]></phrase>
+    <phrase title="banned_ips_hint" version_id="21" version_string="1.2.1"><![CDATA[IP Address will be added to the built in Banned IPs list.]]></phrase>
+    <phrase title="botscout_email" version_id="20" version_string="1.2.0"><![CDATA[Your email address was found on the <a href="http://www.botscout.com/search.htm?stype=q&sterm={email}">BotScout</a> database and has been rejected.]]></phrase>
+    <phrase title="botscout_failure" version_id="3" version_string="1.0.3"><![CDATA[Failed to connect to the BotScout database. Please try again later.]]></phrase>
+    <phrase title="botscout_ip" version_id="20" version_string="1.2.0"><![CDATA[Your ip address was found on the <a href="http://www.botscout.com/search.htm?stype=q&sterm={ip}">BotScout</a> database and has been rejected.]]></phrase>
+    <phrase title="botscout_username" version_id="20" version_string="1.2.0"><![CDATA[Your username was found on the <a href="http://www.botscout.com/search.htm?stype=q&sterm={username}">BotScout</a> database and has been rejected.]]></phrase>
+    <phrase title="change_username_limit_hint" version_id="21" version_string="1.2.1"><![CDATA[You may only change your username once every {limit} days.]]></phrase>
+    <phrase title="change_username_limit_next" version_id="21" version_string="1.2.1"><![CDATA[You will be able to change your username again on {date} at {time}.]]></phrase>
+    <phrase title="clear_registration_log" version_id="21" version_string="1.2.1"><![CDATA[Clear Registration Log]]></phrase>
+    <phrase title="cron_entry_EWRutiles_cleanUpDaily" version_id="4" version_string="1.0.4"><![CDATA[XenUtiles: Daily Clean Up]]></phrase>
+    <phrase title="cron_entry_EWRutiles_sitemap" version_id="4" version_string="1.0.4"><![CDATA[XenUtiles: Rebuild Sitemap]]></phrase>
+    <phrase title="downvotes" version_id="13" version_string="1.1.3"><![CDATA[Down-votes]]></phrase>
+    <phrase title="downvote_thread" version_id="13" version_string="1.1.3"><![CDATA[Down-vote Thread]]></phrase>
+    <phrase title="downvote_thread_deleted" version_id="13" version_string="1.1.3"><![CDATA[[QUOTE][CENTER][SIZE=4]This thread has been down-voted by your fellow community members.[/SIZE][/CENTER]
+
+[CENTER][B][SIZE=6]It has now been locked/moved/moderated/deleted...[/SIZE][/B][/CENTER]
+
+[CENTER][SIZE=4]A moderator may chose to re-open this thread in the future; but you shouldn't count on it.[/SIZE][/CENTER][/QUOTE]]]></phrase>
+    <phrase title="downvote_thread_hint" version_id="13" version_string="1.1.3"><![CDATA[Threads that recieve a total of {votes} down-votes within a {hours}-hour time period will automatically get {action}.]]></phrase>
+    <phrase title="downvote_thread_none" version_id="13" version_string="1.1.3"><![CDATA[This has yet to receive any down-votes, or it's existing down-votes have expired.]]></phrase>
+    <phrase title="empty_error_log" version_id="12" version_string="1.1.2"><![CDATA[Empty Error Log]]></phrase>
+    <phrase title="ewrutiles_admin_email_confirmation_body_html" version_id="4" version_string="1.0.4"><![CDATA[<p>This is your daily summary of unconfirmed accounts on {board_title}.</p>
+
+<p>The following users have been deleted:<br />
+{usersEnd}</p>
+
+<p>The following users have been emailed; they have {daysTwo} days left:<br />
+{usersTwo}</p>
+
+<p>The following users have been emailed; they have {daysOne} days left:<br />
+{usersOne}</p>
+
+<p>The following users are also unconfirmed, but have not been emailed:<br />
+{usersNon}</p>]]></phrase>
+    <phrase title="ewrutiles_admin_email_confirmation_body_text" version_id="4" version_string="1.0.4"><![CDATA[This is your daily summary of unconfirmed accounts on {board_title}.
+
+The following users have been deleted:
+{usersEnd}
+
+The following users have been emailed; they have {daysTwo} days left:
+{usersTwo}
+
+The following users have been emailed; they have {daysOne} days left:
+{usersOne}
+
+The following users are also unconfirmed, but have not been emailed:
+{usersNon}]]></phrase>
+    <phrase title="ewrutiles_user_email_confirmation_body_html" version_id="4" version_string="1.0.4"><![CDATA[<p>{username},</p>
+
+<p>It has been {days} days since you registered your account at {board_title}.<br />
+If you do not confirm your account within the next {left} days, it will automatically be deleted.</p>
+
+<p>In order to complete your registration, you need confirm your account by following the page below.</p>
+
+<p><a href="{confirm_link}">{confirm_link}</a></p>
+
+<p>Thanks for registering,<br />
+{board_title}</p>]]></phrase>
+    <phrase title="ewrutiles_user_email_confirmation_body_text" version_id="4" version_string="1.0.4"><![CDATA[{username},
+
+It has been {days} days since you registered your account at {board_title}.
+If you do not confirm your account within the next {left} days, it will automatically be deleted.
+
+In order to complete your registration, you need confirm your account by following the page below.
+
+{confirm_link}
+
+Thanks for registering,
+{board_title}]]></phrase>
+    <phrase title="fspamlist_email" version_id="4" version_string="1.0.4"><![CDATA[Your email address was found on the <a href="http://www.fspamlist.com/">FSpamList</a> database and has been rejected.]]></phrase>
+    <phrase title="fspamlist_failure" version_id="4" version_string="1.0.4"><![CDATA[Failed to connect to the FSpamList database. Please try again later.]]></phrase>
+    <phrase title="fspamlist_ip" version_id="4" version_string="1.0.4"><![CDATA[Your ip address was found on the <a href="http://www.fspamlist.com/">FSpamList</a> database and has been rejected.]]></phrase>
+    <phrase title="fspamlist_username" version_id="4" version_string="1.0.4"><![CDATA[Your username was found on the <a href="http://www.fspamlist.com/">FSpamList</a> database and has been rejected.]]></phrase>
+    <phrase title="moderate_threads" version_id="13" version_string="1.1.3"><![CDATA[Moderate Threads]]></phrase>
+    <phrase title="news_feed_username_change_admin" version_id="21" version_string="1.2.1"><![CDATA[{username} had their username changed from {old} to {new}.]]></phrase>
+    <phrase title="news_feed_username_change_self" version_id="21" version_string="1.2.1"><![CDATA[{username} changed their username from {old} to {new}.]]></phrase>
+    <phrase title="notice" version_id="14" version_string="1.1.4"><![CDATA[NOTICE]]></phrase>
+    <phrase title="option_EWRutiles_botscout_apikey" version_id="3" version_string="1.0.3"><![CDATA[BotScout API Key]]></phrase>
+    <phrase title="option_EWRutiles_botscout_apikey_explain" version_id="20" version_string="1.2.0"><![CDATA[An <a href="http://spambusted.com/signup.php">API Key</a> is required to query any and all functions to this database.]]></phrase>
+    <phrase title="option_EWRutiles_botscout_checks" version_id="20" version_string="1.2.0"><![CDATA[BotScout Heuristics]]></phrase>
+    <phrase title="option_EWRutiles_botscout_checks_explain" version_id="20" version_string="1.2.0"><![CDATA[]]></phrase>
+    <phrase title="option_EWRutiles_botscout_enable" version_id="20" version_string="1.2.0"><![CDATA[Enable BOTSCOUT.COM for Registration Checking]]></phrase>
+    <phrase title="option_EWRutiles_botscout_enable_explain" version_id="20" version_string="1.2.0"><![CDATA[During registration, a user's information will be challenged at <a href="http://www.botscout.com/">botscout.com</a>.]]></phrase>
+    <phrase title="option_EWRutiles_botscout_failure" version_id="20" version_string="1.2.0"><![CDATA[Validate Registration on DB Failure]]></phrase>
+    <phrase title="option_EWRutiles_botscout_failure_explain" version_id="20" version_string="1.2.0"><![CDATA[]]></phrase>
+    <phrase title="option_EWRutiles_botscout_username" version_id="20" version_string="1.2.0"><![CDATA[Enable the Challenging of Usernames]]></phrase>
+    <phrase title="option_EWRutiles_botscout_username_explain" version_id="20" version_string="1.2.0"><![CDATA[]]></phrase>
+    <phrase title="option_EWRutiles_downvote_action" version_id="20" version_string="1.2.0"><![CDATA[Down-vote Action]]></phrase>
+    <phrase title="option_EWRutiles_downvote_action_explain" version_id="20" version_string="1.2.0"><![CDATA[The action to take when a thread receives the required number of unexpired down-votes.]]></phrase>
+    <phrase title="option_EWRutiles_downvote_disable" version_id="20" version_string="1.2.0"><![CDATA[Disabled down-vote Forums]]></phrase>
+    <phrase title="option_EWRutiles_downvote_disable_explain" version_id="20" version_string="1.2.0"><![CDATA[Down-votes will NOT be available for these forums. (unspecify to disable)]]></phrase>
+    <phrase title="option_EWRutiles_downvote_expiration" version_id="20" version_string="1.2.0"><![CDATA[Down-vote Expiration]]></phrase>
+    <phrase title="option_EWRutiles_downvote_expiration_explain" version_id="20" version_string="1.2.0"><![CDATA[The length of time before a down-vote expires (in hours).]]></phrase>
+    <phrase title="option_EWRutiles_downvote_requirement" version_id="20" version_string="1.2.0"><![CDATA[Down-vote Requirement]]></phrase>
+    <phrase title="option_EWRutiles_downvote_requirement_explain" version_id="20" version_string="1.2.0"><![CDATA[This is the number of down-votes required for a thread to get affected.]]></phrase>
+    <phrase title="option_EWRutiles_downvote_user" version_id="20" version_string="1.2.0"><![CDATA[Down-vote Lock User]]></phrase>
+    <phrase title="option_EWRutiles_downvote_user_explain" version_id="20" version_string="1.2.0"><![CDATA[User ID of the user who will post notifying of a locked down-voted thread. (0 to disable)]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_apikey" version_id="20" version_string="1.2.0"><![CDATA[FSpamList API Key]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_apikey_explain" version_id="20" version_string="1.2.0"><![CDATA[An <a href="http://fspamlist.com/index.php?c=register">API Key</a> is required to query any and all functions to this database.]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_checks" version_id="20" version_string="1.2.0"><![CDATA[FSpamList Heuristics]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_checks_explain" version_id="20" version_string="1.2.0"><![CDATA[]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_enable" version_id="20" version_string="1.2.0"><![CDATA[Enable FSPAMLIST.COM for Registration Checking]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_enable_explain" version_id="20" version_string="1.2.0"><![CDATA[During registration, a user's information will be challenged at <a href="http://www.fspamlist.com/">fspamlist.com</a>.]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_failure" version_id="20" version_string="1.2.0"><![CDATA[Validate Registration on DB Failure]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_failure_explain" version_id="20" version_string="1.2.0"><![CDATA[]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_username" version_id="20" version_string="1.2.0"><![CDATA[Enable the Challenging of Usernames]]></phrase>
+    <phrase title="option_EWRutiles_fspamlist_username_explain" version_id="20" version_string="1.2.0"><![CDATA[]]></phrase>
+    <phrase title="option_EWRutiles_registration_captcha" version_id="21" version_string="1.2.1"><![CDATA[Check CAPTCHA before spam management...]]></phrase>
+    <phrase title="option_EWRutiles_registration_captcha_explain" version_id="21" version_string="1.2.1"><![CDATA[If enabled, you MUST comment out lines 164-167 from XenForo_ControllerPublic_Register.<br />
+If you do not do this first; users will not be able to register! <b>USE AT YOUR OWN RISK!</b>]]></phrase>
+    <phrase title="option_EWRutiles_registration_immediate" version_id="20" version_string="1.2.0"><![CDATA[Run Registration Challenge System in Immediate Mode]]></phrase>
+    <phrase title="option_EWRutiles_registration_immediate_explain" version_id="20" version_string="1.2.0"><![CDATA[By default, in immediate mode, the challenge system will reject a registration the moment a single database reports it as a spammer. If disabled, the challenge system will wait to receive responses from every enabled spammer database; this is purely for logging purposes.]]></phrase>
+    <phrase title="option_EWRutiles_registration_timefield" version_id="21" version_string="1.2.1"><![CDATA[Registration Time Field]]></phrase>
+    <phrase title="option_EWRutiles_registration_timefield_explain" version_id="21" version_string="1.2.1"><![CDATA[The name of the "time field" on the registration form. Periodically changing this field may help fight against the smarter spambots out there. Keep this field simple; alpha-numeric only.]]></phrase>
+    <phrase title="option_EWRutiles_registration_timemax" version_id="21" version_string="1.2.1"><![CDATA[Registration Time Maximum]]></phrase>
+    <phrase title="option_EWRutiles_registration_timemax_explain" version_id="21" version_string="1.2.1"><![CDATA[If the registration form is filled and submitted slower than the defined seconds; chances are the spam bot modified the form field to circumvent the minimum time check.]]></phrase>
+    <phrase title="option_EWRutiles_registration_timemin" version_id="21" version_string="1.2.1"><![CDATA[Registration Time Minimum]]></phrase>
+    <phrase title="option_EWRutiles_registration_timemin_explain" version_id="21" version_string="1.2.1"><![CDATA[If the registration form is filled and submitted quicker than the defined seconds; the registration will automatically be rejected as a spam-bot. (0 to disable)]]></phrase>
+    <phrase title="option_EWRutiles_sitemap_limit" version_id="1" version_string="1.0.1"><![CDATA[Sitemap Urls per Split]]></phrase>
+    <phrase title="option_EWRutiles_sitemap_limit_explain" version_id="1" version_string="1.0.1"><![CDATA[Sitemap indexes will be split into separate files based on this limit.]]></phrase>
+    <phrase title="option_EWRutiles_sitemap_options" version_id="1" version_string="1.0.1"><![CDATA[Sitemap Build Source]]></phrase>
+    <phrase title="option_EWRutiles_sitemap_options_explain" version_id="1" version_string="1.0.1"><![CDATA[]]></phrase>
+    <phrase title="option_EWRutiles_sitemap_ping" version_id="1" version_string="1.0.1"><![CDATA[Sitemap Search Engines]]></phrase>
+    <phrase title="option_EWRutiles_sitemap_ping_explain" version_id="1" version_string="1.0.1"><![CDATA[When a sitemap is generated, it will ping the selected search engines.]]></phrase>
+    <phrase title="option_EWRutiles_softdelete_cutoff" version_id="4" version_string="1.0.4"><![CDATA[Soft-Delete Cutoff]]></phrase>
+    <phrase title="option_EWRutiles_softdelete_cutoff_explain" version_id="4" version_string="1.0.4"><![CDATA[Soft-deleted content will automatically be hard-deleted after this many days. (0 to disable)]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_apikey" version_id="20" version_string="1.2.0"><![CDATA[StopForumSpam API Key]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_apikey_explain" version_id="20" version_string="1.2.0"><![CDATA[An <a href="http://www.stopforumspam.com/signup">API Key</a> is required to re-confirm a challenge to the database. Remove to disable.]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_checks" version_id="20" version_string="1.2.0"><![CDATA[StopForumSpam Heuristics]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_checks_explain" version_id="20" version_string="1.2.0"><![CDATA[How many positive matches are required before it rejects a registration?]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_enable" version_id="20" version_string="1.2.0"><![CDATA[Enable STOPFORUMSPAM.COM for Registration Checking]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_enable_explain" version_id="20" version_string="1.2.0"><![CDATA[During registration, a user's information will be challenged at <a href="http://www.stopforumspam.com/">stopforumspam.com</a>.]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_failure" version_id="20" version_string="1.2.0"><![CDATA[Validate Registration on DB Failure]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_failure_explain" version_id="20" version_string="1.2.0"><![CDATA[Should XenForo fail to connect to the database, a user will automatically be approved for registration. Otherwise they will be rejected and told to try registering again later.]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_username" version_id="20" version_string="1.2.0"><![CDATA[Enable the Challenging of Usernames]]></phrase>
+    <phrase title="option_EWRutiles_stopforumspam_username_explain" version_id="20" version_string="1.2.0"><![CDATA[If you disable the challenging of usernames, only emails and IP addresses will be challenged. Advanced warning however: make sure you do not use the "Low" heuristic option, as it would mathematically be impossible to match 3 challenges; since only 2 challenges will be issued.]]></phrase>
+    <phrase title="option_EWRutiles_unconfirmed_cutoff" version_id="4" version_string="1.0.4"><![CDATA[Unconfirmed Cutoff]]></phrase>
+    <phrase title="option_EWRutiles_unconfirmed_cutoff_explain" version_id="4" version_string="1.0.4"><![CDATA[How many days to give a new user to confirm their email address before automatically deleting their account. Periodic emails will automatically be sent out. (0 to disable)]]></phrase>
+    <phrase title="option_EWRutiles_unconfirmed_email" version_id="21" version_string="1.2.1"><![CDATA[Email Reminders to Unconfirmed Users]]></phrase>
+    <phrase title="option_EWRutiles_unconfirmed_email_explain" version_id="21" version_string="1.2.1"><![CDATA[Ideally, you would want to email users remind them to confirm their registrations.]]></phrase>
+    <phrase title="option_EWRutiles_username_change" version_id="21" version_string="1.2.1"><![CDATA[Allow Users to Change their Usernames]]></phrase>
+    <phrase title="option_EWRutiles_username_change_explain" version_id="21" version_string="1.2.1"><![CDATA[A usergroup permission is required to be set to define how often a user may use this action.]]></phrase>
+    <phrase title="option_group_EWRutiles" version_id="1" version_string="1.0.1"><![CDATA[[8wayRun.Com] XenUtiles (Tools)]]></phrase>
+    <phrase title="option_group_EWRutiles_description" version_id="1" version_string="1.0.1"><![CDATA[[8wayRun.Com] XenUtiles (Tools)]]></phrase>
+    <phrase title="option_group_EWRutiles_Spam" version_id="20" version_string="1.2.0"><![CDATA[[8wayRun.Com] XenUtiles (Tools) - Spam Management]]></phrase>
+    <phrase title="option_group_EWRutiles_Spam_description" version_id="20" version_string="1.2.0"><![CDATA[[8wayRun.Com] XenUtiles (Tools) - Spam Management]]></phrase>
+    <phrase title="permission_EWRutiles_canAdmin" version_id="13" version_string="1.1.3"><![CDATA[Can Administrate Down-votes]]></phrase>
+    <phrase title="permission_EWRutiles_canReview" version_id="13" version_string="1.1.3"><![CDATA[Can Review Down-votes]]></phrase>
+    <phrase title="permission_EWRutiles_canUsername" version_id="21" version_string="1.2.1"><![CDATA[Time limit on changing username (days)]]></phrase>
+    <phrase title="permission_EWRutiles_canVote" version_id="13" version_string="1.1.3"><![CDATA[Can Down-vote Threads]]></phrase>
+    <phrase title="permission_group_EWRutiles" version_id="13" version_string="1.1.3"><![CDATA[[8wayRun.Com] XenUtiles (Tools)]]></phrase>
+    <phrase title="permission_interface_EWRutiles" version_id="13" version_string="1.1.3"><![CDATA[[8wayRun.Com] XenUtiles (Tools)]]></phrase>
+    <phrase title="posted_on_xs_profile_on_y" version_id="3" version_string="1.0.3"><![CDATA[Posted on {profile}'s profile on {date}]]></phrase>
+    <phrase title="profile_spam_finder" version_id="3" version_string="1.0.3"><![CDATA[Profile Spam Finder]]></phrase>
+    <phrase title="registration_logs" version_id="3" version_string="1.0.3"><![CDATA[Registration Logs]]></phrase>
+    <phrase title="registration_rejected_time" version_id="21" version_string="1.2.1"><![CDATA[Your registration was rejected due to a security error; press back, refresh the page and try again.]]></phrase>
+    <phrase title="sitemap_build_forums" version_id="1" version_string="1.0.1"><![CDATA[Build Forums]]></phrase>
+    <phrase title="sitemap_build_media" version_id="1" version_string="1.0.1"><![CDATA[Build Media]]></phrase>
+    <phrase title="sitemap_build_media_hint" version_id="1" version_string="1.0.1"><![CDATA[Requires existing installation of <a href="http://xenforo.com/community/threads/8092/">[8wayRun.Com] XenMedio (Media)</a>]]></phrase>
+    <phrase title="sitemap_build_members" version_id="1" version_string="1.0.1"><![CDATA[Build Members]]></phrase>
+    <phrase title="sitemap_build_threads" version_id="1" version_string="1.0.1"><![CDATA[Build Threads]]></phrase>
+    <phrase title="sitemap_build_wiki" version_id="1" version_string="1.0.1"><![CDATA[Build Wiki]]></phrase>
+    <phrase title="sitemap_build_wiki_hint" version_id="1" version_string="1.0.1"><![CDATA[Requires existing installation of <a href="http://xenforo.com/community/threads/7589/">[8wayRun.Com] XenCarta (Wiki)</a>]]></phrase>
+    <phrase title="spamlog_submit_missing" version_id="20" version_string="1.2.0"><![CDATA[This information was not matched in existing spammer databases. If you submit this field, you are confirming this information as accurate and a real spammer. It will be marked as a spammer in the selected databases.]]></phrase>
+    <phrase title="staff_list" version_id="21" version_string="1.2.1"><![CDATA[Staff List]]></phrase>
+    <phrase title="stopforumspam" version_id="20" version_string="1.2.0"><![CDATA[StopForumSpam.com]]></phrase>
+    <phrase title="stopforumspam_email" version_id="3" version_string="1.0.3"><![CDATA[Your email address was found on the <a href="http://www.stopforumspam.com/search/?q={email}">StopForumSpam</a> database and has been rejected.]]></phrase>
+    <phrase title="stopforumspam_failure" version_id="3" version_string="1.0.3"><![CDATA[Failed to connect to the StopForumSpam database. Please try again later.]]></phrase>
+    <phrase title="stopforumspam_ip" version_id="3" version_string="1.0.3"><![CDATA[Your ip address was found on the <a href="http://www.stopforumspam.com/ipcheck/{ip}">StopForumSpam</a> database and has been rejected.]]></phrase>
+    <phrase title="stopforumspam_username" version_id="3" version_string="1.0.3"><![CDATA[Your username was found on the <a href="http://www.stopforumspam.com/search/?q={username}">StopForumSpam</a> database and has been rejected.]]></phrase>
+    <phrase title="submit_spammer" version_id="20" version_string="1.2.0"><![CDATA[Submit Spammer]]></phrase>
+    <phrase title="submit_to_databases" version_id="20" version_string="1.2.0"><![CDATA[Submit to Databases]]></phrase>
+    <phrase title="sure_you_want_to_clear_registration_log" version_id="21" version_string="1.2.1"><![CDATA[Are you sure you want to clear the registration log?]]></phrase>
+    <phrase title="username_changed_from_x_to_y" version_id="21" version_string="1.2.1"><![CDATA[Username changed from {old} to {new}.]]></phrase>
+    <phrase title="view_downvotes" version_id="13" version_string="1.1.3"><![CDATA[View Down-votes]]></phrase>
+    <phrase title="view_dying_threads" version_id="20" version_string="1.2.0"><![CDATA[View Dying Threads]]></phrase>
+    <phrase title="your_username_cannot_be_changed_while_your_account_does_not_have_password" version_id="21" version_string="1.2.1"><![CDATA[Your username cannot be changed while your account does not have a password.]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="admin">
+      <prefix original_prefix="utiles" class="EWRutiles_Route_Utiles" build_link="data_only"/>
+    </route_type>
+    <route_type type="public">
+      <prefix original_prefix="sitemap" class="EWRutiles_Route_Sitemap" build_link="none"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties/>
+  <templates>
+    <template title="EWRutiles.css" version_id="22" version_string="1.2.2"><![CDATA[.downVotes { float: right; }
+
+.voteList .primaryContent .users { text-align: right; float: right; margin-left: 10px; }
+.voteList .primaryContent .avatar img { width: 24px; height: 24px; }
+
+.modList { text-align: right; }
+
+.staffList .staffActivity{ float: right; padding: 10px; font-size: 11px; }
+.staffList .staffUser { position: relative; display: inline-block; width: 180px; }
+.staffList .staffUser .userInfo { margin-left: 35px; padding: 10px; }
+.staffList .avatar { float: left; }
+.staffList .avatar img { height: 30px; width: 30px; }
+.staffVerbose .staffUser { float: left; }
+.staffVerbose .contentInfo { margin: 0px 0px 0px 200px; padding: 10px; border-bottom: 1px solid {xen:property primaryLighterStill}; }
+{xen:helper clearfix, '.staffList .staffVerbose'}
+
+.copyright { text-align: center; font-size: 11px; margin: 10px; }
+
+.bbCodeBlock.bbCodeNotice
+{
+	border-color: #990000 !important;
+}
+
+.bbCodeBlock.bbCodeNotice .attribution
+{
+	color: #EBEBEB !important;
+	background: #990000 url('{xen:property imagePath}/xenforo/gradients/category-23px-light.png') repeat-x top !important;
+	border-bottom: 1px solid #990000 !important;
+}
+
+.bbCodeBlock.bbCodeNotice .attribution b { font-size: 19px; }]]></template>
+    <template title="EWRutiles_AccountUsername" version_id="21" version_string="1.2.1"><![CDATA[<xen:title>{xen:phrase user_name}</xen:title>
+
+<xen:require css="account.css" />
+<xen:require css="EWRutiles.css" />
+
+<form method="post" class="xenForm AutoValidator" action="{xen:link 'account/username-save'}" data-redirect="true">
+	<xen:if is="{$hasPassword}">
+
+		<dl class="ctrlUnit">
+			<dt><label for="ctrl_username">{xen:phrase user_name}:</label></dt>
+			<dd>
+				<xen:if is="{$canChange}">
+					<input type="text" name="username" value="{$visitor.username}" id="ctrl_username" class="textCtrl" />
+					<xen:if is="{$perms.username} > 0">
+						<p class="explain">{xen:phrase change_username_limit_hint, 'limit={$perms.username}'}</p>
+					</xen:if>
+				<xen:else />
+					{$visitor.username}
+					<p class="explain">{xen:phrase change_username_limit_next, 'date={xen:date $nextChange}', 'time={xen:time $nextChange}'}</p>
+				</xen:if>
+			</dd>
+		</dl>
+
+		<xen:if is="{$canChange}">
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_password">{xen:phrase current_password}:</label></dt>
+				<dd>
+					<input type="password" name="password" value="" class="textCtrl OptOut" id="ctrl_password" />
+					<p class="explain">{xen:phrase you_must_enter_your_current_password_to_validate_this_request}</p>
+				</dd>
+			</dl>
+
+			<dl class="ctrlUnit submitUnit">
+				<dt></dt>
+				<dd><input type="submit" name="save" value="{xen:phrase save}" accesskey="s" class="button primary" /></dd>
+			</dl>
+
+			<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+		</xen:if>
+
+	<xen:else />
+
+		<dl class="ctrlUnit">
+			<dt>{xen:phrase user_name}:</dt>
+			<dd>
+				{$visitor.username}
+				<p class="explain">{xen:phrase your_username_cannot_be_changed_while_your_account_does_not_have_password} <a href="{xen:link account/request-password}" class="OverlayTrigger">{xen:phrase request_password_be_emailed_to_you}</a></p>
+			</dd>
+		</dl>
+
+	</xen:if>
+
+	<h3 class="sectionHeader">{xen:phrase history}</h3>
+
+	<xen:foreach loop="$history" value="$change">
+		<dl class="ctrlUnit">
+			<dt><span class="muted">{xen:datetime $change.username_date}</span></dt>
+			<dd>
+				{xen:phrase username_changed_from_x_to_y,
+					'old=<b>{$change.username_old}</b>',
+					'new=<b>{$change.username_new}</b>'}
+			</dd>
+		</dl>
+	</xen:foreach>
+</form>
+
+<xen:include template="EWRutiles_Footer" />]]></template>
+    <template title="EWRutiles_AccountUsername_Wrapper" version_id="21" version_string="1.2.1"><![CDATA[<li><a
+	class="{xen:if "{$selectedKey} == 'account/username'", 'secondaryContent', 'primaryContent'}"
+	href="{xen:link account/username}">{xen:phrase user_name}</a></li>]]></template>
+    <template title="EWRutiles_BbCode_Notice" version_id="14" version_string="1.1.4"><![CDATA[<xen:require css="EWRutiles.css" />
+
+<div class="bbCodeBlock bbCodeQuote bbCodeNotice">
+	<aside>
+		<div class="attribution type">
+			<b>{xen:phrase notice}</b><xen:if is="{$notice}">: {$notice}</xen:if>
+		</div>
+		<blockquote>{xen:raw $content}</blockquote>
+	</aside>
+</div>]]></template>
+    <template title="EWRutiles_DownVote" version_id="20" version_string="1.2.0"><![CDATA[<xen:title>{xen:phrase downvote_thread}: {$thread.title}</xen:title>
+
+<xen:navigation>
+	<xen:breadcrumb source="$nodeBreadCrumbs" />
+	<xen:breadcrumb href="{xen:link full:threads, $thread}">{$thread.title}</xen:breadcrumb>
+</xen:navigation>
+
+<xen:require css="EWRutiles.css" />
+
+<form action="{xen:link 'threads/downvote', $thread}" method="post" class="xenForm formOverlay">
+
+	<dl class="ctrlUnit">
+		<dt>{xen:phrase downvote_thread}</dt>
+		<dd>
+			<a href="{xen:link threads, $thread}">{$thread.title}</a>
+			<p class="explain">{xen:phrase downvote_thread_hint,
+				'votes={$xenOptions.EWRutiles_downvote_requirement}',
+				'hours={$xenOptions.EWRutiles_downvote_expiration}',
+				'action=<b>{$action}</b>'}</p>
+		</dd>
+	</dl>
+
+	<dl class="ctrlUnit submitUnit">
+		<dt></dt>
+		<dd><input type="submit" value="{xen:phrase downvote_thread}" class="button primary" /></dd>
+	</dl>
+
+	<input type="hidden" name="vote_id" value="{$downvote.vote_id}" />
+	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+</form>]]></template>
+    <template title="EWRutiles_DownVoteControl" version_id="20" version_string="1.2.0"><![CDATA[<xen:require css="EWRutiles.css" />
+
+<xen:if is="{$perms.review}">
+	<div class="Popup linkGroup downVotes">
+		<a rel="Menu">{xen:phrase downvotes} ({$downVotes}/{$reqVotes})</a>
+
+		<div class="Menu">
+			<div class="primaryContent menuHeader"><h3>{xen:phrase downvotes}</h3></div>
+			<ul class="secondaryContent blockLinksList">
+				<li><a href="{xen:link 'threads/downvote', $thread}" class="OverlayTrigger" data-cacheOverlay="false">{xen:phrase downvote_thread}</a></li>
+				<li><a href="{xen:link 'threads/downvotes', $thread}" class="OverlayTrigger" data-cacheOverlay="false">{xen:phrase view_downvotes}</a></li>
+				<li><a href="{xen:link 'misc/downvotes'}">{xen:phrase view_dying_threads}</a></li>
+			</ul>
+		</div>
+	</div>
+<xen:else />
+	<div class="linkGroup downVotes">
+		<a href="{xen:link 'threads/downvote', $thread}" class="OverlayTrigger" data-cacheOverlay="false">{xen:phrase downvote_thread}</a>
+	</div>
+</xen:if>]]></template>
+    <template title="EWRutiles_DownVotes" version_id="20" version_string="1.2.0"><![CDATA[<xen:title>{xen:phrase downvotes}</xen:title>
+<xen:h1>{xen:phrase downvotes}</xen:h1>
+
+<xen:require css="EWRutiles.css" />
+<xen:require css="discussion_list.css" />
+
+<xen:pagenav link="misc/downvotes" page="{$start}" perpage="{$stop}" total="{$count}" />
+
+<div class="sectionMain voteList">
+	<div class="subHeading">{xen:phrase downvotes}</div>
+
+	<xen:foreach loop="$threads" value="$thread">
+		<div class="primaryContent discussionListItem">
+			<div class="users">
+				<xen:foreach loop="$thread.users" value="$user">
+					<xen:avatar user="$users.{$user}" size="s" img="true" class="Tooltip" text="{$users.{$user}.username}" title="{$users.{$user}.username}" />
+				</xen:foreach>
+			</div>
+
+			<div class="thread">
+				<xen:if hascontent="true">
+					<div class="iconKey">
+					<xen:contentcheck>
+						<xen:if is="{$thread.isModerated}"><span class="moderated" title="{xen:phrase moderated}">{xen:phrase moderated}</span></xen:if>
+						<xen:if is="!{$thread.discussion_open}"><span class="locked" title="{xen:phrase locked}">{xen:phrase locked}</span></xen:if>
+						<xen:if is="{$thread.sticky}"><span class="sticky" title="{xen:phrase sticky}">{xen:phrase sticky}</span></xen:if>
+						<xen:if is="{$thread.isRedirect}"><span class="redirect" title="{xen:phrase redirect}">{xen:phrase redirect}</span></xen:if>
+					</xen:contentcheck>
+					</div>
+				</xen:if>
+
+				<b><a href="{xen:link threads, $thread}">{$thread.title}</a></b><br />
+				&nbsp; <b>({$thread.count}/{$xenOptions.EWRutiles_downvote_requirement})</b> &nbsp;
+				<span class="muted">{xen:datetime $thread.vote_date}</span>
+			</div>
+		</div>
+	</xen:foreach>
+</div>
+
+<xen:pagenav link="misc/downvotes" page="{$start}" perpage="{$stop}" total="{$count}" />
+
+<xen:include template="EWRutiles_Footer" />]]></template>
+    <template title="EWRutiles_Footer" version_id="20" version_string="1.2.0"><![CDATA[<div class="utilesCopy copyright muted">
+	<a href="http://xenforo.com/community/resources/104/">XenUtiles</a>
+	&copy; Jason Axelrod from <a href="http://8wayrun.com/">8WAYRUN.COM</a>
+</div>]]></template>
+    <template title="EWRutiles_ForumModerators" version_id="21" version_string="1.2.1"><![CDATA[<xen:if is="{$modCount}">
+	<xen:require css="EWRutiles.css" />
+	<div class="section modList">
+		<b>{xen:phrase moderators}:</b>
+
+		<xen:foreach loop="$moderators" value="$moderator" i="$i">
+			<a href="{xen:link members, $moderator}" class="username">{$moderator.username}</a><xen:if is="{$i} < {$modCount}">,</xen:if>
+		</xen:foreach>
+	</div>
+</xen:if>]]></template>
+    <template title="EWRutiles_StaffList" version_id="21" version_string="1.2.1"><![CDATA[<xen:title>{xen:phrase staff_list}</xen:title>
+
+<xen:require css="EWRutiles.css" />
+
+<div class="baseHtml">
+	<div class="subHeading">{xen:phrase administrators}</div>
+
+	<div class="secondaryContent staffList">
+	<xen:foreach loop="$administrators" value="$user">
+		<xen:include template="EWRutiles_StaffList_Bit" />
+	</xen:foreach>
+	</div>
+
+	<div class="subHeading">{xen:phrase super_moderators}</div>
+
+	<div class="secondaryContent staffList">
+	<xen:foreach loop="$superModerators" value="$user">
+		<xen:include template="EWRutiles_StaffList_Bit" />
+	</xen:foreach>
+	</div>
+
+	<div class="subHeading">{xen:phrase content_moderators}</div>
+
+	<div class="secondaryContent staffList">
+	<xen:foreach loop="$contentModerators" value="$user">
+		<xen:include template="EWRutiles_StaffList_Bit_Verbose" />
+	</xen:foreach>
+	</div>
+</div>
+
+<xen:include template="EWRutiles_Footer" />]]></template>
+    <template title="EWRutiles_StaffList_Bit" version_id="21" version_string="1.2.1"><![CDATA[<div class="staffUser">
+	<xen:avatar user="$user" size="s" img="true" />
+	<div class="userInfo"><xen:username user="$user" rich="true" class="Tooltip" title="{xen:datetime $user.last_activity}" /></div>
+</div>]]></template>
+    <template title="EWRutiles_StaffList_Bit_Verbose" version_id="21" version_string="1.2.1"><![CDATA[<div class="staffVerbose">
+	<div class="staffActivity">
+		<span class="muted">{xen:datetime $user.last_activity}</span>
+	</div>
+
+	<div class="staffUser">
+		<xen:avatar user="$user" size="s" img="true" />
+		<div class="userInfo"><xen:username user="$user" rich="true" /></div>
+	</div>
+
+	<xen:if is="{$user.content}">
+		<ul class="contentInfo">
+			<xen:foreach loop="$user.content" value="$content">
+				<li><a href="{xen:link forums, $content}">{$content.title}</a></li>
+			</xen:foreach>
+		</ul>
+	</xen:if>
+</div>]]></template>
+    <template title="EWRutiles_StaffList_Help" version_id="21" version_string="1.2.1"><![CDATA[<li><a href="{xen:link help/staff-list}" class="{xen:if "{$selected} == 'staffList'", 'secondaryContent', 'primaryContent'}">{xen:phrase staff_list}</a></li>]]></template>
+    <template title="EWRutiles_StaffList_NavTabs" version_id="21" version_string="1.2.1"><![CDATA[<li><a href="{xen:link help/staff-list}">{xen:phrase staff_list}</a></li>]]></template>
+    <template title="EWRutiles_ViewVotes" version_id="20" version_string="1.2.0"><![CDATA[<xen:title>{xen:phrase downvotes}: {$thread.title}</xen:title>
+<xen:h1>{xen:phrase downvotes}: {$thread.title}</xen:h1>
+
+<div class="section">
+	<div class="subHeading">{xen:phrase downvote_thread_hint,
+		'votes={$xenOptions.EWRutiles_downvote_requirement}',
+		'hours={$xenOptions.EWRutiles_downvote_expiration}',
+		'action=<b>{$action}</b>'}</div>
+
+	<xen:if is="{$downvotes}">
+		<ol class="overlayScroll">
+		<xen:foreach loop="$downvotes" value="$user">
+			<xen:include template="member_list_item">
+				<xen:set var="$extraTemplate">{xen:datetime $user.vote_date}</xen:set>
+			</xen:include>
+		</xen:foreach>
+		</ol>
+	<xen:else />
+		<div class="primaryContent">
+			{xen:phrase downvote_thread_none}
+		</div>
+	</xen:if>
+
+	<div class="sectionFooter overlayOnly"><a class="button primary OverlayCloser">{xen:phrase close}</a></div>
+</div>]]></template>
+    <template title="news_feed_item_username_change_insert" version_id="21" version_string="1.2.1"><![CDATA[<h3 class="description">
+
+	<xen:if is="{$content.username_self}">
+	
+		{xen:phrase news_feed_username_change_self,
+			'username={xen:helper username, $user, 'primaryText'}',
+			'old=<b>{$content.username_old}</b>',
+			'new=<b>{$content.username_new}</b>'}
+	
+	<xen:else />
+	
+		{xen:phrase news_feed_username_change_admin,
+			'username={xen:helper username, $user, 'primaryText'}',
+			'old=<b>{$content.username_old}</b>',
+			'new=<b>{$content.username_new}</b>'}
+
+	</xen:if>
+
+</h3>
+]]></template>
+  </templates>
+  <bb_code_media_sites/>
+</addon>

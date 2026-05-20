@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+    <option option_id="Tag_Function_Open" edit_format="onoff" data_type="boolean" can_backup="1">
+        <default_value>1</default_value>
+        <edit_format_params></edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="14"/>
+    </option>
+    <option option_id="ads_disabled_for_group" edit_format="callback" data_type="array" can_backup="1" validation_class="\Tapatalk\Option\AdsDisabledForGroup" validation_method="verifyOption">
+        <default_value>[]</default_value>
+        <edit_format_params>\Tapatalk\Option\AdsDisabledForGroup::renderOption</edit_format_params>
+        <sub_options>*</sub_options>
+        <relation group_id="tapatalkOptions" display_order="5"/>
+    </option>
+    <option option_id="advanced_delete" edit_format="onoff" data_type="boolean" can_backup="1">
+        <default_value>1</default_value>
+        <edit_format_params></edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="13"/>
+    </option>
+    <option option_id="auto_approval_tp_user" edit_format="onoff" data_type="boolean" can_backup="1">
+        <default_value>1</default_value>
+        <edit_format_params></edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="3"/>
+    </option>
+    <option option_id="tapatalk_banner_control" edit_format="callback" data_type="string" can_backup="1">
+        <default_value></default_value>
+        <edit_format_params>\Tapatalk\Option\StringOption::renderOption</edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="1"/>
+    </option>
+    <option option_id="tapatalk_banner_update" edit_format="callback" data_type="unsigned_integer" can_backup="1">
+        <default_value>0</default_value>
+        <edit_format_params>\Tapatalk\Option\StringOption::renderOption</edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="1"/>
+    </option>
+    <option option_id="custom_tapatalkdetect" edit_format="callback" data_type="string" can_backup="1">
+        <default_value></default_value>
+        <edit_format_params>\Tapatalk\Option\StringOption::renderOption</edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="1"/>
+    </option>
+
+    <option option_id="hideForums" edit_format="callback" data_type="array" can_backup="1" validation_class="\Tapatalk\Option\ListForums" validation_method="verifyOption">
+        <default_value>[]</default_value>
+        <edit_format_params>\Tapatalk\Option\ListForums::renderOption</edit_format_params>
+        <sub_options>*</sub_options>
+        <relation group_id="tapatalkOptions" display_order="7"/>
+    </option>
+    <option option_id="push_slug" edit_format="callback" data_type="string" can_backup="1">
+        <default_value>a:0:{}</default_value>
+        <edit_format_params>\Tapatalk\Option\StringOption::renderOption</edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="1"/>
+    </option>
+    <option option_id="tapatalk_forum_id" edit_format="callback" data_type="string" can_backup="1">
+        <default_value></default_value>
+        <edit_format_params>\Tapatalk\Option\StringOption::renderOption</edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="1"/>
+    </option>
+    <option option_id="readonlyForums" edit_format="callback" data_type="array" can_backup="1" validation_class="\Tapatalk\Option\ListForums" validation_method="verifyOption">
+        <default_value>[]</default_value>
+        <edit_format_params>\Tapatalk\Option\ListForums::renderOption</edit_format_params>
+        <sub_options>*</sub_options>
+        <relation group_id="tapatalkOptions" display_order="8"/>
+    </option>
+    <option option_id="tapatalk_custom_replacement" edit_format="textbox" data_type="string" can_backup="1">
+        <default_value># For each sample blow, remove the '#' ahead to test
+            # More infor: http://support.tapatalk.com/threads/advanced-plugin-usage.17106/
+
+            # Sample 1, replace all string 'abc' in post content to 'xyz'
+            # '/abc/', 'xyz'
+
+            # Sample 2, replace [JAVA] BBCODE to [QUOTE] for better display in tapatalk
+            # '/\[java\](.*?)\[\/java\]/si', '[quote]$1[/quote]'
+        </default_value>
+        <edit_format_params>rows=2</edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="9"/>
+    </option>
+    <option option_id="tapatalk_push_notifications" edit_format="radio" data_type="unsigned_integer" can_backup="1">
+        <default_value>1</default_value>
+        <edit_format_params>0=Basic Message
+            1=Rich Message</edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="15"/>
+    </option>
+    <option option_id="tapatalk_reg_type" edit_format="radio" data_type="integer">
+        <default_value>0</default_value>
+        <edit_format_params>0=Yes
+            1=No</edit_format_params>
+        <relation group_id="tapatalkOptions" display_order="2"/>
+    </option>
+    <option option_id="tapatalk_reg_ug" edit_format="textbox" data_type="integer" can_backup="1">
+        <default_value>2</default_value>
+        <edit_format_params></edit_format_params>
+        <relation group_id="tapatalkOptions" display_order="4"/>
+    </option>
+    <option option_id="tapatalk_settings" edit_format="callback" data_type="string" can_backup="1">
+        <default_value>0</default_value>
+        <edit_format_params>\Tapatalk\Option\StringOption::renderOption</edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="1"/>
+    </option>
+    <!--<option option_id="tp_android_url" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="tapatalkBYOOptions" display_order="2"/>
+    </option>
+    <option option_id="tp_app_banner_msg" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="tapatalkBYOOptions" display_order="4"/>
+    </option>
+    <option option_id="tp_app_ios_id" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="tapatalkBYOOptions" display_order="1"/>
+    </option>-->
+    <option option_id="tp_directory" edit_format="textbox" data_type="string" can_backup="1">
+        <default_value>mobiquo</default_value>
+        <edit_format_params></edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="6"/>
+    </option>
+    <option option_id="tp_push_key" edit_format="textbox" data_type="string" can_backup="1">
+        <default_value></default_value>
+        <edit_format_params></edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="1"/>
+    </option>
+    <option option_id="deep_link_in_sub_emails" edit_format="radio" data_type="unsigned_integer" can_backup="1">
+        <default_value>1</default_value>
+        <edit_format_params>
+            2=Enable
+            1=Enable to Tapatalk users only
+            0=Disable
+        </edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="16"/>
+    </option>
+    <option option_id="TT_2fa_enabled" edit_format="radio" data_type="unsigned_integer" can_backup="1">
+        <default_value>1</default_value>
+        <edit_format_params>
+            1=Enforced
+            0=Bypass
+        </edit_format_params>
+        <sub_options></sub_options>
+        <relation group_id="tapatalkOptions" display_order="16"/>
+    </option>
+    <!--<option option_id="full_banner" edit_format="onoff" data_type="boolean" can_backup="1">-->
+        <!--<default_value>1</default_value>-->
+        <!--<edit_format_params></edit_format_params>-->
+        <!--<sub_options></sub_options>-->
+        <!--<relation group_id="tapatalkOptions" display_order="17"/>-->
+    <!--</option>-->
+    <!--<option option_id="google_indexing_enabled" edit_format="onoff" data_type="boolean" can_backup="1">-->
+        <!--<default_value>1</default_value>-->
+        <!--<edit_format_params></edit_format_params>-->
+        <!--<sub_options></sub_options>-->
+        <!--<relation group_id="tapatalkOptions" display_order="18"/>-->
+    <!--</option>-->
+    <!--<option option_id="facebook_indexing_enabled" edit_format="onoff" data_type="boolean" can_backup="1">-->
+        <!--<default_value>1</default_value>-->
+        <!--<edit_format_params></edit_format_params>-->
+        <!--<sub_options></sub_options>-->
+        <!--<relation group_id="tapatalkDeepLinkOptions" display_order="3"/>-->
+    <!--</option>-->
+    <!--<option option_id="twitter_indexing_enabled" edit_format="onoff" data_type="boolean" can_backup="1">-->
+        <!--<default_value>1</default_value>-->
+        <!--<edit_format_params></edit_format_params>-->
+        <!--<sub_options></sub_options>-->
+        <!--<relation group_id="tapatalkDeepLinkOptions" display_order="4"/>-->
+    <!--</option>-->
+</options>

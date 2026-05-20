@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="Attachments" widget_title="Attachments Slider" widget_desc="Displays a slider widget from the source forum" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 hours">
+  <listeners>
+    <listener description="EWRwidget_Attachments_controller" event_id="load_class_controller" execute_order="10" callback_class="EWRporta2_Widget_Listener_Attachments" callback_method="controller" active="1"/>
+  </listeners>
+  <options>
+    <option option_id="attachments_source" edit_format="callback" data_type="array" display_order="1">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Source Forums</title>
+      <explain><![CDATA[Only selected forums will be searched. (unspecify to select all)]]></explain>
+    </option>
+    <option option_id="attachments_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>40</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Limit</title>
+      <explain><![CDATA[The maximum number of attachments to load into the carousel.]]></explain>
+    </option>
+    <option option_id="attachments_height" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>120</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Size</title>
+      <explain><![CDATA[Slide sizes will be normalized to this square.]]></explain>
+    </option>
+    <option option_id="attachments_link" edit_format="radio" data_type="string" display_order="4">
+      <default_value>lbox</default_value>
+      <edit_format_params>lbox=XenForo Light Box
+post=Referenced Post</edit_format_params>
+      <sub_options></sub_options>
+      <title>Link Type</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="attachments_speed" edit_format="spinbox" data_type="unsigned_integer" display_order="102">
+      <default_value>1000</default_value>
+      <edit_format_params>min=0
+step=500</edit_format_params>
+      <sub_options></sub_options>
+      <title>Transition Speed</title>
+      <explain><![CDATA[The speed at which transitions will process in milliseconds.]]></explain>
+    </option>
+    <option option_id="attachments_auto" edit_format="spinbox" data_type="unsigned_integer" display_order="103">
+      <default_value>5000</default_value>
+      <edit_format_params>min=0
+step=500</edit_format_params>
+      <sub_options></sub_options>
+      <title>Frequency</title>
+      <explain><![CDATA[The frequency at which the carousel will auto-rotate in milliseconds. (0 to disable)]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_Attachments"><![CDATA[<xen:require css="EWRwidget_Attachments.css" />
+<xen:require js="js/8wayrun/EWRporta2_slider.js" />
+
+<div class="sectionMain widget_{$wWidget}" id="widget_{$wWidlink}">
+
+	<style>
+	#widget_{$wWidlink} .heightFix
+	{
+		height: {$wOptions.attachments_height}px;
+		line-height: {$wOptions.attachments_height}px;
+	}
+	</style>
+
+	<script type="text/javascript">
+	jQuery(document).ready(function() {
+		$('#widget_{$wWidlink} .attachSlider').bxSlider({
+			minSlides: 1,
+			maxSlides: 20,
+			slideMargin: 5,
+			slideWidth: {$wOptions.attachments_height},
+			auto: {$wOptions.attachments_auto},
+			pause: {$wOptions.attachments_auto},
+			autoHover: true,
+			speed: {$wOptions.attachments_speed},
+			pager: 0,
+			prevText: '&laquo;',
+			nextText: '&raquo;'
+		});
+	});
+	</script>
+	
+	<ul class="attachSlider">
+		<xen:foreach loop="$wCached" value="$attach"><xen:include template="EWRwidget_Attachments_Bit" /></xen:foreach>
+	</ul>
+</div>]]></template>
+    <template title="EWRwidget_Attachments.css"><![CDATA[.widget_Attachments { position: relative; }
+.widget_Attachments .attachSlider { overflow: hidden; white-space: nowrap; }
+
+.widget_Attachments .slide
+{
+	color: #CCC;
+	border: 1px solid #000;
+	background-color: rgba(0,0,0,0.7);
+	display: inline-block;
+	padding: 3px;
+	border-radius: 4px;
+	text-align: center;
+}
+.widget_Attachments .slide:hover { background-color: rgba(255,255,255,0.5); }
+.widget_Attachments .imageHolder
+{
+	width: 100%;
+	height: 100%; 
+	overflow: hidden;
+	background-position: center center; 
+	background-repeat: no-repeat;
+}
+.widget_Attachments .imageHolder.imageHorz { background-size: 100% auto; }
+.widget_Attachments .imageHolder.imageVert { background-size: auto 100%; }
+.widget_Attachments .imageHolder img { opacity: 0; }
+.widget_Attachments .imageMeta { display: none; }
+
+.widget_Attachments .bx-controls-direction>a
+{
+	color: #CCC;
+	background-color: rgba(0,0,0,0.7);
+	position: absolute; top: 30%;
+	font-size: 30px;
+	padding: 0px 5px 5px;
+	cursor: pointer;
+}
+.widget_Attachments .bx-controls-direction>a:hover { background-color: rgba(255,255,255,0.5); text-decoration: none; }
+.widget_Attachments .bx-controls-direction>a.bx-prev { left: -10px; border-top-left-radius: 15px; border-bottom-left-radius: 15px; }
+.widget_Attachments .bx-controls-direction>a.bx-next { right: -10px; border-top-right-radius: 15px; border-bottom-right-radius: 15px; }]]></template>
+    <template title="EWRwidget_Attachments_Bit"><![CDATA[<li class="slide" data-author="{$attach.username}">
+	<div class="imageHolder heightFix image{$attach.alignment}" style="background-image: url({$attach.thumbnailUrl})">
+		<xen:if is="{$wOptions.attachments_link} == 'lbox'">
+			<div class="imageMeta">
+				<xen:avatar user="$attach" size="s" />
+				<xen:datetime time="{$attach.attach_date}" />
+			</div>
+		
+			<a href="{xen:link attachments, $attach}" class="{xen:if '{$attach.canView}', 'LbTrigger'}" target="_blank" data-href="{xen:link misc/lightbox}">
+				<img src="{$attach.thumbnailUrl}" alt="{$attach.filename}"  title="{$attach.filename}"
+					class="Tooltip {xen:if '{$attach.canView}', 'LbImage'}" />
+			</a>	
+		<xen:else/>
+			<a href="{xen:link posts, $attach}">
+				<img src="{$attach.thumbnailUrl}" alt="{$attach.filename}" title="{$attach.filename}" class="Tooltip" />
+			</a>
+		</xen:if>
+	</div>
+</li>]]></template>
+    <template title="EWRwidget_Attachments_Simple"><![CDATA[<xen:require css="EWRwidget_Attachments.css" />
+
+<div class="sectionMain widget_Attachments">
+	<ul style="text-align: center;">
+		<xen:foreach loop="$attachments" value="$attach"><xen:include template="EWRwidget_Attachments_Bit" /></xen:foreach>
+	</ul>
+</div>
+
+<xen:if hascontent="true">
+	<div class="sectionMain">
+		<xen:contentcheck>
+			<xen:pagenav link="widgets/Attachments" linkparams="{$linkParams}" page="{$start}" perpage="{$stop}" total="{$count}" />
+		</xen:contentcheck>
+	</div>
+</xen:if>]]></template>
+  </templates>
+</widget>

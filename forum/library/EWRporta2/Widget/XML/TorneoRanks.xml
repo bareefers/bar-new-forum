@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="TorneoRanks" widget_title="XenTorneo: Rankings" widget_desc="Displays the top rankings of a league from XenTorneo" widget_string="1" widget_version="1" widget_url="https://xenforo.com/community/resources/8wayrun-com-xentorneo-rankings-pro.785/" widget_install_class="EWRporta2_Widget_Install_Torneo" widget_install_method="installCode" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 days">
+  <listeners/>
+  <options>
+    <option option_id="torneoranks_league" edit_format="callback" data_type="unsigned_integer" display_order="1">
+      <default_value>0</default_value>
+      <edit_format_params>EWRporta2_Widget_Option_TorneoRanks::renderSelect</edit_format_params>
+      <sub_options></sub_options>
+      <title>League</title>
+      <explain><![CDATA[You must select a league to display in this widget.]]></explain>
+    </option>
+    <option option_id="torneoranks_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Limit</title>
+      <explain><![CDATA[The number of players to display in the top rankings list.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_TorneoRanks"><![CDATA[<xen:if is="{$wCached}">
+	<xen:require css="EWRtorneo.css" />
+	
+	<xen:include template="EWRtorneo_Sidebar_Ranks">
+		<xen:map from="$wCached" to="$league" />
+	</xen:include>
+</xen:if>]]></template>
+  </templates>
+</widget>

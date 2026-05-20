@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="ArticlesSimple" widget_title="Articles Simple" widget_desc="Displays a list of most recent articles in a simple grid" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="articlessimple_category" edit_format="callback" data_type="array" display_order="1">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_CategoryChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Category</title>
+      <explain><![CDATA[Only articles from the selected category will be searched. (unspecify to select all)]]></explain>
+    </option>
+    <option option_id="articlessimple_author" edit_format="callback" data_type="array" display_order="2">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_AuthorChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Author</title>
+      <explain><![CDATA[Only articles from the selected author will be searched. (unspecify to select all)]]></explain>
+    </option>
+    <option option_id="articlessimple_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>4</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Articles Limit</title>
+      <explain><![CDATA[The maximum number of articles to display on the widget.]]></explain>
+    </option>
+    <option option_id="articlessimple_trim" edit_format="spinbox" data_type="unsigned_integer" display_order="4">
+      <default_value>500</default_value>
+      <edit_format_params>min=0
+step=100</edit_format_params>
+      <sub_options></sub_options>
+      <title>Excerpt Trim</title>
+      <explain><![CDATA[Excerpts will be trimmed to this many characters in all cases. (0 to disable)]]></explain>
+    </option>
+    <option option_id="articlessimple_stripnl" edit_format="onoff" data_type="unsigned_integer" display_order="5">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Strip Line Breaks from Excerpt</title>
+      <explain><![CDATA[If enabled, excerpt text will be stripped of line breaks and appear as a continuous paragraph.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_ArticlesSimple"><![CDATA[<xen:require css="EWRwidget_ArticlesSimple.css" />
+
+<div class="widget_{$wWidget}" id="widget_{$wWidlink}">
+	<ul class="articlesSmall">
+	<xen:foreach loop="$wUncached" value="$article"><li>
+		<div class="sectionMain">
+			<div class="secondaryContent">
+			<xen:if is="{$article.article_icon.type} == 'attach'">
+				<img class="attachHolder" src="{xen:link attachments, $article.article_icon.data}" alt="{$article.article_icon.data.filename}" />
+			<xen:elseif is="{$article.article_icon.type} == 'medio'" />
+				<div class="medioHolder" style="background-image: url('{xen:helper medio, $article.article_icon.data}');">
+					<img src="styles/8wayrun/EWRmedio_play.png" />
+				</div>
+			</xen:if>
+			
+			<a href="{xen:link threads, $article}" class="title">{$article.title}</a>
+				
+			{xen:raw $article.messageHtml}
+			
+			<a href="{xen:link threads, $article}" class="continue">
+				<div class="continue2">
+					{xen:phrase porta2_break_text_default}
+				</div>
+			</a>
+			</div>
+		</div>
+	</li></xen:foreach>
+	</ul>
+</div>]]></template>
+    <template title="EWRwidget_ArticlesSimple.css"><![CDATA[.articlesSmall { margin: -5px; }
+.articlesSmall li { display: inline-block; width: 33.33%; max-width: 320px; }
+.articlesSmall li .sectionMain { position: relative; margin: 5px 5px 3px; height: 250px; overflow: hidden; }
+
+.articlesSmall li .attachHolder { margin-bottom: 5px; }
+.articlesSmall li .medioHolder { margin-bottom: 5px; background-size: 100%; line-height: 0; }
+.articlesSmall li img { max-width: 100%; }
+
+.articlesSmall li .title
+{
+	margin-bottom: 5px; display: block; font-size: 1.5em;
+	white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+
+.articlesSmall li .continue
+{
+	position: absolute; top: 0; bottom: 0; left: 0; right: 0;
+	background-image: linear-gradient(to bottom, transparent 60%, {xen:property contentBackground});
+}
+.articlesSmall li .continue .continue2
+{
+	position: absolute; bottom: 0; left: 0; right: 0; display: none;
+	background-image: linear-gradient(to bottom, transparent, {xen:property contentBackground} 70%);
+	height: 40px; line-height: 40px; text-align: center; text-decoration: none;
+	padding-top: 40px; color: {xen:property secondaryDarker};
+}
+.articlesSmall li .continue:hover .continue2 { display: block; }
+
+<xen:if is="{xen:property enableResponsive}">
+	@media (max-width:{xen:property maxResponsiveMediumWidth})
+	{
+		.articlesSmall li { width: 50%; }
+	}
+</xen:if>]]></template>
+  </templates>
+</widget>

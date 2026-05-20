@@ -1,0 +1,9 @@
+{
+    "src/addons/DL6/WNTPL/addon.json": "724083805f6113d3450dadd81808a6d085b7f9fe0ef1a631e88a2f94e52695c8",
+    "src/addons/DL6/WNTPL/icon.jpg": "cbf1022bf057efab2bf76c69aef914d5f704d17d15e777b0d48ba8c103930cf7",
+    "src/addons/DL6/WNTPL/XF/Widget/NewPostsPrefixLimit.php": "cce28988cba1748457454c4962a5f9f92ee7cf3c0a4dd41e64734d3b4f022c4d",
+    "src/addons/DL6/WNTPL/XF/Widget/NewThreadsPrefixLimit.php": "d75452ad1e3d9004afb6016c37cce8705c4762160754b3ba7b128cbc8e0c1059",
+    "src/addons/DL6/WNTPL/_data/phrases.xml": "b5a04b0851d2945d4bb332fd186d557b48e279037734f3d6b3f43a9cb5c3e3ff",
+    "src/addons/DL6/WNTPL/_data/templates.xml": "b851126f196aee1d65156b63b45472e74bfe693f7a19cd6ca0d62e2ebe7d1b66",
+    "src/addons/DL6/WNTPL/_data/widget_definitions.xml": "7bd596a015933b91d52d73e432158461a7f2044cb27a80254a791b9c11cad184"
+}

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="SharePage" widget_title="Share Page" widget_desc="Displays social media widgets to share the current page" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options/>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_SharePage"><![CDATA[<xen:require css="EWRwidget_SharePage.css" />
+
+<xen:if is="{$wScale} == 'full'">
+	<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+		<div class="secondaryContent">
+			<xen:include template="share_page">
+				<xen:set var="$url"></xen:set>
+			</xen:include>
+		</div>
+	</div>
+<xen:else />
+	<xen:include template="sidebar_share_page">
+		<xen:set var="$url"></xen:set>
+	</xen:include>
+</xen:if>]]></template>
+    <template title="EWRwidget_SharePage.css"><![CDATA[.infoBlock.sharePage .shareControl { float: none; }]]></template>
+  </templates>
+</widget>

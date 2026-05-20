@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="TabThreads" widget_title="Threads Tabbed" widget_desc="Displays a tabbed list of most recently active threads" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners>
+    <listener description="EWRwidget_TabThreads_controller" event_id="load_class_controller" execute_order="10" callback_class="EWRporta2_Widget_Listener_TabThreads" callback_method="controller" active="1"/>
+  </listeners>
+  <options>
+    <option option_id="tabthreads_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Limit</title>
+      <explain><![CDATA[The maximum number of threads to display on the widget.]]></explain>
+    </option>
+    <option option_id="tabthreads_cutoff" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>7</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Age Cutoff</title>
+      <explain><![CDATA[Limits the search to only display threads updated within X days.]]></explain>
+    </option>
+    <option option_id="tabthreads_title1" edit_format="textbox" data_type="string" display_order="101">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Title 1</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_source1" edit_format="callback" data_type="array" display_order="102">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Source 1</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_title2" edit_format="textbox" data_type="string" display_order="201">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Title 2</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_source2" edit_format="callback" data_type="array" display_order="202">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Source 2</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_title3" edit_format="textbox" data_type="string" display_order="301">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Title 3</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_source3" edit_format="callback" data_type="array" display_order="302">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Source 3</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_title4" edit_format="textbox" data_type="string" display_order="401">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Title 4</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_source4" edit_format="callback" data_type="array" display_order="402">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Source 4</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_title5" edit_format="textbox" data_type="string" display_order="501">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Title 5</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+    <option option_id="tabthreads_source5" edit_format="callback" data_type="array" display_order="502">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Source 5</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_TabThreads"><![CDATA[<xen:if is="{$wScale} == 'full'">
+	<xen:require css="discussion_list.css" />
+	<xen:require css="inline_mod.css" />
+	<xen:require js="js/xenforo/discussion_list.js" />
+	<xen:require css="EWRwidget_TabThreads.css" />
+
+	<div class="section sectionMain widget_{$wWidget}" id="widget_{$wWidlink}">
+		<form action="{xen:link inline-mod/thread/switch}" method="post"
+			class="discussionList DiscussionList InlineModForm"
+			data-cookieName="threads"
+			data-controls="#InlineModControls"
+			data-imodOptions="#ModerationSelect option">
+
+			<ul class="tabs mainTabs Tabs" data-panes="#TabThreads > li" data-history="on">
+				<li><a href="{$requestPaths.requestUri}#tabThreads1">{$wOptions.tabthreads_title1}</a></li>
+				<xen:if is="{$wOptions.tabthreads_title2}"><li><a href="{$requestPaths.requestUri}#tabThreads2">{$wOptions.tabthreads_title2}</a></li></xen:if>
+				<xen:if is="{$wOptions.tabthreads_title3}"><li><a href="{$requestPaths.requestUri}#tabThreads3">{$wOptions.tabthreads_title3}</a></li></xen:if>
+				<xen:if is="{$wOptions.tabthreads_title4}"><li><a href="{$requestPaths.requestUri}#tabThreads4">{$wOptions.tabthreads_title4}</a></li></xen:if>
+				<xen:if is="{$wOptions.tabthreads_title5}"><li><a href="{$requestPaths.requestUri}#tabThreads5">{$wOptions.tabthreads_title5}</a></li></xen:if>
+			</ul>
+					
+			<dl class="sectionHeaders">
+				<dt class="posterAvatar"><a><span>{xen:phrase sort_by}:</span></a></dt>
+				<dd class="main">
+					<a class="title"><span>{xen:phrase title}</span></a>
+					<a class="postDate"><span>{xen:phrase start_date}</span></a>
+				</dd>
+				<dd class="stats">
+					<a class="major"><span>{xen:phrase replies}</span></a>
+					<a class="minor"><span>{xen:phrase views}</span></a>
+				</dd>
+				<dd class="lastPost"><a><span>{xen:phrase last_message}</span></a></dd>
+			</dl>
+			
+			<ul id="TabThreads">
+				<li id="tabThreads1">
+					<xen:include template="EWRwidget_TabThreads_Simple" />
+				</li>
+				
+				<xen:if is="{$wOptions.tabthreads_title2}">
+					<li id="tabThreads2" data-loadUrl="{xen:link widgets/tabthreads, '', 'tab=2', 'wid={$wWidlink}', 'pos={$wScale}'}">
+						<span class="jsOnly">{xen:phrase loading}...</span>
+						<noscript><a href="{xen:link widgets/tabthreads, '' , 'tab=2&wid={$wWidlink}'}">{xen:phrase view}</a></noscript>
+					</li>
+				</xen:if>
+				
+				<xen:if is="{$wOptions.tabthreads_title3}">
+					<li id="tabThreads3" data-loadUrl="{xen:link widgets/tabthreads, '', 'tab=3', 'wid={$wWidlink}', 'pos={$wScale}'}">
+						<span class="jsOnly">{xen:phrase loading}...</span>
+						<noscript><a href="{xen:link widgets/tabthreads, '' , 'tab=3&wid={$wWidlink}'}">{xen:phrase view}</a></noscript>
+					</li>
+				</xen:if>
+				
+				<xen:if is="{$wOptions.tabthreads_title4}">
+					<li id="tabThreads4" data-loadUrl="{xen:link widgets/tabthreads, '', 'tab=4', 'wid={$wWidlink}', 'pos={$wScale}'}">
+						<span class="jsOnly">{xen:phrase loading}...</span>
+						<noscript><a href="{xen:link widgets/tabthreads, '' , 'tab=4&wid={$wWidlink}'}">{xen:phrase view}</a></noscript>
+					</li>
+				</xen:if>
+				
+				<xen:if is="{$wOptions.tabthreads_title5}">
+					<li id="tabThreads5" data-loadUrl="{xen:link widgets/tabthreads, '', 'tab=5', 'wid={$wWidlink}', 'pos={$wScale}'}">
+						<span class="jsOnly">{xen:phrase loading}...</span>
+						<noscript><a href="{xen:link widgets/tabthreads, '' , 'tab=5&wid={$wWidlink}'}">{xen:phrase view}</a></noscript>
+					</li>
+				</xen:if>
+			<ul>
+			
+			<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+		</form>
+	</div>
+<xen:else/>
+	<xen:require css="profile_post_list_simple.css" />
+	
+	<div class="section profilePostList widget_{$wWidget}" id="widget_{$wWidlink}">
+		<div class="secondaryContent">
+			<h3>{xen:phrase new_posts}</h3>
+
+			<ul class="tabs mainTabs Tabs" data-panes="#TabThreads > li" data-history="on">
+				<li><a href="{$requestPaths.requestUri}#tabThreads1">{$wOptions.tabthreads_title1}</a></li>
+				<xen:if is="{$wOptions.tabthreads_title2}"><li><a href="{$requestPaths.requestUri}#tabThreads2">{$wOptions.tabthreads_title2}</a></li></xen:if>
+				<xen:if is="{$wOptions.tabthreads_title3}"><li><a href="{$requestPaths.requestUri}#tabThreads3">{$wOptions.tabthreads_title3}</a></li></xen:if>
+				<xen:if is="{$wOptions.tabthreads_title4}"><li><a href="{$requestPaths.requestUri}#tabThreads4">{$wOptions.tabthreads_title4}</a></li></xen:if>
+				<xen:if is="{$wOptions.tabthreads_title5}"><li><a href="{$requestPaths.requestUri}#tabThreads5">{$wOptions.tabthreads_title5}</a></li></xen:if>
+			</ul>
+
+			<ul id="TabThreads">
+				<li id="tabThreads1">
+					<xen:include template="EWRwidget_TabThreads_Simple" />
+				</li>
+				
+				<xen:if is="{$wOptions.tabthreads_title2}">
+					<li id="tabThreads2" data-loadUrl="{xen:link widgets/tabthreads, '', 'tab=2', 'wid={$wWidlink}', 'pos={$wScale}'}">
+						<span class="jsOnly">{xen:phrase loading}...</span>
+						<noscript><a href="{xen:link widgets/tabthreads, '', 'tab=2&wid={$wWidlink}'}">{xen:phrase view}</a></noscript>
+					</li>
+				</xen:if>
+				
+				<xen:if is="{$wOptions.tabthreads_title3}">
+					<li id="tabThreads3" data-loadUrl="{xen:link widgets/tabthreads, '', 'tab=3', 'wid={$wWidlink}', 'pos={$wScale}'}">
+						<span class="jsOnly">{xen:phrase loading}...</span>
+						<noscript><a href="{xen:link widgets/tabthreads, '', 'tab=3&wid={$wWidlink}'}">{xen:phrase view}</a></noscript>
+					</li>
+				</xen:if>
+				
+				<xen:if is="{$wOptions.tabthreads_title4}">
+					<li id="tabThreads4" data-loadUrl="{xen:link widgets/tabthreads, '', 'tab=4', 'wid={$wWidlink}', 'pos={$wScale}'}">
+						<span class="jsOnly">{xen:phrase loading}...</span>
+						<noscript><a href="{xen:link widgets/tabthreads, '', 'tab=4&wid={$wWidlink}'}">{xen:phrase view}</a></noscript>
+					</li>
+				</xen:if>
+				
+				<xen:if is="{$wOptions.tabthreads_title5}">
+					<li id="tabThreads5" data-loadUrl="{xen:link widgets/tabthreads, '', 'tab=5', 'wid={$wWidlink}', 'pos={$wScale}'}">
+						<span class="jsOnly">{xen:phrase loading}...</span>
+						<noscript><a href="{xen:link widgets/tabthreads, '', 'tab=5&wid={$wWidlink}'}">{xen:phrase view}</a></noscript>
+					</li>
+				</xen:if>
+			</ul>
+		</div>
+	</div>
+</xen:if>
+
+<xen:include template="preview_tooltip" />]]></template>
+    <template title="EWRwidget_TabThreads.css"><![CDATA[.widget_TabThreads .tabs { background-color: transparent; }
+.widget_TabThreads .discussionList .sectionHeaders { margin-top: 0; }
+.widget_TabThreads .jsOnly { display: block; padding: 20px; }]]></template>
+    <template title="EWRwidget_TabThreads_Simple"><![CDATA[<xen:if is="{$wScale} == 'full'">
+	<ol class="discussionListItems">
+	<xen:if is="{$wUncached}">
+		<xen:foreach loop="$wUncached" value="$thread">
+			<xen:include template="thread_list_item">
+				<xen:map from="$thread.showForumLink" to="$showForumLink" />
+			</xen:include>
+		</xen:foreach>
+	<xen:else />
+		<li class="primaryContent">{xen:phrase there_no_threads_to_display}</li>
+	</xen:if>
+	</ol>
+<xen:else/>
+	<ul>
+	<xen:if is="{$wUncached}">
+		<xen:foreach loop="$wUncached" value="$thread">
+			<li class="profilePostListItem">
+				<xen:avatar user="$thread" size="s" img="true" />
+				
+				<div class="messageInfo">
+					<div class="messageContent">
+						<a href="{xen:link "threads{xen:if '{$thread.isNew} AND {$thread.haveReadData}', '/unread'}", $thread}"
+							title="{xen:if '{$thread.isNew} AND {$thread.haveReadData}', {xen:phrase go_to_first_unread_message}}"
+							class="{xen:if $thread.hasPreview, PreviewTooltip}"
+							data-previewUrl="{xen:if $thread.hasPreview, {xen:link threads/preview, $thread}}">{xen:helper snippet, $thread.title, 50}</a>
+					</div>
+					
+					<div class="messageMeta muted">
+						<a href="{xen:link members, $thread.lastPostInfo}">{$thread.lastPostInfo.username}</a> :
+						<a href="{xen:link 'posts', $thread.lastPostInfo}" title="{xen:phrase go_to_last_message}" class="dateTime"><xen:datetime time="$thread.lastPostInfo.post_date" /></a>
+					</div>
+				</div>
+			</li>
+		</xen:foreach>
+	<xen:else />
+		<li class="primaryContent">{xen:phrase there_no_threads_to_display}</li>
+	</xen:if>
+	</ul>
+</xen:if>]]></template>
+  </templates>
+</widget>

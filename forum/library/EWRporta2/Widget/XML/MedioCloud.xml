@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="MedioCloud" widget_title="XenMedio: Cloud" widget_desc="Displays the keyword cloud from XenMedio" widget_string="1" widget_version="1" widget_url="https://xenforo.com/community/resources/8wayrun-com-xenmedio-media-pro.1716/" widget_install_class="EWRporta2_Widget_Install_Medio" widget_install_method="installCode" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="mediocloud_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>50</default_value>
+      <edit_format_params>min=10</edit_format_params>
+      <sub_options></sub_options>
+      <title>Keyword Cloud Limit</title>
+      <explain><![CDATA[The maximum number of keywords to display on the keyword cloud.]]></explain>
+    </option>
+    <option option_id="mediocloud_minsize" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>8</default_value>
+      <edit_format_params>min=4</edit_format_params>
+      <sub_options></sub_options>
+      <title>Minimum Font Size</title>
+      <explain><![CDATA[The minimum text size for keywords displayed in the keyword cloud.]]></explain>
+    </option>
+    <option option_id="mediocloud_maxsize" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>18</default_value>
+      <edit_format_params>min=12</edit_format_params>
+      <sub_options></sub_options>
+      <title>Maximum Font Size</title>
+      <explain><![CDATA[The maximum text size for keywords displayed in the keyword cloud.]]></explain>
+    </option>
+    <option option_id="mediocloud_animated" edit_format="onoff" data_type="boolean" display_order="4">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Enable Animated Cloud</title>
+      <explain><![CDATA[Disabling the animated keyword cloud will default to a static cloud.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_MedioCloud"><![CDATA[<xen:require css="EWRmedio.css" />
+
+<xen:include template="EWRmedio_Sidebar_Cloud">
+	<xen:map from="$wCached" to="$sidebar" />
+</xen:include>]]></template>
+  </templates>
+</widget>

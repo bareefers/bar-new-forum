@@ -1,0 +1,7 @@
+/*
+	Style adjustments for IE8
+*/
+.navTabs .navTab { border-width: 0 !important; }
+
+.messageUserBlock .arrow { display: none !important; }
+

@@ -1,0 +1,23 @@
+{
+    "legacy_addon_id": "",
+    "title": "[OzzModz] Simple Stats",
+    "description": "",
+    "version_id": 2000091,
+    "version_string": "2.0.0 Patch Level 1",
+    "dev": "Painbaker",
+    "dev_url": "https://xenforo.com/community/members/painbaker.184537/",
+    "faq_url": "",
+    "support_url": "https://snogssite.com/",
+    "extra_urls": [],
+    "require": {
+        "XF": [
+            2020070,
+            "XenForo 2.2.0+"
+        ],
+        "php": [
+            "7.0.0",
+            "PHP 7.0.0+"
+        ]
+    },
+    "icon": "fa-calendar-alt"
+}

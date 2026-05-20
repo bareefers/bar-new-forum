@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="conversationsearch_conversation_search" version_id="10" version_string="1.0"><![CDATA[Conversation search]]></phrase>
+  <phrase title="conversationsearch_conversation_search_results" version_id="10" version_string="1.0"><![CDATA[Conversation search results]]></phrase>
+  <phrase title="conversationsearch_conversation_starter" version_id="10" version_string="1.0"><![CDATA[Conversation starter]]></phrase>
+  <phrase title="conversationsearch_conversation_titles" version_id="20" version_string="2.0"><![CDATA[Conversation titles]]></phrase>
+  <phrase title="conversationsearch_date" version_id="10" version_string="1.0"><![CDATA[Date]]></phrase>
+  <phrase title="conversationsearch_keywords" version_id="10" version_string="1.0"><![CDATA[Keywords]]></phrase>
+  <phrase title="conversationsearch_limit" version_id="10" version_string="1.0"><![CDATA[Limit]]></phrase>
+  <phrase title="conversationsearch_member" version_id="10" version_string="1.0"><![CDATA[Member]]></phrase>
+  <phrase title="conversationsearch_message_content" version_id="20" version_string="2.0"><![CDATA[Message content]]></phrase>
+  <phrase title="conversationsearch_message_count" version_id="20" version_string="2.0"><![CDATA[Message count]]></phrase>
+  <phrase title="conversationsearch_message_id" version_id="14" version_string="1.4"><![CDATA[Message ID]]></phrase>
+  <phrase title="conversationsearch_no_results_found" version_id="19" version_string="1.9"><![CDATA[No results found.]]></phrase>
+  <phrase title="conversationsearch_posted_by" version_id="10" version_string="1.0"><![CDATA[Posted by]]></phrase>
+  <phrase title="conversationsearch_recipients" version_id="15" version_string="1.5"><![CDATA[Recipients]]></phrase>
+  <phrase title="conversationsearch_results" version_id="21" version_string="2.1"><![CDATA[Results]]></phrase>
+  <phrase title="conversationsearch_return_to_conversation_search" version_id="22" version_string="2.2"><![CDATA[Return to conversation search]]></phrase>
+  <phrase title="conversationsearch_return_to_conversations" version_id="22" version_string="2.2"><![CDATA[Return to conversations]]></phrase>
+  <phrase title="conversationsearch_search" version_id="20" version_string="2.0"><![CDATA[Search]]></phrase>
+  <phrase title="conversationsearch_select" version_id="20" version_string="2.0"><![CDATA[Select]]></phrase>
+  <phrase title="conversationsearch_submit" version_id="10" version_string="1.0"><![CDATA[Submit]]></phrase>
+  <phrase title="conversationsearch_title" version_id="10" version_string="1.0"><![CDATA[Title]]></phrase>
+  <phrase title="option.conversationSearchLimit" version_id="10" version_string="1.0"><![CDATA[Limit]]></phrase>
+  <phrase title="option_explain.conversationSearchLimit" version_id="10" version_string="1.0"><![CDATA[Limit the number of results to this number.]]></phrase>
+  <phrase title="option_group.conversationSearch" version_id="10" version_string="1.0"><![CDATA[Conversation search]]></phrase>
+  <phrase title="option_group_description.conversationSearch" version_id="10" version_string="1.0"><![CDATA[Options here control the Conversation search add-on.]]></phrase>
+  <phrase title="permission.conversationSearch_view" version_id="10" version_string="1.0"><![CDATA[View]]></phrase>
+  <phrase title="permission_interface.conversationSearch" version_id="10" version_string="1.0"><![CDATA[Conversation search]]></phrase>
+</phrases>

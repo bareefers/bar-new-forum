@@ -1,0 +1,16 @@
+{
+    "legacy_addon_id": "",
+    "title": "BAR Sponsor Banners",
+    "description": "ACP-managed sponsor banner uploads and rendering helpers.",
+    "version_id": 1000029,
+    "version_string": "1.1.9",
+    "dev": "BAR",
+    "dev_url": "https://bareefers.org",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": {
+        "XF": [2030000, "XenForo 2.3.0+"]
+    },
+    "icon": "fa-image"
+}

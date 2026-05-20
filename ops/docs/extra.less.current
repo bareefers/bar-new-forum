@@ -1,0 +1,359 @@
+/* Navigation - logo */
+.p-header-logo.p-header-logo--image {
+	margin: 0;
+	picture,
+	img {
+		max-width: 220px;   /* was 50px — increase until it looks right */
+		width: auto;
+		height: auto;
+	}
+}
+
+/* Aurora caps header logo in dark (~100px) — match BAR 220 / 160 */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-variation]) .p-header-logo.p-header-logo--image picture,
+	:root:not([data-variation]) .p-header-logo.p-header-logo--image img {
+		max-width: 220px !important;
+		width: auto !important;
+		height: auto !important;
+	}
+}
+
+html[data-color-scheme="dark"] .p-header-logo.p-header-logo--image picture,
+html[data-color-scheme="dark"] .p-header-logo.p-header-logo--image img {
+	max-width: 220px !important;
+	width: auto !important;
+	height: auto !important;
+}
+
+@media (prefers-color-scheme: dark) and (max-width: @xf-responsiveNarrow) {
+	:root:not([data-variation]) .p-header-logo.p-header-logo--image picture,
+	:root:not([data-variation]) .p-header-logo.p-header-logo--image img {
+		max-width: 88px !important;
+		max-height: 40px !important;
+	}
+}
+
+@media (max-width: @xf-responsiveNarrow) {
+	html[data-color-scheme="dark"] .p-header-logo.p-header-logo--image picture,
+	html[data-color-scheme="dark"] .p-header-logo.p-header-logo--image img {
+		max-width: 88px !important;
+		max-height: 40px !important;
+	}
+}
+
+@supports ~"(position: sticky) or (position: -webkit-sticky)" {
+	/*
+	 * Sticky gap: theme .p-navSticky { top: 20px }. html body beats repeated theme rules.
+	 * Tilde @supports: XenForo less.php breaks on bare (sticky) or (-webkit-sticky).
+	 */
+	html body .p-navSticky,
+	html body .p-navSticky.p-navSticky--primary {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 0 !important;
+	}
+	html body .p-navSticky.is-sticky,
+	html body .p-navSticky.p-navSticky--primary.is-sticky {
+		top: 0 !important;
+	}
+	html body .p-staffBar ~ .p-header .p-navSticky,
+	html body .p-staffBar + .p-header .p-navSticky,
+	html body .p-navSticky.p-staffSticky,
+	html body .p-staffBar ~ .p-header .p-navSticky.p-navSticky--primary,
+	html body .p-staffBar + .p-header .p-navSticky.p-navSticky--primary {
+		top: 20px !important;
+	}
+}
+
+/*
+ * Mobile only (@xf-responsiveNarrow): smaller logo on the left, visitor row in the middle,
+ * menu (hamburger) on the far right — flex order overrides default DOM order on narrow viewports.
+ */
+@media (max-width: @xf-responsiveNarrow) {
+	.p-header-logo.p-header-logo--image picture,
+	.p-header-logo.p-header-logo--image img {
+		max-width: 88px;
+		max-height: 40px;
+		width: auto;
+		height: auto;
+		object-fit: contain;
+	}
+
+	.p-nav-intra {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 6px;
+		min-width: 0;
+	}
+
+	/* Left: logo (compact, never grows over icons) */
+	.p-nav-intra .p-header-logo.p-header-logo--image {
+		order: 1;
+		flex: 0 1 auto;
+		min-width: 0;
+		max-width: 30vw;
+		max-height: 44px;
+		overflow: hidden;
+	}
+
+	.p-nav-intra .p-header-logo.p-header-logo--image picture,
+	.p-nav-intra .p-header-logo.p-header-logo--image img {
+		max-width: 100%;
+		max-height: 40px;
+	}
+
+	/* Middle: search / what's-new strip if present */
+	.p-nav-intra .p-discovery {
+		order: 2;
+		flex-shrink: 0;
+	}
+
+	/* Middle–right: login / alerts / avatar — may shrink text, keep icons */
+	.p-nav-intra .p-nav-opposite {
+		order: 3;
+		flex: 1 1 auto;
+		min-width: 0;
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	.p-nav-intra .p-nav-opposite .p-navgroup {
+		flex-wrap: nowrap;
+	}
+
+	/* Far right: hamburger / off-canvas menu control */
+	.p-nav-intra .p-nav-smallLogo {
+		order: 4;
+		flex-shrink: 0;
+		margin-left: 2px;
+	}
+}
+
+.p-nav-inner {
+	max-width: 1400px;
+	padding-top: 0px;
+}
+
+/* aligns and centers iconic nav icons vertically */
+.p-navgroup-link.p-navgroup-link--iconic i::after {
+	line-height: 25px;
+	vertical-align: middle;
+}
+
+.p-navgroup-link--dbtech-credits .p-navgroup-linkText {
+	display: none;
+}
+
+/* Center sponsor / ad blocks */
+.alignCenter {
+	text-align: center;
+	a {
+		display: inline-block;
+	}
+	img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 100%;
+		height: auto;
+	}
+}
+
+/* Staff bar height tweak (safe) */
+.p-staffBar {
+	min-height: 40px;
+	line-height: 40px;
+}
+
+/* --- BAR DM mobile tap-target override v5 (bigger real checkbox) --- */
+body[data-template="conversation_list"]
+{
+  @media (max-width: @xf-responsiveMedium)
+  {
+    input.js-inlineModToggle,
+    .structItem-statuses input.js-inlineModToggle,
+    .structItem-extraInfo input.js-inlineModToggle
+    {
+      width: 34px !important;
+      height: 34px !important;
+      min-width: 34px !important;
+      min-height: 34px !important;
+      margin: 6px !important;
+      transform: scale(1.65) !important;
+      transform-origin: center center !important;
+      -webkit-transform: scale(1.65) !important;
+      -webkit-transform-origin: center center !important;
+      position: relative;
+      z-index: 5;
+      pointer-events: auto !important;
+    }
+
+    .structItem-statuses .iconic,
+    .structItem-extraInfo .iconic,
+    .structItem-statuses .iconic--checkbox,
+    .structItem-extraInfo .iconic--checkbox
+    {
+      min-width: 30px !important;
+      min-height: 30px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      position: relative;
+      z-index: 4;
+    }
+  }
+}
+
+/* --- BAR mobile fix: malformed latest-post stat fragments (e.g. 0110/9738) --- */
+body[data-template="forum_list"]
+{
+  @media (max-width: @xf-responsiveMedium)
+  {
+    /* Hide compressed replies/views pairs that collapse into raw digits */
+    .structItem--thread .structItem-cell--meta .pairs,
+    .structItem--thread .structItem-minor .pairs
+    {
+      display: none !important;
+    }
+
+    /* Keep the latest date/time readable on the right */
+    .structItem--thread .structItem-minor
+    {
+      display: flex;
+      align-items: center;
+      gap: @xf-paddingSmall;
+    }
+
+    .structItem--thread .structItem-minor .structItem-latestDate,
+    .structItem--thread .structItem-minor .u-dt
+    {
+      margin-left: auto;
+      white-space: nowrap;
+    }
+  }
+}
+
+/* --- BAR mobile fix v2: hide raw numeric thread meta cells site-wide --- */
+@media (max-width: @xf-responsiveMedium)
+{
+  .structItem--thread .structItem-cell--meta
+  {
+    display: none !important;
+  }
+}
+
+/* --- BAR mobile fix v3: restore readable thread stats instead of hiding --- */
+@media (max-width: @xf-responsiveMedium)
+{
+  /* Override prior hide rule and render compact labeled stats */
+  .structItem--thread .structItem-cell--meta
+  {
+    display: block !important;
+  }
+
+  .structItem--thread .structItem-cell--meta .pairs
+  {
+    display: inline-flex !important;
+    align-items: baseline;
+    font-size: 12px;
+    line-height: 1.2;
+    opacity: .9;
+  }
+
+  /* Thread row usually has 3 meta cells before latest/iconEnd: replies, views, reactions */
+  .structItem--thread .structItem-cell--meta:nth-last-child(5) .pairs::before
+  {
+    content: "R ";
+    opacity: .7;
+  }
+
+  .structItem--thread .structItem-cell--meta:nth-last-child(4) .pairs::before
+  {
+    content: "V ";
+    opacity: .7;
+  }
+
+  .structItem--thread .structItem-cell--meta:nth-last-child(3) .pairs::before
+  {
+    content: "★ ";
+    opacity: .7;
+  }
+}
+
+/* --- BAR dark mode: improve hover/focus link contrast (purple-on-purple fix) --- */
+html[data-color-scheme="dark"] a:hover,
+html[data-color-scheme="dark"] a:focus,
+body[data-template] .p-body-theme--dark a:hover,
+body[data-template] .p-body-theme--dark a:focus,
+body[data-theme="dark"] a:hover,
+body[data-theme="dark"] a:focus
+{
+  color: @xf-textColorEmphasized !important;
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Common high-traffic link surfaces in dark mode */
+html[data-color-scheme="dark"] .structItem-title a:hover,
+html[data-color-scheme="dark"] .contentRow-title a:hover,
+html[data-color-scheme="dark"] .message-name a:hover,
+html[data-color-scheme="dark"] .p-nav a:hover,
+html[data-color-scheme="dark"] .memberTooltip-nameWrapper a:hover,
+body[data-theme="dark"] .structItem-title a:hover,
+body[data-theme="dark"] .contentRow-title a:hover
+{
+  color: @xf-textColorEmphasized !important;
+}
+
+/* --- BAR: stronger struct item separators (desktop + mobile) --- */
+.structItemContainer .structItem
+{
+  border-top: 2px dashed #ddc7f3 !important;
+}
+
+/* Keep first item from double-thick stack in some blocks */
+.structItemContainer .structItem:first-child
+{
+  border-top-width: 1px !important;
+}
+
+
+/* --- BAR minimal footer fixes (scoped) --- */
+
+/* 1) Make style variation control readable (icon + text) */
+.js-styleVariationsLink
+{
+  display: inline-flex !important;
+  align-items: center;
+  gap: 6px;
+}
+.js-styleVariationsLink::after
+{
+  content: "Theme mode";
+  font-weight: 600;
+  color: @xf-linkColor;
+}
+
+/* 2) Re-brand supporting member CTA in footer links */
+a[href*="how-do-i-become-a-supporting-member.14130"]
+{
+  color: @xf-textColorAccentContent !important;
+  background: @xf-contentAccentBg;
+  padding: 3px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  text-decoration: none;
+}
+a[href*="how-do-i-become-a-supporting-member.14130"]:hover,
+a[href*="how-do-i-become-a-supporting-member.14130"]:focus
+{
+  color: @xf-textColorAccentContent !important;
+  filter: brightness(0.96);
+}

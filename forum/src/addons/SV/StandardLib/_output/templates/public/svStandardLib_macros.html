@@ -1,0 +1,139 @@
+<xf:macro name="choices_setup" arg-choicesJs="{{ $xf.options.svDefaultChoicesJs ?: 'choices.search-basic.js' }}">
+
+	<xf:js src="sv/vendor/choices/{$choicesJs}" min="1" addon="SV/StandardLib" />
+
+	<xf:js src="sv/lib/select.js" min="1" addon="SV/StandardLib" />
+	<xf:css src="svStandardLib_choices.less" />
+	<script class="js-extraPhrases" type="application/json">
+	{
+		"svChoices_loadingText": "{{ phrase('loading...')|escape('js') }}",
+		"svChoices_noResultsText": "{{ phrase('no_results_found')|escape('js') }}",
+		"svChoices_noChoicesText": "{{ phrase('(none)')|escape('js') }}",
+		"svChoices_itemSelectText": "{{ phrase('svChoices.itemSelectText')|escape('js') }}",
+		"svChoices_uniqueItemText": "{{ phrase('svChoices.uniqueItemText')|escape('js') }}",
+		"svChoices_customAddItemText": "{{ phrase('svChoices.customAddItemText')|escape('js') }}",
+		"svChoices_addItemText": "{{ phrase('svChoices.addItemText')|escape('js') }}",
+		"svChoices_removeItemLabel": "{{ phrase('svChoices.removeItemLabel')|escape('js') }}",
+		"svChoices_maxItemText": "{{ phrase('svChoices.maxItemText')|escape('js') }}"
+	}
+	</script>
+</xf:macro>
+
+<xf:macro name="choices_static_render"
+		  arg-name="!"
+		  arg-value="!"
+		  arg-multiple="!"
+		  arg-placeholder=""
+		  arg-selectHtml="!"
+		  arg-controlOptions="!"
+		  arg-choices="!"
+		  arg-selectedChoices="!"
+		  arg-search="{{ true }}"
+		  arg-class="{{ [] }}"
+		  >
+	<div class="choices inputGroup svChoices--inputGroup u-JsOnly {$class.containerOuter}" data-type="select-multiple" role="combobox" aria-autocomplete="list" aria-haspopup="true" aria-expanded="false">
+		<div class="choices__inner input {$class.containerInner}">
+			{$selectHtml|raw}
+			<div class="choices__list {$class.list} choices__list--multiple {$class.listItems}" role="listbox"><xf:trim>
+				<xf:foreach loop="$selectedChoices" key="$i" value="$choice"><xf:trim>
+					<div class="choices__item {$class.item} choices__item--selectable {$class.itemSelectable}" data-item="" data-id="{$i}" data-value="{$choice.value}" aria-selected="true" role="option" data-deletable=""><button type="button" class="choices__button" aria-label="{{ phrase('svChoices.removeItemLabel', {'value': $choice.value} )|for_attr }}" data-button=""></button>{{
+						$choice.span
+						? '<span class="' . $choice.span .'">'. ($choice.escape ? $choice.label : $choice.label|raw) .'</span>'
+						: ($choice.escape ? $choice.label : $choice.label|raw)
+					}}</div>
+				</xf:trim></xf:foreach>
+			</xf:trim></div>
+			<xf:if is="$search">
+			<input type="search" class="choices__input {$class.input} choices__input--cloned {$class.inputCloned}" autocomplete="off" autocapitalize="off" spellcheck="false" role="textbox" aria-autocomplete="list" {{$selectedChoices ? 'style="min-width: '.($placeholder ? 1 + strlen(trim($placeholder)) : '1').'ch; width: 1ch;"' : '' }} {{
+				$placeholder 
+				? 'placeholder="' . $placeholder . '" aria-label="' . $placeholder . '"' 
+				: '' }}>
+			</xf:if>
+		</div>
+	</div>
+	<noscript>{$selectHtml|raw}</noscript>
+</xf:macro>
+
+<xf:macro name="render_prefix_filter"
+		  arg-filters="!"
+		  arg-prefixId="!"
+		  ><xf:trim>
+
+	<xf:if is="!is_scalar($prefixId)">
+		<xf:set var="$prefixId" value="{{ $prefixId.prefix_id is not empty ? $prefixId.prefix_id : 0 }}" />
+	</xf:if>
+
+	<xf:set var="$filterRoute" value="{{ $__globals.filterRoute !== null ? $__globals.filterRoute : 'forums' }}" />
+	<xf:set var="$filterContainer" value="{{ ($filterRoute === 'forums' && $__globals.filterContainer !== null) ? $__globals.filterContainer : null }}" />
+
+	<xf:set var="$removeFilter" value="{{ $prefixId === $filters.prefix_id }}" />
+	<xf:set var="$filters" value="{{ $removeFilter
+									? $filters|replace('prefix_id', null)
+									: $filters|replace('prefix_id', $prefixId)
+								}}" />
+	<xf:if contentcheck="true">
+		<a href="{{ link($filterRoute, $filterContainer, $filters) }}" class="labelLink" rel="nofollow" data-xf-init="tooltip" title="{{
+			($removeFilter
+			? phrase('svStandardLib_remove_from_filters')
+			: phrase('svStandardLib_add_to_filters')
+			)|for_attr }}"  rel="nofollow">
+			<xf:contentcheck><xf:trim>{{ prefix('thread', $prefixId) }}</xf:trim></xf:contentcheck>
+		</a>
+	</xf:if>
+</xf:trim></xf:macro>
+
+<xf:macro name="render_forum_filter"
+		  arg-filters="!"
+		  arg-nodeId="!"
+		  arg-forum="!"
+		  arg-removeFilter="!"
+		  arg-noFilterValue=""
+		  ><xf:trim>
+
+	<xf:set var="$filterRoute" value="{{ $__globals.filterRoute !== null ? $__globals.filterRoute : 'forums' }}" />
+	<xf:set var="$filterContainer" value="{{ ($filterRoute === 'forums' && $__globals.filterContainer !== null) ? $__globals.filterContainer : $forum }}" />
+
+	<xf:set var="$removeFilter" value="{{ in_array($nodeId, $filters.nodes ?: [], true) }}" />
+	<xf:set var="$filters.nodes" value="{{ $removeFilter
+											   ? ($filters.nodes|replaceValue($nodeId, null) ?: $noFilterValue)
+											   : $filters.nodes|addValue($nodeId)
+											   }}" />
+	<a href="{{ link($filterRoute, $filterContainer, $filters) }}" class="labelLink" rel="nofollow" data-xf-init="tooltip" title="{{
+		($removeFilter
+			? phrase('svStandardLib_remove_from_filters')
+			: phrase('svStandardLib_add_to_filters')
+		)|for_attr }}"  rel="nofollow">
+		{$forum.title}
+	</a>
+</xf:trim></xf:macro>
+
+<xf:macro name="dynamic_quick_filter" arg-key="" arg-ajax="" arg-class="" arg-page="" arg-filter="{{ [] }}">
+    <xf:js src="xf/filter.js" min="1" />
+	<xf:js src="sv/vendor/domurl/url.js" addon="SV/StandardLib" min="1" />
+	<xf:js src="sv/lib/xf/filter.js" addon="SV/StandardLib" min="1" />
+	<script class="js-extraPhrases" type="application/json">
+		{
+			"no_items_matched_your_filter": "{{ phrase('no_items_matched_your_filter')|escape('js') }}"
+		}
+	</script>
+	<xf:css src="sv_quick_filter.less" />
+
+    <div class="{$class} quickFilter u-jsOnly"
+         data-xf-init="sv-dynamic-filter"
+         data-key="{$key}"
+         data-ajax="{$ajax}"
+         data-search-target=".userList"
+         data-search-row=".userList-row"
+		 data-search-limit=".username"
+         data-no-results-format="<div class=&quot;blockMessage js-filterNoResults&quot;>%s</div>">
+		<div class="inputGroup inputGroup--inline inputGroup--joined">
+			<input type="text" class="input js-filterInput" value="{$filter.text}" placeholder="{{ phrase('filter...')|for_attr }}" data-xf-key="{{ phrase('shortcut.filter')|for_attr }}" />
+			<span class="inputGroup-text">
+				<xf:checkbox standalone="true">
+					<xf:option class="js-filterPrefix" label="{{ phrase('prefix') }}" checked="{$filter.prefix}" />
+				</xf:checkbox>
+			</span>
+			<i class="inputGroup-text js-filterClear is-disabled" aria-hidden="true"></i>
+        </div>
+    </div>
+</xf:macro>

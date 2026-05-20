@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="cron_entry.ExUp" version_id="100" version_string="1.0.0"><![CDATA[Expiring User Upgrades]]></phrase>
+  <phrase title="cron_entry.alertExpiringUserUpgrades" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Alert user upgrades about to expire]]></phrase>
+  <phrase title="cron_entry_ExUp" version_id="100" version_string="1.0.0"><![CDATA[Expiring User Upgrades]]></phrase>
+  <phrase title="expiringUserUpgrades_receive_expiring_and_expired_subscription_mailings_option" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Receive expiring and expired subscription emails]]></phrase>
+  <phrase title="expiringUserUpgrades_receive_expiring_and_expired_user_upgrades_mailings_option" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Receive expiring and expired user upgrade emails]]></phrase>
+  <phrase title="expiringUserUpgrades_receive_user_upgrade_purchase_mailings_option" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Receive user upgrade purchase emails]]></phrase>
+  <phrase title="expiringUserUpgrades_receive_user_upgrade_reversal_mailings_option" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Receive user upgrade payment reversal emails]]></phrase>
+  <phrase title="expiringUserUpgrades_stop_notifications_email_for_all_expiring_and_expired_subscriptions" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Stop notification emails for all expiring and expired subscriptions]]></phrase>
+  <phrase title="expiringUserUpgrades_stop_notifications_email_for_all_expiring_and_expired_upgrades" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Stop notification emails for all expiring and expired user upgrades]]></phrase>
+  <phrase title="expiringUserUpgrades_stop_notifications_email_for_all_reversed_user_upgrade_payments" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Stop notification emails for all reversed user upgrade payments]]></phrase>
+  <phrase title="expiringUserUpgrades_stop_notifications_email_for_all_upgrade_purchase" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Stop notification emails for all user upgrade purchase]]></phrase>
+  <phrase title="expiringUserUpgrades_sv_subscription_expiring_email_html_footer" version_id="2000400" version_string="2.0.4"><![CDATA[<p class="minorText">Please do not reply to this message. You must visit the forum to reply.</p>
+
+<p class="minorText">This message was sent to you because you opted to receive emails when your subscriptions are about to expire at {board}.</p>
+
+<p class="minorText">If you no longer wish to receive these emails, you may <a href="{disable_this_link}">disable emails when your subscriptions are about to expire</a> or <a href="{disable_all_link}">disable all emails</a>.</p>]]></phrase>
+  <phrase title="expiringUserUpgrades_user_upgrade_expiring_and_expired_email_html_footer" version_id="2000400" version_string="2.0.4"><![CDATA[<p class="minorText">Please do not reply to this message. You must visit the forum to reply.</p>
+
+<p class="minorText">This message was sent to you because you opted to receive emails when your user upgrades are about to expire or have expired at {board}.</p>
+
+<p class="minorText">If you no longer wish to receive these emails, you may <a href="{disable_this_link}">disable emails when your user upgrades are about to expire or have expired</a> or <a href="{disable_all_link}">disable all emails</a>.</p>]]></phrase>
+  <phrase title="expiringUserUpgrades_user_upgrade_payment_reversal_email_html_footer" version_id="2000400" version_string="2.0.4"><![CDATA[<p class="minorText">Please do not reply to this message. You must visit the forum to reply.</p>
+
+<p class="minorText">This message was sent to you because you opted to receive emails when your user upgrade payments are reversed {board}.</p>
+
+<p class="minorText">If you no longer wish to receive these emails, you may <a href="{disable_this_link}">disable emails when youur user upgrade payments are reversed</a> or <a href="{disable_all_link}">disable all emails</a>.</p>]]></phrase>
+  <phrase title="expiringUserUpgrades_user_upgrade_purchased_email_html_footer" version_id="2000400" version_string="2.0.4"><![CDATA[<p class="minorText">Please do not reply to this message. You must visit the forum to reply.</p>
+
+<p class="minorText">This message was sent to you because you opted to receive emails when you purchase user upgrades at {board}.</p>
+
+<p class="minorText">If you no longer wish to receive these emails, you may <a href="{disable_this_link}">disable emails when you purchase user upgrades</a> or <a href="{disable_all_link}">disable all emails</a>.</p>]]></phrase>
+  <phrase title="exup_alert" version_id="100" version_string="1.0.0"><![CDATA[Alert]]></phrase>
+  <phrase title="exup_alert_and_email" version_id="100" version_string="1.0.0"><![CDATA[Both Alert and Email]]></phrase>
+  <phrase title="exup_alert_expired_user_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Your account subscription <i><b>{upgrade_title}</b></i> has now expired.<br />Thank you for having purchased this upgrade and we hope you have enjoyed the benefits it offered.<br />You may renew your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_expired_user_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Your account upgrade <i><b>{upgrade_title}</b></i> has now expired.<br />Thank you for having purchased this upgrade and we hope you have enjoyed the benefits it offered.<br />You may renew your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_expiring_user_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Your account upgrade subscription <i><b>{upgrade_title}</b></i> will automatically renew in {num_days} days.<br />We hope you have been enjoying the benefits this upgrade offers and thank you in advance for renewing your subscription.<br />You may view your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_expiring_user_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Your account upgrade <i><b>{upgrade_title}</b></i> will expire in {num_days} days.<br />Thank you for having purchased this upgrade and we hope you have enjoyed the benefits it offered.<br />You may extend or renew your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_payment_reversal_extend_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Your payment for extending the account subscription <i><b>{upgrade_title}</b></i> has been reversed.<br />Therefore the upgrade expiry date has been adjusted accordingly.<br />You may view your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_payment_reversal_extend_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Your payment for extending the account upgrade <i><b>{upgrade_title}</b></i> has been reversed.<br />Therefore the upgrade expiry date has been adjusted accordingly.<br />You may view your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_payment_reversal_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Your payment for the account subscription <i><b>{upgrade_title}</b></i> has been reversed.<br />Therefore the upgrade has been removed.<br />You may view your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_payment_reversal_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Your payment for the account upgrade <i><b>{upgrade_title}</b></i> has been reversed.<br />Therefore the upgrade has been removed.<br />You may view your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_purchased_user_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Thank you for purchasing the account subscription <i><b>{upgrade_title}</b></i>.<br />We hope you will take advantage of and enjoy all the benefits it has to offer.<br />You may view your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_purchased_user_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[Thank you for purchasing the account upgrade <i><b>{upgrade_title}</b></i>.<br />We hope you will take advantage of and enjoy all the benefits it has to offer.<br />You may view your account upgrades <a href="{upgrade_url}" class="PopupItemLink">here</a>.]]></phrase>
+  <phrase title="exup_alert_sender_username" version_id="2040100" version_string="2.4.1"><![CDATA[Alert sender (username)]]></phrase>
+  <phrase title="exup_conversation" version_id="106" version_string="1.0.6"><![CDATA[Conversation]]></phrase>
+  <phrase title="exup_conversation_expired_subscription_message" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Hi {username},
+
+Your user subscription {upgrade_title} has expired.
+
+You can renew it by going to the [url={upgrade_url}]Account Upgrades[/URL] page.]]></phrase>
+  <phrase title="exup_conversation_expired_subscription_title" version_id="2001100" version_string="2.0.11"><![CDATA[Your user subscription ({upgrade_title}) has expired.]]></phrase>
+  <phrase title="exup_conversation_expired_upgrade_message" version_id="1030600" version_string="1.3.6"><![CDATA[Hi {username},
+
+Your user upgrade {upgrade_title} has expired.
+
+You can renew it by going to the [url={upgrade_url}]Account Upgrades[/URL] page.]]></phrase>
+  <phrase title="exup_conversation_expired_upgrade_title" version_id="2001100" version_string="2.0.11"><![CDATA[Your user upgrade ({upgrade_title}) has expired.]]></phrase>
+  <phrase title="exup_conversation_expiring_subscription_message" version_id="110" version_string="1.1.0"><![CDATA[Hi {username},
+
+Your subscription upgrade ({upgrade_title}) is expiring soon.]]></phrase>
+  <phrase title="exup_conversation_expiring_subscription_title" version_id="110" version_string="1.1.0"><![CDATA[Your user upgrade subscription is expiring soon!]]></phrase>
+  <phrase title="exup_conversation_expiring_upgrade_message" version_id="1030600" version_string="1.3.6"><![CDATA[Hi {username},
+
+Your user upgrade {upgrade_title} is expiring soon.
+
+You can renew your upgrade on the [URL={upgrade_url}]account upgrades[/url] page.]]></phrase>
+  <phrase title="exup_conversation_expiring_upgrade_title" version_id="110" version_string="1.1.0"><![CDATA[Your user upgrade ({upgrade_title}) is expiring soon!]]></phrase>
+  <phrase title="exup_conversation_payment_reversal_subscription_message" version_id="2010300" version_string="2.1.3"><![CDATA[{username}, your account subscription payment was reversed. The account upgrade has been cancelled.]]></phrase>
+  <phrase title="exup_conversation_payment_reversal_subscription_title" version_id="2010300" version_string="2.1.3"><![CDATA[Your subscription payment was reversed.]]></phrase>
+  <phrase title="exup_conversation_payment_reversal_upgrade_message" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[{username}, your account upgrade payment was reversed. The account upgrade has been cancelled.]]></phrase>
+  <phrase title="exup_conversation_payment_reversal_upgrade_title" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Your upgrade payment was reversed.]]></phrase>
+  <phrase title="exup_conversation_purchased_subscription_message" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Hi,
+
+Your user subscription purchase has been confirmed and is now active.]]></phrase>
+  <phrase title="exup_conversation_purchased_subscription_title" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[User upgrade subscription purchase confirmation.]]></phrase>
+  <phrase title="exup_conversation_purchased_upgrade_message" version_id="110" version_string="1.1.0"><![CDATA[Hi,
+
+Your user upgrade purchase has been confirmed and is now active.]]></phrase>
+  <phrase title="exup_conversation_purchased_upgrade_title" version_id="110" version_string="1.1.0"><![CDATA[User upgrade purchase confirmation.]]></phrase>
+  <phrase title="exup_conversation_reversal_extend_subscription_message" version_id="2010300" version_string="2.1.3"><![CDATA[{username}, your payment for extending your account subscription was reversed. Therefore the upgrade expiry date has been adjusted accordingly.]]></phrase>
+  <phrase title="exup_conversation_reversal_extend_subscription_title" version_id="2010300" version_string="2.1.3"><![CDATA[Your subscription payment was reversed.]]></phrase>
+  <phrase title="exup_conversation_reversal_extend_upgrade_message" version_id="2010300" version_string="2.1.3"><![CDATA[{username}, your payment for extending your account upgrade was reversed. Therefore the upgrade expiry date has been adjusted accordingly.]]></phrase>
+  <phrase title="exup_conversation_reversal_extend_upgrade_title" version_id="2010300" version_string="2.1.3"><![CDATA[Your upgrade payment was reversed.]]></phrase>
+  <phrase title="exup_conversation_sender_must_be_valid_user" version_id="106" version_string="1.0.6"><![CDATA[Conversation sender must be valid user!]]></phrase>
+  <phrase title="exup_conversation_sender_username" version_id="106" version_string="1.0.6"><![CDATA[Sender (Username)]]></phrase>
+  <phrase title="exup_current_not_available" version_id="1020002" version_string="1.2.0"><![CDATA[Your current upgrade is no longer available.]]></phrase>
+  <phrase title="exup_days_not_valid" version_id="104" version_string="1.0.4"><![CDATA[Expiration Notification must be between 0 and 30 days.]]></phrase>
+  <phrase title="exup_email" version_id="100" version_string="1.0.0"><![CDATA[Email]]></phrase>
+  <phrase title="exup_email_expired_user_subscription_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, your account subscription <i><b>{upgrade_title}</b></i> at {board_title} has now expired.<br />Thank you for having purchased this upgrade and we hope you have enjoyed the benefits it offered.<br />You may renew your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_expired_user_subscription_subject" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[{boardTitle} Account Upgrade Subscription Expired]]></phrase>
+  <phrase title="exup_email_expired_user_upgrade_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, your account upgrade <i><b>{upgrade_title}</b></i> at {board_title} has now expired.<br />Thank you for having purchased this upgrade and we hope you have enjoyed the benefits it offered.<br />You may renew your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_expired_user_upgrade_subject" version_id="100" version_string="1.0.0"><![CDATA[{boardTitle} Account Upgrade Expired]]></phrase>
+  <phrase title="exup_email_expiring_user_subscription_body_html" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[{username}, your account upgrade subscription named <i><b>{upgrade_title}</b></i> at {board_title} will automatically renew in {num_days} days.<br />We hope you have been enjoying the benefits this upgrade offers and thank you in advance for renewing your subscription.<br />You may view your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_expiring_user_subscription_subject" version_id="100" version_string="1.0.0"><![CDATA[{boardTitle} Account Upgrade Subscription Renewal]]></phrase>
+  <phrase title="exup_email_expiring_user_upgrade_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, your account upgrade <i><b>{upgrade_title}</b></i> at {board_title} will expire in {num_days} days.<br />Thank you for having purchased this upgrade and we hope you have enjoyed the benefits it offered.<br />You may extend or renew your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_expiring_user_upgrade_subject" version_id="100" version_string="1.0.0"><![CDATA[{boardTitle} Account Upgrade Expiring]]></phrase>
+  <phrase title="exup_email_payment_reversal_extend_subscription_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, your payment for extending the account subscription <i><b>{upgrade_title}</b></i> at {board_title} has been reversed.<br />
+Therefore the upgrade expiry date has been adjusted accordingly.<br />
+You may view your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>
+Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_payment_reversal_extend_subscription_subject" version_id="2000901" version_string="2.0.9"><![CDATA[{boardTitle} Account Upgrade Subscription Payment Reversal]]></phrase>
+  <phrase title="exup_email_payment_reversal_extend_upgrade_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, your payment for extending the account upgrade <i><b>{upgrade_title}</b></i> at {board_title} has been reversed.<br />
+Therefore the upgrade expiry date has been adjusted accordingly.<br />
+You may view your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>
+Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_payment_reversal_extend_upgrade_subject" version_id="2000901" version_string="2.0.9"><![CDATA[{boardTitle} Account Upgrade Payment Reversal]]></phrase>
+  <phrase title="exup_email_payment_reversal_subscription_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, your payment for extending the account subscription <i><b>{upgrade_title}</b></i> at {board_title} has been reversed.<br />Therefore the upgrade expiry date has been adjusted accordingly.<br />You may view your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_payment_reversal_subscription_subject" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[{boardTitle} Account Upgrade Subscription Reversal]]></phrase>
+  <phrase title="exup_email_payment_reversal_upgrade_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, your payment for the account upgrade <i><b>{upgrade_title}</b></i> at {board_title} has been reversed.<br />Therefore the upgrade has been removed.<br />You may view your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_payment_reversal_upgrade_subject" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[{boardTitle} Account Upgrade Reversal]]></phrase>
+  <phrase title="exup_email_purchased_user_subscription_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, thank you for purchasing the account subscription <i><b>{upgrade_title}</b></i> at {board_title}.<br />We hope you will take advantage of and enjoy all the benefits it has to offer.<br />You may view your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_purchased_user_subscription_subject" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[{boardTitle} Account Upgrade Subscription Purchase]]></phrase>
+  <phrase title="exup_email_purchased_user_upgrade_body_html" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{username}, thank you for purchasing the account upgrade <i><b>{upgrade_title}</b></i> at {board_title}.<br />We hope you will take advantage of and enjoy all the benefits it has to offer.<br />You may view your account upgrades <a href="{upgrade_url}" style="color: #176093; text-decoration: none">here</a>.<p>Sincerely,<br />
+{board_title}</p>]]></phrase>
+  <phrase title="exup_email_purchased_user_upgrade_subject" version_id="100" version_string="1.0.0"><![CDATA[{boardTitle} Account Upgrade Purchase]]></phrase>
+  <phrase title="exup_excluded_payment_providers" version_id="2020100" version_string="2.2.1"><![CDATA[Exclude payment provides from notifications]]></phrase>
+  <phrase title="exup_excluded_payment_providers_explain" version_id="2020100" version_string="2.2.1"><![CDATA[Skips notifying expiring user upgrades which have been purchased by the relevant payment providers.]]></phrase>
+  <phrase title="exup_extend" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Extend]]></phrase>
+  <phrase title="exup_extend_upgrade" version_id="100" version_string="1.0.0"><![CDATA[Extend Upgrade]]></phrase>
+  <phrase title="exup_gift_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[gifted {upgrade_title}]]></phrase>
+  <phrase title="exup_no_recommended" version_id="100" version_string="1.0.0"><![CDATA[No (Recommended)]]></phrase>
+  <phrase title="exup_notify_days" version_id="104" version_string="1.0.4"><![CDATA[Expiration Notification (Days)]]></phrase>
+  <phrase title="exup_notify_days_explain" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Notify users this many days before the upgrade expires (max 30).<br />To disable notifications, set this value to Zero (0).<br /><br />An <a href="admin.php?options/groups/exup/">Alert and/or Email</a> will be sent to all users who own this upgrade notifying them that it will expire in X days.<br />If the upgrade is a recurring one, the notification will be sent out X days prior to the subscription renewal date. While this may help users ensure that they have sufficient funds in their PayPal account prior to renewal, it may also cause them to cancel the subscription.]]></phrase>
+  <phrase title="exup_option_notify_days" version_id="104" version_string="1.0.4"><![CDATA[You may notify users X days prior to their account upgrades expiring.<br />This value is set when creating or editing a <a href="admin.php?user-upgrades">User Upgrade</a>.]]></phrase>
+  <phrase title="exup_upgrade_can_not_be_purchased" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade can not be purchased]]></phrase>
+  <phrase title="exup_upgrade_cost_has_changed" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade cost has changed]]></phrase>
+  <phrase title="exup_upgrade_currency_changed" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade currency changed]]></phrase>
+  <phrase title="exup_upgrade_has_no_end_date" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade has no end date]]></phrase>
+  <phrase title="exup_upgrade_has_no_length_amount" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade has no length amount]]></phrase>
+  <phrase title="exup_upgrade_has_no_length_units" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade has no length units]]></phrase>
+  <phrase title="exup_upgrade_is_recurring" version_id="2010500" version_string="2.1.5"><![CDATA[Upgrade is recurring]]></phrase>
+  <phrase title="exup_upgrade_length_changed" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade length changed]]></phrase>
+  <phrase title="exup_upgrade_length_units_changed" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade length units changed]]></phrase>
+  <phrase title="exup_upgrade_recurring_status_has_changed" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade recurring status has changed]]></phrase>
+  <phrase title="exup_upgrade_usergroups_added_has_changed" version_id="1020300" version_string="1.2.3"><![CDATA[Upgrade usergroups added has changed]]></phrase>
+  <phrase title="exup_user_upgrade_expiry_notify" version_id="2020100" version_string="2.2.1"><![CDATA[User upgrade expiry notification]]></phrase>
+  <phrase title="option.ExUp_BccEmail" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[BCC Email Address]]></phrase>
+  <phrase title="option.ExUp_BccEmail_Action" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[BCC On Actions]]></phrase>
+  <phrase title="option.ExUp_ShowExtendFailReason" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Shows the reason an upgrade can not be extended]]></phrase>
+  <phrase title="option.exup_autoLeaveConversation" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Leave notify conversation on submit]]></phrase>
+  <phrase title="option.exup_extend_upgrade_button" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Extend Upgrade button?]]></phrase>
+  <phrase title="option.exup_notify_by" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Notify user by]]></phrase>
+  <phrase title="option.exup_notify_expired" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Notify user once upgrade has expired?]]></phrase>
+  <phrase title="option.exup_notify_purchase" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Notify user upon upgrade purchase?]]></phrase>
+  <phrase title="option.exup_notify_recurring_extend" version_id="2001300" version_string="2.0.13"><![CDATA[Notify user upon extending a recurring user upgrade/subscription?]]></phrase>
+  <phrase title="option.exup_respect_email_privacy" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Respect user's email privacy settings?]]></phrase>
+  <phrase title="option.exup_upgradeUrl" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[User Upgrade URL]]></phrase>
+  <phrase title="option_explain.ExUp_BccEmail" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[On upgrade/downgrade emails, BCC the email notification <b>if it is sent</b> to an admin email address.]]></phrase>
+  <phrase title="option_explain.ExUp_BccEmail_Action" version_id="2000800" version_string="2.0.8"><![CDATA[New-line separated list!
+BCC notification emails on one of the following actions:<br/>
+<i>purchased_upgrade<br/> reversal_extend_subscription<br/> reversal_extend_upgrade<br/> payment_reversal_upgrade<br/> payment_reversal_subscription<br/> expiring_upgrade<br/> expiring_subscription<br/>expired_upgrade<br/> expired_subscription<i>]]></phrase>
+  <phrase title="option_explain.ExUp_ShowExtendFailReason" version_id="1020300" version_string="1.2.3"><![CDATA[For debugging purposes, determining why an upgrade failed to be extendable can be tricky. This will print the reason the upgrade couldn't be extended.]]></phrase>
+  <phrase title="option_explain.exup_autoLeaveConversation" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[]]></phrase>
+  <phrase title="option_explain.exup_extend_upgrade_button" version_id="104" version_string="1.0.4"><![CDATA[Do you wish to provide a "Extend Upgrade" button in the user's purchased upgrades list?<br />This will allow your members to renew a non-recurring upgrade prior to it expiring. Upgrade length will be added to their remaining time.<br /><br /><b>This button will only be available if the upgrade details have not changed since it was first purchased</b> (such as cost, length, user groups, and whether recurring) as they must remain the same in case the payment is reversed and the end date has to be adjusted accordingly.]]></phrase>
+  <phrase title="option_explain.exup_notify_by" version_id="2010300" version_string="2.1.3"><![CDATA[Alert text may be changed by modifying the following phrases:<br />
+<i>exup_alert_purchased_user_upgrade<br />
+exup_alert_purchased_user_subscription<br />
+exup_alert_expired_user_upgrade<br />
+exup_alert_expired_user_subscription<br />
+exup_alert_expiring_user_upgrade<br />
+exup_alert_expiring_user_subscription<br />
+exup_alert_payment_reversal_upgrade<br/>
+exup_alert_payment_reversal_subscription<br/>
+exup_alert_payment_reversal_extend_upgrade<br />
+exup_alert_payment_reversal_extend_subscription
+</i><br /><br />Email text may be changed by modifying the following phrases:<br />
+<i>exup_email_purchased_user_upgrade_body<br />
+exup_email_purchased_subscription_body<br />
+exup_email_expiring_user_upgrade_body<br />
+exup_email_expiring_user_subscription_body<br />
+exup_email_expired_user_upgrade_body<br />
+exup_email_expired_user_subscription_body<br />
+exup_email_payment_reversal_upgrade_body<br />
+exup_email_payment_reversal_subscription_body<br />
+exup_email_payment_reversal_extend_upgrade_body<br />
+exup_email_payment_reversal_extend_subscription_body
+</i><br /><br />Conversation title and message can be changed by modifying the following phrases:<br />
+<i>exup_conversation_purchased_upgrade_title, exup_conversation_purchased_upgrade_message<br/>
+exup_conversation_purchased_subscription_title, exup_conversation_purchased_subscription_message<br/>
+exup_conversation_expiring_upgrade_title, exup_conversation_expiring_upgrade_message<br/>
+exup_conversation_expiring_subscription_title, exup_conversation_expiring_subscription_message<br/>
+exup_conversation_expired_upgrade_title, exup_conversation_expired_upgrade_message<br/>
+exup_conversation_expired_subscription_title, exup_conversation_expired_subscription_message<br/>
+exup_conversation_payment_reversal_upgrade_title, exup_conversation_payment_reversal_upgrade_message<br/>
+exup_conversation_reversal_extend_upgrade_title, exup_conversation_reversal_extend_upgrade_message<br/>
+exup_conversation_reversal_extend_subscription_title, exup_conversation_reversal_extend_subscription_message
+</i>]]></phrase>
+  <phrase title="option_explain.exup_notify_expired" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[Let the user know the upgrade has expired. <font color="#7E2217">Selecting 'Yes' here will override the default expiry alert</font><br />Alert and Email text may be changed by modifying the following phrases:<br /><i>exup_alert_expired_user_upgrade</i><br /><i>exup_email_expired_user_upgrade_text, exup_email_expired_user_upgrade_html</i>]]></phrase>
+  <phrase title="option_explain.exup_notify_purchase" version_id="104" version_string="1.0.4"><![CDATA[Thank the user for the purchase and provide further information about upgrades and their benefits.<br />Alert and Email text may be changed by modifying the following phrases:<br /><i>exup_alert_purchased_user_upgrade<br />exup_email_purchased_user_upgrade_html, exup_email_purchased_user_upgrade_text</i>]]></phrase>
+  <phrase title="option_explain.exup_notify_recurring_extend" version_id="2001300" version_string="2.0.13"><![CDATA[Thank the user for the purchase and provide further information about upgrades and their benefits.<br />Alert and Email text may be changed by modifying the following phrases:<br /><i>exup_alert_purchased_user_subscription<br />exup_email_purchased_user_subscription_subject, exup_email_purchased_user_subscription_body_html</i>]]></phrase>
+  <phrase title="option_explain.exup_respect_email_privacy" version_id="100" version_string="1.0.0"><![CDATA[Do you wish to respect the privacy setting <i>Receive site mailings</i> ?<br />Sellecting 'No' will ensure emails will be sent regardless of whether the user has opted not to receive site mailings.]]></phrase>
+  <phrase title="option_explain.exup_upgradeUrl" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[This link will be shown in alerts, conversations and emails to direct users to the user upgrade page.]]></phrase>
+  <phrase title="option_group.exup" version_id="100" version_string="1.0.0"><![CDATA[Expiring User Upgrades]]></phrase>
+  <phrase title="option_group_description.exup" version_id="100" version_string="1.0.0"><![CDATA[Notify users when their account upgrades are about to expire.]]></phrase>
+</phrases>

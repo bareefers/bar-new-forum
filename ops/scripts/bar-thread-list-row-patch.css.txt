@@ -1,0 +1,179 @@
+/* Must match extra-less-aurora16-source.less .barThreadListRowFlex (+ 640px block). Probe injects this. */
+@media (max-width: 1600px) {
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread {
+		display: flex !important;
+		flex-wrap: wrap !important;
+		align-items: flex-start;
+		justify-content: flex-start;
+		width: 100% !important;
+		min-width: 0;
+		box-sizing: border-box;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell {
+		width: auto !important;
+		box-sizing: border-box;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--icon,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--icon,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--icon,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--icon {
+		flex: 0 0 52px;
+		min-width: 52px;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--main,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--main,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--main,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--main {
+		flex: 1 1 0 !important;
+		min-width: min(100%, 14rem) !important;
+		max-width: none !important;
+		overflow: hidden;
+		text-align: left;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--main .structItem-title,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--main .structItem-title,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--main .structItem-title,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--main .structItem-title {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 100%;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--main .structItem-title a,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--main .structItem-title a,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--main .structItem-title a,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--main .structItem-title a {
+		display: block;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		max-width: 100%;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread .structItem-cell--main .structItem-minor,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread .structItem-cell--main .structItem-minor,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread .structItem-cell--main .structItem-minor,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread .structItem-cell--main .structItem-minor {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 6px 10px;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread .structItem-pageJump,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread .structItem-pageJump,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread .structItem-pageJump,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread .structItem-pageJump {
+		display: inline-flex !important;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 4px 6px;
+		margin-left: 0 !important;
+		float: none !important;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread .structItem-pageJump a,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread .structItem-pageJump a,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread .structItem-pageJump a,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread .structItem-pageJump a {
+		opacity: 1 !important;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--meta,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--meta,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta {
+		display: flex !important;
+		flex: 0 1 5.25rem !important;
+		min-width: 0 !important;
+		max-width: 6rem;
+		justify-content: center;
+		align-items: center;
+		padding-left: 4px;
+		padding-right: 4px;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--meta .pairs,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta .pairs,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--meta .pairs,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta .pairs {
+		display: inline-flex !important;
+		flex-direction: row !important;
+		flex-wrap: nowrap;
+		align-items: baseline !important;
+		justify-content: center;
+		gap: 2px;
+		font-size: 12px;
+		line-height: 1.2;
+		min-width: 0;
+		max-width: 100%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		opacity: 1;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--meta.barThreadStatReply .pairs::before,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta.barThreadStatReply .pairs::before,
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--meta.barThreadStatView .pairs::before,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta.barThreadStatView .pairs::before,
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--meta.barThreadStatRx .pairs::before,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta.barThreadStatRx .pairs::before,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--meta.barThreadStatReply .pairs::before,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta.barThreadStatReply .pairs::before,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--meta.barThreadStatView .pairs::before,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta.barThreadStatView .pairs::before,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--meta.barThreadStatRx .pairs::before,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta.barThreadStatRx .pairs::before {
+		display: inline !important;
+		white-space: nowrap;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--latest,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--latest,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--latest,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--latest {
+		flex: 0 1 11rem;
+		min-width: 0;
+		max-width: 12rem;
+		margin-left: auto;
+		text-align: right;
+		align-self: flex-start;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--latest .structItem-minor,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--latest .structItem-minor,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--latest .structItem-minor,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--latest .structItem-minor {
+		text-align: right;
+	}
+
+	.p-body-main.p-body-main--withSidebar .p-body-content .structItem.structItem--thread > .structItem-cell--iconEnd,
+	.p-body-main.p-body-main--withSidebar .p-body-pageContent .structItem.structItem--thread > .structItem-cell--iconEnd,
+	.p-body-main.p-body-main--withSideNav .p-body-content .structItem.structItem--thread > .structItem-cell--iconEnd,
+	.p-body-main.p-body-main--withSideNav .p-body-pageContent .structItem.structItem--thread > .structItem-cell--iconEnd {
+		flex: 0 0 auto;
+		align-self: flex-start;
+	}
+}
+
+@media (max-width: 640px) {
+	.p-body-content .structItem.structItem--thread > .structItem-cell--meta.barThreadStatView,
+	.p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta.barThreadStatView,
+	.p-body-content .structItem.structItem--thread > .structItem-cell--meta.barThreadStatRx,
+	.p-body-pageContent .structItem.structItem--thread > .structItem-cell--meta.barThreadStatRx {
+		display: none !important;
+	}
+}

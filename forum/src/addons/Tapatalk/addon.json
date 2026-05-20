@@ -1,0 +1,15 @@
+{
+    "legacy_addon_id": "",
+    "title": "Tapatalk",
+    "description": "Tapatalk - Mobile First Community Platform - Free forum mobile app, Free forum hosting, Managed Hosting for forums",
+    "version_id": 2120970,
+    "version_string": "1.2.9",
+    "dev": "Tapatalk.com",
+    "dev_url": "https://www.tapatalk.com/getting_started",
+    "faq_url": "https://www.tapatalk.com/groups/tapatalksupport/",
+    "support_url": "https://www.tapatalk.com/groups/tapatalksupport/",
+    "extra_urls": [],
+    "require": [],
+    "icon": "icon.png",
+	"options": ""
+}

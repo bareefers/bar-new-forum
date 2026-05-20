@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="CartaNav" widget_title="XenCarta: Navigation" widget_desc="Displays the navigation index from XenCarta" widget_string="1" widget_version="1" widget_url="https://xenforo.com/community/resources/8wayrun-com-xencarta-wiki-pro.1690/" widget_install_class="EWRporta2_Widget_Install_Carta" widget_install_method="installCode" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 days">
+  <listeners/>
+  <options>
+    <option option_id="cartanav_search" edit_format="onoff" data_type="boolean" display_order="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Show Wiki Search Bar</title>
+      <explain><![CDATA[If selected, a search bar will be added at the bottom of the block.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_CartaNav"><![CDATA[<xen:require css="EWRcarta.css" />
+<xen:require css="member_list.css" />
+
+<div class="section wikiNav widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3><a href="{xen:link 'full:wiki'}">{$wTitle}</a></h3>
+
+		<xen:if hascontent="true">
+		<ul>
+			<xen:contentcheck>
+			<xen:foreach loop="$wCached" value="$page">
+				<li>
+					{xen:raw $page.page_indent}<a href="{xen:link 'full:wiki/{$page.page_slug}/'}">{$page.page_name}</a>
+				</li>
+			</xen:foreach>
+			</xen:contentcheck>
+		</ul>
+		</xen:if>
+
+		<xen:if is="{$wOptions.cartanav_search}">
+		<div style="margin-top: 10px;" class="findMember">
+			<form action="{xen:link 'search/search'}" method="post" class="AutoValidator" data-optInOut="optIn" data-redirect="true">
+				<input type="search" name="keywords" class="textCtrl" placeholder="{xen:phrase search_wiki}..." results="0" title="{xen:phrase enter_your_search_and_hit_enter}" id="searchBar_keywords" value="{$search.keywords}" />
+				<input type="hidden" name="type" value="wiki" />
+				<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+			</form>
+		</div>
+		</xen:if>
+	</div>
+</div>]]></template>
+  </templates>
+</widget>

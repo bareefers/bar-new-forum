@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="ForumStats" widget_title="Forum Statistics" widget_desc="Displays basic statistics about the forum" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options/>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_ForumStats"><![CDATA[<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent statsList">
+		<h3>{xen:phrase forum_statistics}</h3>
+		<div class="pairsJustified">
+			<dl class="discussionCount"><dt>{xen:phrase discussions}:</dt>
+				<dd>{xen:number $wUncached.discussions}</dd></dl>
+			<dl class="messageCount"><dt>{xen:phrase messages}:</dt>
+				<dd>{xen:number $wUncached.messages}</dd></dl>
+			<dl class="memberCount"><dt>{xen:phrase members_count}:</dt>
+				<dd>{xen:number $wUncached.users}</dd></dl>
+			<dl class="mostCount"><dt>{xen:phrase porta2_user_record}:</dt>
+				<dd class="Tooltip" title="{xen:dateTime $wUncached.most_users.time}">{xen:number $wUncached.most_users.total}</dd></dl>
+			<dl><dt>{xen:phrase latest_member}:</dt>
+				<dd><xen:username user="$wUncached.latestUser" text="rich" /></dd></dl>
+			<!-- slot: forum_stats_extra -->
+		</div>
+	</div>
+</div>]]></template>
+  </templates>
+</widget>

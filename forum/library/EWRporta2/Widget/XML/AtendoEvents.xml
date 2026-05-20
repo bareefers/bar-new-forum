@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="AtendoEvents" widget_title="XenAtendo: Upcoming Events" widget_desc="Displays upcoming events from XenAtendo" widget_string="1" widget_version="1" widget_url="https://xenforo.com/community/resources/8wayrun-com-xenatendo-events.99/" widget_install_class="EWRporta2_Widget_Install_Atendo" widget_install_method="installCode" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="atendoevents_range" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>7</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Date Range</title>
+      <explain><![CDATA[The number of days back to display upcoming events]]></explain>
+    </option>
+    <option option_id="atendoevents_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>5</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Limit</title>
+      <explain><![CDATA[The maximum number of upcoming events to display.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_AtendoEvents"><![CDATA[<xen:if hascontent="true">
+<xen:require css="EWRwidget_AtendoEvents.css" />
+
+<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3>{$wTitle}</h3>
+		
+		<ul>
+			<xen:contentcheck>
+			<xen:foreach loop="$wCached" value="$event">
+				<li>
+					<div class="eventName"><a href="{xen:link 'events', $event}"><b>{$event.event_title}</b></a></div>
+					
+					<xen:if is="{$event.event_address}">
+						<i>{$event.event_address}, {$event.event_citystate}</i>
+					<xen:else/>
+						<i>{$event.event_venue}</i>
+					</xen:if>
+					
+					<div class="eventTime">{$event.formatted_strtime} <span class="muted">({$event.formatted_timezone})</span></div>
+				</li>
+			</xen:foreach>
+			</xen:contentcheck>
+		</ul>
+	</div>
+</div>
+</xen:if>]]></template>
+    <template title="EWRwidget_AtendoEvents.css"><![CDATA[.widget_AtendoEvents li { margin: 8px 0 0; padding: 8px 0 0; border-top: 1px solid {xen:property primaryLighterStill}; }
+.widget_AtendoEvents li:first-child { margin-top: 0; padding-top: 0; border-top: 0; }]]></template>
+  </templates>
+</widget>

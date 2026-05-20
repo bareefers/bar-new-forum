@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "Conversation search plus",
+    "description": "Allows searching all conversations.",
+    "version_id": 29,
+    "version_string": "2.9",
+    "dev": "XF2 Addons",
+    "dev_url": "https://www.xf2addons.com/",
+    "faq_url": "",
+    "support_url": "",
+    "extra_urls": [],
+    "require": [],
+    "icon": "icon.jpg"
+}

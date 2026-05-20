@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="public" title="andy_conversationsearchplus" version_id="26" version_string="2.6"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_conversation_search_plus') }}</xf:title>
+
+<a href="{{ link('conversations') }}">{{ phrase('conversationsearchplus_return_to_conversations') }}</a>
+<br /><br />
+
+{{ phrase('conversationsearchplus_description') }}
+<br /><br />
+
+<xf:form action="{{ link('conversationsearchplus/results') }}" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:radiorow label="{{ phrase('conversationsearchplus_select') }}" name="type">
+				<xf:option value="title" checked="checked}">
+					<xf:label>{{ phrase('conversationsearchplus_conversation_titles') }}</xf:label>
+				</xf:option>
+				<xf:option value="message">
+					<xf:label>{{ phrase('conversationsearchplus_message_content') }}</xf:label>
+				</xf:option>
+			</xf:radiorow>
+			<xf:textboxrow label="{{ phrase('conversationsearchplus_keywords') }}" name="keywords" placeholder="{{ phrase('conversationsearchplus_search...') }}" />
+			<xf:textboxrow label="{{ phrase('conversationsearchplus_posted_by') }}" name="posted_by" placeholder="{{ phrase('conversationsearchplus_member...') }}" ac="single" autocomplete="off" />
+			<xf:submitrow submit="{{ phrase('conversationsearchplus_submit') }}" />
+		</div>
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="andy_conversationsearchplus.less" version_id="10" version_string="1.0"><![CDATA[.anchor {
+    position: relative;
+    top: -50px;
+}
+
+.conversationsearchplus-container {
+	padding: 20px;
+	background: @xf-paletteNeutral1;
+	border: 1px solid xf-diminish(@xf-borderColor, 6%);
+}
+
+.conversationsearchplus-message-block {
+	border-top: 1px solid @xf-borderColorFaint;
+	border-bottom: 1px solid @xf-borderColorFaint;
+	padding: 20px 0px 20px 0px;
+}]]></template>
+  <template type="public" title="andy_conversationsearchplus_attachments" version_id="10" version_string="1.0"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_attachments') }}</xf:title>
+
+<xf:css src="andy_conversationsearchplus.less" />
+
+{{ phrase('conversationsearchplus_message_id') }}: {$messageId}
+<br /><br />
+
+<xf:foreach loop="$results" value="$result">
+	<div class="conversationsearchplus-container">
+		{$result|raw}
+	</div>
+	<br />
+</xf:foreach>]]></template>
+  <template type="public" title="andy_conversationsearchplus_conversation_view" version_id="27" version_string="2.7"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_conversation_view') }}</xf:title>
+
+<xf:css src="andy_conversationsearchplus.less" />
+
+{{ phrase('conversationsearchplus_title:') }}
+<xf:foreach loop="$results1" value="$result">
+	{$result.title}
+</xf:foreach>
+
+<br />
+
+{{ phrase('conversationsearchplus_starter:') }}
+<xf:foreach loop="$results1" value="$result">
+	<a href="{{ link('members', $result) }}">{$result.username}</a>
+</xf:foreach>
+
+<br />
+
+<ul class="listInline listInline--comma">
+	{{ phrase('conversationsearchplus_participants:') }}
+	<xf:foreach loop="$results2" value="$result">
+		<xf:if is="$result.User is not empty">
+			<li><xf:username user="{$result.User}" rich="true" /></li>
+		</xf:if>
+		<xf:if is="$result.User is empty">
+			<li>{{ phrase('conversationsearchplus_unknown_member') }}</li>
+		</xf:if>
+	</xf:foreach>
+</ul>
+
+{{ phrase('conversationsearchplus_limit:') }} {$limit}
+
+<br /><br />
+
+<a href="{{ link('conversationsearchplus/delete', '', {'conversation_id': $conversationId}) }}" data-xf-click="overlay">{{ phrase('conversationsearchplus_delete_conversation') }}</a>
+<br />
+<br />
+
+<xf:foreach loop="$results3" value="$result">
+	<div class="anchor" id="{$result.message_id}"></div>
+	
+	<div class="conversationsearchplus-container">
+
+		<xf:date time="{$result.message_date}" />
+		<br /><br />
+
+		<xf:avatar user="$result.User" size="s" img="true" />
+		<br /><br />
+
+		{$result.username}
+		<br /><br />
+
+		<div class="conversationsearchplus-message-block">
+			{{ bb_code($result.message, 'post', $message) }}
+		</div>
+
+		<xf:if is="{$result.attach_count} > 0">
+			<br />
+			<a href="{{ link('conversationsearchplus/attachments', '', {'message_id': $result.message_id}) }}">{{ phrase('conversationsearchplus_attachments') }} {$result.attach_count}</a>
+			<br />
+		</xf:if>
+
+		<br />
+		{{ phrase('conversationsearchplus_message_id') }}: {$result.message_id}
+		<br /><br />
+
+		<a href="{{ link('conversationsearchplus/report', '', {'message_id': $result.message_id}) }}" data-xf-click="overlay">{{ phrase('report') }}</a>
+		<br />
+
+	</div>
+	<br />
+</xf:foreach>]]></template>
+  <template type="public" title="andy_conversationsearchplus_delete" version_id="24" version_string="2.4"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_delete_conversation') }}</xf:title>
+
+<xf:form action="{{ link('conversationsearchplus/delete-confirmed', '', {'conversation_id': $conversationId}) }}" ajax="true" class="block">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:hiddenval name="conversation_id" value="{$conversationId}" />
+			<xf:inforow rowtype="confirm">
+				{$title}
+			</xf:inforow>
+		</div>
+		<xf:submitrow rowtype="simple" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="andy_conversationsearchplus_report" version_id="27" version_string="2.7"><![CDATA[<xf:title>{{ phrase('report_content') }}</xf:title>
+
+<xf:form action="{{ link('conversationsearchplus/report-save') }}" class="block" ajax="true"
+	data-skip-overlay-redirect="true">
+
+	<div class="block-container">
+		<div class="block-body">
+			<xf:hiddenval name="message_id" value="{$messageId}" />
+			<xf:textarearow name="report_reason" autosize="true" autofocus="autofocus"
+				label="{{ phrase('report_reason') }}" />
+		</div>
+		<xf:submitrow submit="{{ phrase('report_verb') }}" />
+	</div>
+</xf:form>]]></template>
+  <template type="public" title="andy_conversationsearchplus_results_latest_conversations" version_id="25" version_string="2.5"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_conversation_search_plus_results') }}</xf:title>
+
+<a href="{{ link('conversationsearchplus') }}">{{ phrase('conversationsearchplus_return_to_conversation_search_plus') }}</a>
+<br /><br />
+
+{{ phrase('conversationsearchplus_select:') }} {{ phrase('conversationsearchplus_latest_conversations') }}
+<br />
+
+{{ phrase('conversationsearchplus_keywords:') }} {$keywords}
+<br />
+
+{{ phrase('conversationsearchplus_posted_by:') }} {$postedBy}
+<br />
+
+{{ phrase('conversationsearchplus_results:') }} {$resultsCount}
+<br />
+
+{{ phrase('conversationsearchplus_limit:') }} {$limit}
+<br /><br />
+
+<xf:if is="$results is not empty">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('conversationsearchplus_date') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_title') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_conversation_starter') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_participants') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_message_count') }}</xf:cell>
+				</xf:datarow>
+				<xf:foreach loop="$results" value="$result">
+					<xf:datarow rowclass="dataList-row--noHover">
+						<xf:cell><xf:date time="{$result.start_date}" /></xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}">{$result.title}</xf:cell>
+						<xf:cell href="{{ link('members', $result) }}">{$result.username}</xf:cell>
+						<xf:cell>
+							<ul class="listInline listInline--comma">
+								<xf:foreach loop="$result.recipients" value="$recipient">
+									<li><xf:username user="{$recipient}" rich="true" /></li>
+								</xf:foreach>
+							</ul>
+						</xf:cell>
+						<xf:cell>{{ {$result.reply_count} + 1 }}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+	</div>
+<xf:else />
+	<div class="block">
+		<div class="block-container">
+			<div class="block-row">
+				{{ phrase('conversationsearch_no_results_found') }}
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="andy_conversationsearchplus_results_latest_messages" version_id="26" version_string="2.6"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_conversation_search_plus_results') }}</xf:title>
+
+<a href="{{ link('conversationsearchplus') }}">{{ phrase('conversationsearchplus_return_to_conversation_search_plus') }}</a>
+<br /><br />
+
+{{ phrase('conversationsearchplus_select:') }} {{ phrase('conversationsearchplus_latest_messages') }}
+<br />
+
+{{ phrase('conversationsearchplus_keywords:') }} {$keywords}
+<br />
+
+{{ phrase('conversationsearchplus_posted_by:') }} {$postedBy}
+<br />
+
+{{ phrase('conversationsearchplus_results:') }} {$resultsCount}
+<br />
+
+{{ phrase('conversationsearchplus_limit:') }} {$limit}
+<br /><br />
+
+<xf:if is="$results is not empty">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('conversationsearchplus_date') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_title') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_conversation_starter') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_posted_by') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_message_id') }}</xf:cell>
+				</xf:datarow>
+				<xf:foreach loop="$results" value="$result">
+					<xf:datarow rowclass="dataList-row--noHover">
+						<xf:cell><xf:date time="{$result.message_date}" /></xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}">{$result.Conversation.title}</xf:cell>
+						<xf:cell href="{{ link('members', $result.Conversation) }}">{$result.Conversation.username}</xf:cell>
+						<xf:cell href="{{ link('members', $result) }}">{$result.username}</xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}#{$result.message_id}">{$result.message_id}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+	</div>
+<xf:else />
+	<div class="block">
+		<div class="block-container">
+			<div class="block-row">
+				{{ phrase('conversationsearchplus_no_results_found') }}
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="andy_conversationsearchplus_results_message" version_id="25" version_string="2.5"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_conversation_search_plus_results') }}</xf:title>
+
+<a href="{{ link('conversationsearchplus') }}">{{ phrase('conversationsearchplus_return_to_conversation_search_plus') }}</a>
+<br /><br />
+
+{{ phrase('conversationsearchplus_select:') }} {{ phrase('conversationsearchplus_message_content') }}
+<br />
+
+{{ phrase('conversationsearchplus_keywords:') }} {$keywords}
+<br />
+
+{{ phrase('conversationsearchplus_posted_by:') }} {$postedBy}
+<br />
+
+{{ phrase('conversationsearchplus_results:') }} {$resultsCount}
+<br />
+
+{{ phrase('conversationsearchplus_limit:') }} {$limit}
+<br /><br />
+
+<xf:if is="$results is not empty">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('conversationsearchplus_date') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_title') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_conversation_starter') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_posted_by') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_message_id') }}</xf:cell>
+				</xf:datarow>
+				<xf:foreach loop="$results" value="$result">
+					<xf:datarow rowclass="dataList-row--noHover">
+						<xf:cell><xf:date time="{$result.message_date}" /></xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}">{$result.Conversation.title}</xf:cell>
+						<xf:cell href="{{ link('members', $result) }}">{$result.Conversation.username}</xf:cell>
+						<xf:cell href="{{ link('members', $result) }}">{$result.username}</xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}#{$result.message_id}">{$result.message_id}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+	</div>
+<xf:else />
+	<div class="block">
+		<div class="block-container">
+			<div class="block-row">
+				{{ phrase('conversationsearchplus_no_results_found') }}
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="andy_conversationsearchplus_results_message_username" version_id="25" version_string="2.5"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_conversation_search_plus_results') }}</xf:title>
+
+<a href="{{ link('conversationsearchplus') }}">{{ phrase('conversationsearchplus_return_to_conversation_search_plus') }}</a>
+<br /><br />
+
+{{ phrase('conversationsearchplus_select:') }} {{ phrase('conversationsearchplus_message_content') }}
+<br />
+
+{{ phrase('conversationsearchplus_keywords:') }} {$keywords}
+<br />
+
+{{ phrase('conversationsearchplus_posted_by:') }} {$postedBy}
+<br />
+
+{{ phrase('conversationsearchplus_results:') }} {$resultsCount}
+<br />
+
+{{ phrase('conversationsearchplus_limit:') }} {$limit}
+<br /><br />
+
+<xf:if is="$results is not empty">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('conversationsearchplus_date') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_title') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_conversation_starter') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_posted_by') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_message_id') }}</xf:cell>
+				</xf:datarow>
+				<xf:foreach loop="$results" value="$result">
+					<xf:datarow rowclass="dataList-row--noHover">
+						<xf:cell><xf:date time="{$result.message_date}" /></xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}">{$result.Conversation.title}</xf:cell>
+						<xf:cell href="{{ link('members', $result) }}">{$result.username}</xf:cell>
+						<xf:cell href="{{ link('members', $result) }}">{$result.username}</xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}#{$result.message_id}">{$result.message_id}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+	</div>
+<xf:else />
+	<div class="block">
+		<div class="block-container">
+			<div class="block-row">
+				{{ phrase('conversationsearchplus_no_results_found') }}
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="andy_conversationsearchplus_results_title" version_id="25" version_string="2.5"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_conversation_search_plus_results') }}</xf:title>
+
+<a href="{{ link('conversationsearchplus') }}">{{ phrase('conversationsearchplus_return_to_conversation_search_plus') }}</a>
+<br /><br />
+
+{{ phrase('conversationsearchplus_select:') }} {{ phrase('conversationsearchplus_conversation_titles') }}
+<br />
+
+{{ phrase('conversationsearchplus_keywords:') }} {$keywords}
+<br />
+
+{{ phrase('conversationsearchplus_posted_by:') }} {$postedBy}
+<br />
+
+{{ phrase('conversationsearchplus_results:') }} {$resultsCount}
+<br />
+
+{{ phrase('conversationsearchplus_limit:') }} {$limit}
+<br /><br />
+
+<xf:if is="$results is not empty">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('conversationsearchplus_date') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_title') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_conversation_starter') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_participants') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_message_count') }}</xf:cell>
+				</xf:datarow>
+				<xf:foreach loop="$results" value="$result">
+					<xf:datarow rowclass="dataList-row--noHover">
+						<xf:cell><xf:date time="{$result.start_date}" /></xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}">{$result.title}</xf:cell>
+						<xf:cell href="{{ link('members', $result) }}">{$result.username}</xf:cell>
+						<xf:cell>
+							<ul class="listInline listInline--comma">
+								<xf:foreach loop="$result.recipients" value="$recipient">
+									<li><xf:username user="{$recipient}" rich="true" /></li>
+								</xf:foreach>
+							</ul>
+						</xf:cell>
+						<xf:cell>{{ {$result.reply_count} + 1 }}</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+	</div>
+<xf:else />
+	<div class="block">
+		<div class="block-container">
+			<div class="block-row">
+				{{ phrase('conversationsearchplus_no_results_found') }}
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+  <template type="public" title="andy_conversationsearchplus_results_title_username" version_id="25" version_string="2.5"><![CDATA[<xf:title>{{ phrase('conversationsearchplus_conversation_search_plus_results') }}</xf:title>
+
+<a href="{{ link('conversationsearchplus') }}">{{ phrase('conversationsearchplus_return_to_conversation_search_plus') }}</a>
+<br /><br />
+
+{{ phrase('conversationsearchplus_select:') }} {{ phrase('conversationsearchplus_conversation_titles') }}
+<br />
+
+{{ phrase('conversationsearchplus_keywords:') }} {$keywords}
+<br />
+
+{{ phrase('conversationsearchplus_posted_by:') }} {$postedBy}
+<br />
+
+{{ phrase('conversationsearchplus_results:') }} {$resultsCount}
+<br />
+
+{{ phrase('conversationsearchplus_limit:') }} {$limit}
+<br /><br />
+
+<xf:if is="$results is not empty">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:datalist data-xf-init="responsive-data-list">
+				<xf:datarow rowtype="header">
+					<xf:cell>{{ phrase('conversationsearchplus_date') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_title') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_conversation_starter') }}</xf:cell>
+					<xf:cell>{{ phrase('conversationsearchplus_participants') }}</xf:cell>
+				</xf:datarow>
+				<xf:foreach loop="$results" value="$result">
+					<xf:datarow rowclass="dataList-row--noHover">
+						<xf:cell><xf:date time="{$result.start_date}" /></xf:cell>
+						<xf:cell href="{{ link('conversationsearchplus/conversation', '', {'conversation_id': $result.conversation_id}) }}">{$result.title}</xf:cell>
+						<xf:cell href="{{ link('members', $result) }}">{$result.username}</xf:cell>
+						<xf:cell>
+							<ul class="listInline listInline--comma">
+								<xf:foreach loop="$result.recipients" value="$recipient">
+									<li><xf:username user="{$recipient}" rich="true" /></li>
+								</xf:foreach>
+							</ul>
+						</xf:cell>
+					</xf:datarow>
+				</xf:foreach>
+			</xf:datalist>
+		</div>
+	</div>
+<xf:else />
+	<div class="block">
+		<div class="block-container">
+			<div class="block-row">
+				{{ phrase('conversationsearchplus_no_results_found') }}
+			</div>
+		</div>
+	</div>
+</xf:if>]]></template>
+</templates>

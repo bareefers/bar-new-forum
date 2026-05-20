@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="RawHtml" widget_title="Raw HTML" widget_desc="Displays a raw dump of HTML" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="rawhtml_wrap" edit_format="onoff" data_type="boolean" display_order="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Wrap Widget in Block</title>
+      <explain><![CDATA[If selected, the widget will be wrapped in a standard block.]]></explain>
+    </option>
+    <option option_id="rawhtml_link" edit_format="textbox" data_type="string" display_order="2">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Header Link</title>
+      <explain><![CDATA[You can add a link to the header of the standard block.]]></explain>
+    </option>
+    <option option_id="rawhtml_contents" edit_format="textbox" data_type="string" display_order="3">
+      <default_value></default_value>
+      <edit_format_params>rows=10</edit_format_params>
+      <sub_options></sub_options>
+      <title>Contents</title>
+      <explain><![CDATA[The raw HTML which will be displayed to the viewer.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_RawHtml"><![CDATA[<xen:if is="{$wOptions.rawhtml_wrap}">
+	<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+		<div class="secondaryContent">
+			<h3><xen:if is="{$wOptions.rawhtml_link}"><a href="{$wOptions.rawhtml_link}">{$wTitle}</a><xen:else />{$wTitle}</xen:if></h3>
+</xen:if>
+
+	{xen:raw $wOptions.rawhtml_contents}
+			
+<xen:if is="{$wOptions.rawhtml_wrap}">
+		</div>
+	</div>
+</xen:if>]]></template>
+  </templates>
+</widget>

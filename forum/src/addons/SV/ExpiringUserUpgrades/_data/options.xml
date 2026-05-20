@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<options>
+  <option option_id="ExUp_BccEmail" edit_format="textbox" data_type="string" advanced="0">
+    <default_value></default_value>
+    <relation group_id="exup" display_order="100"/>
+  </option>
+  <option option_id="ExUp_BccEmail_Action" edit_format="textbox" data_type="string" advanced="0">
+    <default_value>purchased_upgrade
+purchased_subscription
+expired_upgrade
+expired_subscription</default_value>
+    <edit_format_params>rows=3</edit_format_params>
+    <relation group_id="exup" display_order="110"/>
+  </option>
+  <option option_id="ExUp_ShowExtendFailReason" edit_format="onoff" data_type="boolean" advanced="0">
+    <default_value></default_value>
+    <relation group_id="exup" display_order="70"/>
+  </option>
+  <option option_id="exup_autoLeaveConversation" edit_format="select" data_type="string" advanced="0">
+    <default_value></default_value>
+    <edit_format_params>no_delete={{ phrase('disabled') }}
+deleted={{ phrase('leave_conversation_and_accept_future_messages') }}
+deleted_ignored={{ phrase('leave_conversation_and_ignore_future_messages') }}</edit_format_params>
+    <relation group_id="exup" display_order="45"/>
+  </option>
+  <option option_id="exup_extend_upgrade_button" edit_format="radio" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>1 = {{ phrase('yes') }}
+0 = {{ phrase('no') }}</edit_format_params>
+    <relation group_id="exup" display_order="60"/>
+  </option>
+  <option option_id="exup_notify_by" edit_format="template" data_type="array" validation_class="SV\ExpiringUserUpgrades\Option\NotifyBy" validation_method="verifyOption" advanced="0">
+    <default_value>{"alert":1,"email":0,"conversation":0}</default_value>
+    <edit_format_params>exup_option_template_notify_by</edit_format_params>
+    <sub_options>alert
+email
+conversation</sub_options>
+    <relation group_id="exup" display_order="40"/>
+  </option>
+  <option option_id="exup_notify_expired" edit_format="radio" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>1 = {{ phrase('yes') }}
+0 = {{ phrase('no') }}</edit_format_params>
+    <relation group_id="exup" display_order="30"/>
+  </option>
+  <option option_id="exup_notify_purchase" edit_format="radio" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>1 = {{ phrase('yes') }}
+0 = {{ phrase('no') }}</edit_format_params>
+    <relation group_id="exup" display_order="10"/>
+  </option>
+  <option option_id="exup_notify_recurring_extend" edit_format="radio" data_type="boolean" advanced="0">
+    <default_value>0</default_value>
+    <edit_format_params>1 = {{ phrase('yes') }}
+0 = {{ phrase('no') }}</edit_format_params>
+    <relation group_id="exup" display_order="20"/>
+  </option>
+  <option option_id="exup_respect_email_privacy" edit_format="radio" data_type="boolean" advanced="0">
+    <default_value>1</default_value>
+    <edit_format_params>1 = {{ phrase('yes') }}
+0 = {{ phrase('exup_no_recommended') }}</edit_format_params>
+    <relation group_id="exup" display_order="50"/>
+  </option>
+  <option option_id="exup_upgradeUrl" edit_format="template" data_type="array" advanced="0">
+    <default_value>{"type":"default","custom":""}</default_value>
+    <edit_format_params>exup_option_template_upgradeUrl</edit_format_params>
+    <sub_options>type
+custom</sub_options>
+    <relation group_id="basicBoard" display_order="290"/>
+    <relation group_id="exup" display_order="200"/>
+  </option>
+</options>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+    <phrase title="byo_favorites" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Managing account details]]></phrase>
+    <phrase title="byo_get_conversation" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Engaged in conversation]]></phrase>
+    <phrase title="byo_get_conversations" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Engaged in conversation]]></phrase>
+    <phrase title="byo_get_forum" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Viewing forum list]]></phrase>
+    <phrase title="byo_get_forum_list" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Viewing forum list]]></phrase>
+    <phrase title="byo_get_online_users" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Viewing list of online members]]></phrase>
+    <phrase title="byo_get_thread" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Viewing thread]]></phrase>
+    <phrase title="byo_get_topic" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[[On App]Viewing forum]]></phrase>
+    <phrase title="byo_get_user_info" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Viewing member profile ]]></phrase>
+    <phrase title="byo_latest" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On App]Viewing latest content]]></phrase>
+    <phrase title="byo_link" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[<a href="http://tapatalk.com">]]></phrase>
+    <phrase title="byo_search" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[[On App]Searching]]></phrase>
+    <phrase title="dark_first_last_inverted" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[First and last indexes are inverted!]]></phrase>
+    <phrase title="dark_forum_subscriptions_not_supported" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Forum subscriptions are not currently supported by XenForo.]]></phrase>
+    <phrase title="dark_in_tapatalk" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[On Tapatalk]]></phrase>
+    <phrase title="dark_passworded_forums_not_supported" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Password protected forums are not currently supported by XenForo]]></phrase>
+    <phrase title="dark_thread_is_redirect" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Thread is a redirect]]></phrase>
+    <phrase title="on_byo" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[On Tapatalk(*)]]></phrase>
+    <phrase title="on_tapatalk" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[On Tapatalk]]></phrase>
+    <phrase title="option.ads_disabled_for_group" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Disable Ads for Group]]></phrase>
+    <phrase title="option_explain.ads_disabled_for_group" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[This option will prevent Tapatalk from displaying advertisements. Users in the selected groups will not be served ads when using the Tapatalk app.]]></phrase>
+    <phrase title="option.advanced_delete" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[Hard Delete]]></phrase>
+    <phrase title="option_explain.advanced_delete" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Enable/Disable "Hard Delete" moderation using Tapatalk]]></phrase>
+    <phrase title="option.auto_approval_tp_user" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Automatically Approve Verified Tapatalk Members]]></phrase>
+    <phrase title="option_explain.auto_approval_tp_user" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[This option automatically approve verified Tapatalk member without the need of moderation or other additional steps.]]></phrase>
+    <phrase title="option.banner_control" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[banner_control]]></phrase>
+    <phrase title="option_explain.banner_control" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[banner_control]]></phrase>
+    <phrase title="option.banner_last_check" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[banner_last_check]]></phrase>
+    <phrase title="option_explain.banner_last_check" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[banner_last_check]]></phrase>
+    <phrase title="option.custom_tapatalkdetect" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[custom_tapatalkdetect]]></phrase>
+    <phrase title="option_explain.custom_tapatalkdetect" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[test]]></phrase>
+    <phrase title="option.deep_link_in_sub_emails" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Deep-linking in Subscription Emails]]></phrase>
+    <phrase title="option_explain.deep_link_in_sub_emails" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Allow Tapatalk users to open thread directly from forum topic subscription email. A "View On Tapatalk" button will be added next to existing "View Thread" button.]]></phrase>
+    <phrase title="option_group.tapatalkDeepLinkOptions" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Tapatalk - Mobile App Deep Linking (BYO Branded App and Tapatalk)]]></phrase>
+    <phrase title="option_group_description.tapatalkDeepLinkOptions" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Additional options of your forums are available in Tapatalk Forum Owner Area.]]></phrase>
+    <phrase title="option_group.tapatalkBYOOptions" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Tapatalk - Build Your Own - Options]]></phrase>
+    <phrase title="option_group_description.tapatalkBYOOptions" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Options for <a href="http://tapatalk.com/build.php" target="_blank"><u>Tapatalk BYO Customers</u></a> to modify Smart App Banner behaviour.]]></phrase>
+    <phrase title="option_group.tapatalkOptions" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Tapatalk]]></phrase>
+    <phrase title="option_group_description.tapatalkOptions" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[]]></phrase>
+    <phrase title="option.hideForums" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[Hide Forums]]></phrase>
+    <phrase title="option_explain.hideForums" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Hide forums and sub-forums you do not wish to be listed in Tapatalk]]></phrase>
+    <phrase title="option.push_slug" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[Push Slug]]></phrase>
+    <phrase title="option_explain.push_slug" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Push Slug can stick push request when push failed several times in short time(cannot connect to push server).]]></phrase>
+    <phrase title="option.readonlyForums" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Disable New Topic]]></phrase>
+    <phrase title="option_explain.readonlyForums" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Prevent Tapatalk users from creating new topics in the selected sub-forums. This feature is useful for forums that require additional information or credentials that Tapatalk does not yet support.]]></phrase>
+    <phrase title="option.Tag_Function_Open" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Open Tag Function]]></phrase>
+    <phrase title="option_explain.Tag_Function_Open" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Enable support for Open Tagging (@). With this feature enabled, users can input "@username" to tag someone. Tagged users will receive alerts in their web browser and a push notification on their mobile device. To successfully tag someone, there must be one space before and after the "@username".]]></phrase>
+    <phrase title="option.tapatalk_custom_replacement" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Thread Content Replacement (Advanced)]]></phrase>
+    <phrase title="option_explain.tapatalk_custom_replacement" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Ability to match and replace thread content using PHP preg_replace function(http://www.php.net/manual/en/function.preg-replace.php). E.g. "'pattern', 'replacement'" . You can define more than one replace rule on each line.]]></phrase>
+    <phrase title="option.tapatalk_push_notifications" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Push Notifications]]></phrase>
+    <phrase title="option_explain.tapatalk_push_notifications" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[<b>Basic Message</b> - Do not include post content and images preview in Push Notifications<br>
+<b>Rich Message</b>  - Includes post content and images preview in Push Notifications]]></phrase>
+    <phrase title="option.tapatalk_reg_type" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[In-App Registration]]></phrase>
+    <phrase title="option_explain.tapatalk_reg_type" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Verified Tapatalk users signed in from Facebook, Google or verified email address can register your forum natively in-app. Addition custom fields are also supported, although we strongly recommend to keep the custom fields to absolute minimal to make registration easier on mobile.]]></phrase>
+    <phrase title="option.tapatalk_reg_ug" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[User Group Assignment]]></phrase>
+    <phrase title="option_explain.tapatalk_reg_ug" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[By filling a usergroup ID, you can assign new users registered from Tapatalk to a specific secondary usergroup.]]></phrase>
+    <phrase title="option.tapatalk_settings" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[tapatalk_settings]]></phrase>
+    <phrase title="option_explain.tapatalk_settings" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[tapatalk_settings]]></phrase>
+    <phrase title="option.tp_android_url" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Android Product URL]]></phrase>
+    <phrase title="option_explain.tp_android_url" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Enter your BYO App URL from Google Play, to be used on Android device]]></phrase>
+    <phrase title="option.tp_app_banner_msg" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[BYO App Banner Message]]></phrase>
+    <phrase title="option_explain.tp_app_banner_msg" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[E.g. "Follow {your_forum_name} with {app_name} for [os_platform]". Do not change the [os_platform] tag as it is displayed dynamically based on user's device platform.]]></phrase>
+    <phrase title="option.tp_app_ios_id" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[BYO iOS App ID]]></phrase>
+    <phrase title="option_explain.tp_app_ios_id" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Enter your product ID in Apple App Store, to be used on iPhone device]]></phrase>
+    <phrase title="option.tp_directory" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Tapatalk Plugin Directory]]></phrase>
+    <phrase title="option_explain.tp_directory" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[This setting is for advanced users. If you installed the Tapatalk plug-in into a custom folder by manually changing the name of the default "mobiquo" folder, you must specify the custom folder name here. You will also need to specify the custom folder name in your <a href="https://tapatalk.com/v2/landing/index" target="_blank">Tapatalk forum owner account</a> as well.]]></phrase>
+    <phrase title="option.tp_push_key" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[Tapatalk Key]]></phrase>
+    <phrase title="option_explain.tp_push_key" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[This field is mandatory. The Tapatalk API key allows us to verify the origin of push notification requests from your server. Please input the key provided in your forum owner account. Inputting this key will insure that push notifications like Private Messages and Subscription activity can be delivered to your members' mobile devices.]]></phrase>
+    <phrase title="option.full_banner" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[Smart App Banner]]></phrase>
+    <phrase title="option_explain.full_banner" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[]]></phrase>
+    <phrase title="option.google_indexing_enabled" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Google App Indexing]]></phrase>
+    <phrase title="option_explain.google_indexing_enabled" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Deep-Linking Thread from Google Search Result.]]></phrase>
+    <phrase title="option.facebook_indexing_enabled" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Facebook]]></phrase>
+    <phrase title="option_explain.facebook_indexing_enabled" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Deep-Linking Thread from Link in Facebook App.]]></phrase>
+    <phrase title="option.twitter_indexing_enabled" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Twitter]]></phrase>
+    <phrase title="option_explain.twitter_indexing_enabled" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Deep-Linking Thread from Link in Twitter App.]]></phrase>
+    <phrase title="option.TT_2fa_enabled" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[Two Factor Authentication for Tapatalk users]]></phrase>
+    <phrase title="option_explain.TT_2fa_enabled" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[<b>Enforced</b> - If you set this option to Enforced then authentication attempts from the Tapatalk application will have to comply with any Two Factor Authentication requirements of the forum, requiring application users to enter a challenge code when prompted.<br>
+<b>Bypass</b> - If set to Bypass then users will be able to login with the Tapatalk application bypassing any Two Factor Authentication policies or requirements set on the forum.]]>
+    </phrase>
+    <!--<phrase title="option.tapatalk_ttid_oauth" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[Tapatalk Connect]]></phrase>
+    <phrase title="option_explain.tapatalk_ttid_oauth" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[This option allow user to register and login in your site with his Tapatalk ID credentials]]></phrase>
+    <phrase title="option.tapatalk_mobilesite" version_id="2000010" 0.1.0on_string=""><![CDATA[Use Tapatalk mobile site]]></phrase>
+    <phrase title="option_explain.tapatalk_mobilesite" version_id="2000010" 0.1.0on_string=""><![CDATA[with this option enabled, your mobile users will browse your site with the enhanced mobile site experience]]></phrase>-->
+    <phrase title="tapatalk_favorites" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Managing account details]]></phrase>
+    <phrase title="tapatalk_get_conversation" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Engaged in conversation]]></phrase>
+    <phrase title="tapatalk_get_conversations" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Engaged in conversation]]></phrase>
+    <phrase title="tapatalk_get_forum" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Viewing forum list]]></phrase>
+    <phrase title="tapatalk_get_forum_list" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Viewing forum list]]></phrase>
+    <phrase title="tapatalk_get_online_users" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Viewing list of online members]]></phrase>
+    <phrase title="tapatalk_get_thread" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Viewing thread]]></phrase>
+    <phrase title="tapatalk_get_topic" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Viewing forum]]></phrase>
+    <phrase title="tapatalk_get_user_info" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Viewing member profile ]]></phrase>
+    <phrase title="tapatalk_latest" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Viewing latest content]]></phrase>
+    <phrase title="tapatalk_search" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[[On Tapatalk]Searching]]></phrase>
+    <phrase title="view_on_tapatalk" version_id="2000010" version_string="0.1.0 Beta"><![CDATA[View in App]]></phrase>
+    <phrase title="x_taged_you_in_post_in_thread_y" global_cache="1" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[{name} mentioned you in the post {title}.]]></phrase>
+</phrases>

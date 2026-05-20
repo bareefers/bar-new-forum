@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.pb_ss" version_id="1000001" version_string="1.0.0 1"><![CDATA[Common statistics]]></phrase>
+  <phrase title="pb_ss_display_content_id" version_id="1000001" version_string="1.0.0 1"><![CDATA[Display ID]]></phrase>
+  <phrase title="pb_ss_display_message" version_id="2000001" version_string="2.0.0 1"><![CDATA[Display message]]></phrase>
+  <phrase title="pb_ss_post_count" version_id="1000000" version_string="1.0.0"><![CDATA[Post count]]></phrase>
+  <phrase title="pb_ss_post_id" version_id="1000001" version_string="1.0.0 1"><![CDATA[Post ID]]></phrase>
+  <phrase title="pb_ss_post_reaction_count" version_id="1000000" version_string="1.0.0"><![CDATA[Post reaction count]]></phrase>
+  <phrase title="pb_ss_reply_count" version_id="1000001" version_string="1.0.0 1"><![CDATA[Reply count]]></phrase>
+  <phrase title="pb_ss_stat_export_bbcode" version_id="1010001" version_string="1.1.0 1"><![CDATA[Export as BB-Code]]></phrase>
+  <phrase title="pb_ss_stat_title" version_id="1000001" version_string="1.0.0 1"><![CDATA[Common statistics]]></phrase>
+  <phrase title="pb_ss_thread_count" version_id="1000000" version_string="1.0.0"><![CDATA[Thread count]]></phrase>
+  <phrase title="pb_ss_thread_id" version_id="1000001" version_string="1.0.0 1"><![CDATA[Thread ID]]></phrase>
+  <phrase title="pb_ss_thread_reply_count" version_id="1000000" version_string="1.0.0"><![CDATA[Thread reply count]]></phrase>
+  <phrase title="pb_ss_thread_view_count" version_id="1000000" version_string="1.0.0"><![CDATA[Thread view count]]></phrase>
+  <phrase title="pb_ss_thread_watch_count" version_id="1000000" version_string="1.0.0"><![CDATA[Thread watch count]]></phrase>
+  <phrase title="pb_ss_user_active_count" version_id="1000000" version_string="1.0.0"><![CDATA[User active count]]></phrase>
+  <phrase title="pb_ss_user_attachment_size" version_id="1000000" version_string="1.0.0"><![CDATA[User attachment size]]></phrase>
+  <phrase title="pb_ss_user_bookmark_count" version_id="1000000" version_string="1.0.0"><![CDATA[User bookmark count]]></phrase>
+  <phrase title="pb_ss_user_count" version_id="1000000" version_string="1.0.0"><![CDATA[User count]]></phrase>
+  <phrase title="pb_ss_user_post_count" version_id="1000000" version_string="1.0.0"><![CDATA[User post count]]></phrase>
+  <phrase title="pb_ss_user_reaction_given_count" version_id="1010001" version_string="1.1.0 1"><![CDATA[User reaction given count]]></phrase>
+  <phrase title="pb_ss_user_reaction_received_count" version_id="1010001" version_string="1.1.0 1"><![CDATA[User reaction received count]]></phrase>
+  <phrase title="pb_ss_user_report_assigned_count" version_id="2000000" version_string="2.0.0"><![CDATA[User report assigned count]]></phrase>
+  <phrase title="pb_ss_user_reported_count" version_id="2000000" version_string="2.0.0"><![CDATA[User reported count]]></phrase>
+  <phrase title="pb_ss_user_thread_count" version_id="1000000" version_string="1.0.0"><![CDATA[User thread count]]></phrase>
+  <phrase title="pb_ss_user_warning_count" version_id="2000000" version_string="2.0.0"><![CDATA[User warning count]]></phrase>
+  <phrase title="pb_ss_user_warning_given_count" version_id="2000000" version_string="2.0.0"><![CDATA[User warning given count]]></phrase>
+  <phrase title="pb_ss_whole_message_count_between" version_id="1000102" version_string="1.0.1 2"><![CDATA[Message count between (whole time)]]></phrase>
+  <phrase title="pb_ss_xfmg.media_comment_count" version_id="1010001" version_string="1.1.0 1"><![CDATA[Media comment count]]></phrase>
+  <phrase title="pb_ss_xfmg.media_reaction_count" version_id="1010001" version_string="1.1.0 1"><![CDATA[Media reaction count]]></phrase>
+  <phrase title="pb_ss_xfmg.media_view_count" version_id="1010001" version_string="1.1.0 1"><![CDATA[Media view count]]></phrase>
+  <phrase title="pb_ss_xfmg.user_media_count" version_id="1010001" version_string="1.1.0 1"><![CDATA[User media count]]></phrase>
+  <phrase title="pb_ss_xfrm.resource_update_count" version_id="2000000" version_string="2.0.0"><![CDATA[Resource update count]]></phrase>
+  <phrase title="pb_ss_xfrm.user_rating_count" version_id="2000000" version_string="2.0.0"><![CDATA[User resource rating count]]></phrase>
+  <phrase title="pb_ss_xfrm.user_resource_count" version_id="1010001" version_string="1.1.0 1"><![CDATA[User resource count]]></phrase>
+</phrases>

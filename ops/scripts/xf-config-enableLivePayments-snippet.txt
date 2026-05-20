@@ -1,0 +1,3 @@
+
+// Sandbox PayPal: use api-m.sandbox.paypal.com (see src/XF/App.php default enableLivePayments true = live)
+$config['enableLivePayments'] = false;

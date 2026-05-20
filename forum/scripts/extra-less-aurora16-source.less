@@ -1,0 +1,164 @@
+/* Navigation - logo */
+.p-header-logo.p-header-logo--image {
+	margin: 0;
+	picture,
+	img {
+		max-width: 220px;   /* was 50px — increase until it looks right */
+		width: auto;
+		height: auto;
+	}
+}
+
+/* Aurora caps header logo in dark (~100px) — match BAR 220 / 160 */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-variation]) .p-header-logo.p-header-logo--image picture,
+	:root:not([data-variation]) .p-header-logo.p-header-logo--image img {
+		max-width: 220px !important;
+		width: auto !important;
+		height: auto !important;
+	}
+}
+
+html[data-color-scheme="dark"] .p-header-logo.p-header-logo--image picture,
+html[data-color-scheme="dark"] .p-header-logo.p-header-logo--image img {
+	max-width: 220px !important;
+	width: auto !important;
+	height: auto !important;
+}
+
+@media (prefers-color-scheme: dark) and (max-width: @xf-responsiveNarrow) {
+	:root:not([data-variation]) .p-header-logo.p-header-logo--image picture,
+	:root:not([data-variation]) .p-header-logo.p-header-logo--image img {
+		max-width: 88px !important;
+		max-height: 40px !important;
+	}
+}
+
+@media (max-width: @xf-responsiveNarrow) {
+	html[data-color-scheme="dark"] .p-header-logo.p-header-logo--image picture,
+	html[data-color-scheme="dark"] .p-header-logo.p-header-logo--image img {
+		max-width: 88px !important;
+		max-height: 40px !important;
+	}
+}
+
+@supports ~"(position: sticky) or (position: -webkit-sticky)" {
+	/*
+	 * Sticky gap: theme .p-navSticky { top: 20px }. html body beats repeated theme rules.
+	 * Tilde @supports: XenForo less.php breaks on bare (sticky) or (-webkit-sticky).
+	 */
+	html body .p-navSticky,
+	html body .p-navSticky.p-navSticky--primary {
+		position: -webkit-sticky;
+		position: sticky;
+		top: 0 !important;
+	}
+	html body .p-navSticky.is-sticky,
+	html body .p-navSticky.p-navSticky--primary.is-sticky {
+		top: 0 !important;
+	}
+	html body .p-staffBar ~ .p-header .p-navSticky,
+	html body .p-staffBar + .p-header .p-navSticky,
+	html body .p-navSticky.p-staffSticky,
+	html body .p-staffBar ~ .p-header .p-navSticky.p-navSticky--primary,
+	html body .p-staffBar + .p-header .p-navSticky.p-navSticky--primary {
+		top: 20px !important;
+	}
+}
+
+/*
+ * Mobile only (@xf-responsiveNarrow): smaller logo on the left, visitor row in the middle,
+ * menu (hamburger) on the far right — flex order overrides default DOM order on narrow viewports.
+ */
+@media (max-width: @xf-responsiveNarrow) {
+	.p-header-logo.p-header-logo--image picture,
+	.p-header-logo.p-header-logo--image img {
+		max-width: 88px;
+		max-height: 40px;
+		width: auto;
+		height: auto;
+		object-fit: contain;
+	}
+
+	.p-nav-intra {
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		gap: 6px;
+		min-width: 0;
+	}
+
+	/* Left: logo (compact, never grows over icons) */
+	.p-nav-intra .p-header-logo.p-header-logo--image {
+		order: 1;
+		flex: 0 1 auto;
+		min-width: 0;
+		max-width: 30vw;
+		max-height: 44px;
+		overflow: hidden;
+	}
+
+	.p-nav-intra .p-header-logo.p-header-logo--image picture,
+	.p-nav-intra .p-header-logo.p-header-logo--image img {
+		max-width: 100%;
+		max-height: 40px;
+	}
+
+	/* Middle: search / what's-new strip if present */
+	.p-nav-intra .p-discovery {
+		order: 2;
+		flex-shrink: 0;
+	}
+
+	/* Middle–right: login / alerts / avatar — may shrink text, keep icons */
+	.p-nav-intra .p-nav-opposite {
+		order: 3;
+		flex: 1 1 auto;
+		min-width: 0;
+		display: flex;
+		flex-wrap: nowrap;
+		align-items: center;
+		justify-content: flex-end;
+	}
+
+	.p-nav-intra .p-nav-opposite .p-navgroup {
+		flex-wrap: nowrap;
+	}
+
+	/* Far right: hamburger / off-canvas menu control */
+	.p-nav-intra .p-nav-smallLogo {
+		order: 4;
+		flex-shrink: 0;
+		margin-left: 2px;
+	}
+}
+
+.p-nav-inner {
+	max-width: 1400px;
+	padding-top: 0px;
+}
+
+/* aligns and centers iconic nav icons vertically */
+.p-navgroup-link.p-navgroup-link--iconic i::after {
+	line-height: 25px;
+	vertical-align: middle;
+}
+
+.p-navgroup-link--dbtech-credits .p-navgroup-linkText {
+	display: none;
+}
+
+/* Center sponsor / ad blocks */
+.alignCenter {
+	text-align: center;
+	a {
+		display: inline-block;
+	}
+	img {
+		display: block;
+		margin-left: auto;
+		margin-right: auto;
+		max-width: 100%;
+		height: auto;
+	}
+}

@@ -1,0 +1,9 @@
+{
+    "template": "helper_js_global",
+    "description": "Add time related phrases required relative time handler",
+    "execution_order": 7915,
+    "enabled": true,
+    "action": "str_replace",
+    "find": "<!--[XF:js_global:xf_phrase_start]-->",
+    "replace": "$0\n\"time.day\": \"{{ phrase('time.day')|escape('js') }}\",\n\"time.days\": \"{{ phrase('time.days')|escape('js') }}\",\n\"time.hour\": \"{{ phrase('time.hour')|escape('js') }}\",\n\"time.hours\": \"{{ phrase('time.hours')|escape('js') }}\",\n\"time.minute\": \"{{ phrase('time.minute')|escape('js') }}\",\n\"time.minutes\": \"{{ phrase('time.minutes')|escape('js') }}\",\n\"time.month\": \"{{ phrase('time.month')|escape('js') }}\",\n\"time.months\": \"{{ phrase('time.months')|escape('js') }}\",\n\"time.second\": \"{{ phrase('time.second')|escape('js') }}\",\n\"time.seconds\": \"{{ phrase('time.seconds')|escape('js') }}\",\n\"time.week\": \"{{ phrase('time.week')|escape('js') }}\",\n\"time.weeks\": \"{{ phrase('time.weeks')|escape('js') }}\",\n\"time.year\": \"{{ phrase('time.year')|escape('sj') }}\",\n\"time.years\": \"{{ phrase('time.years')|escape('sj') }}\","
+}

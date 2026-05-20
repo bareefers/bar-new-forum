@@ -1,0 +1,14 @@
+{
+    "legacy_addon_id": "",
+    "title": "[Widget] New Threads and posts With Prefix Limit",
+    "description": "Adds 2 new widgets to show new threads and posts with prefix filter and other extra options",
+    "version_id": 1050070,
+    "version_string": "1.0.5",
+    "dev": "DL6",
+    "dev_url": "",
+    "faq_url": "",
+    "support_url": "https://xenforo.com/community/threads/dl6-widget-new-threads-and-posts-with-prefix-limit.132901/",
+    "extra_urls": [],
+    "require": [],
+    "icon": "icon.jpg"
+}

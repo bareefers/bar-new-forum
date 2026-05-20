@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="KeyCAPTCHA" title="KeyCAPTCHA" version_string="2.1" version_id="2" url="" install_callback_class="XenForo_Captcha_KeyCaptcha" install_callback_method="KeyCAPTCHA_Install" uninstall_callback_class="XenForo_Captcha_KeyCaptcha" uninstall_callback_method="KeyCAPTCHA_UnInstall">
+<admin_navigation/>
+<admin_permissions/>
+<admin_style_properties/>
+<admin_templates/>
+<code_events/>
+<cron/>
+<email_templates/>
+<optiongroups>
+	<option option_id="keycaptcha_private_key" edit_format="textbox" data_type="string" can_backup="1">
+		<default_value></default_value>
+		<edit_format_params></edit_format_params>
+		<sub_options></sub_options>
+		<relation group_id="basicBoard" display_order="330"/>
+		<relation group_id="usersAndRegistration" display_order="150"/>
+		<relation group_id="spam" display_order="520"/>
+	</option>
+</optiongroups>
+
+<permissions>
+	<permission_groups/>
+	<permissions/>
+	<interface_groups/>
+</permissions>
+
+<phrases>
+	<phrase title="use_keycaptcha" global_cache="0" version_id="1" version_string="1"><![CDATA[Use KeyCAPTCHA]]></phrase>
+	<phrase title="option_keycaptcha_private_key" global_cache="0" version_id="1" version_string="1"><![CDATA[KeyCAPTCHA Private Key]]></phrase>
+	<phrase title="option_keycaptcha_private_key_explain" global_cache="0" version_id="1" version_string="1"><![CDATA[To get KeyCAPTCHA Private Key you should be registered at <a href="https://www.keycaptcha.com" target="_blank">www.keycaptcha.com</a>. After registration please add your website in your account at www.keycaptcha.com and follow the KeyCAPTCHA installation instructions for xenForo.]]></phrase>
+</phrases>
+
+<route_prefixes/>
+<style_properties/>
+<templates>
+	<template title="captcha_keycaptcha" version_id="2000001" version_string="1.0"><![CDATA[
+  	  <table id="keycaptcha_verification"><tr><td>{xen:raw $keycaptcha}</td></tr></table>]]></template>
+</templates>
+
+</addon>

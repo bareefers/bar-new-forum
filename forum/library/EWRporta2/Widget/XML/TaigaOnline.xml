@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="TaigaOnline" widget_title="TaigaChat Online (by Luke Foreman)" widget_desc="Displays a the users currently in the chat" widget_string="1" widget_version="1" widget_url="https://xenforo.com/community/resources/taigachat-pro-realtime-chat-shoutbox.1224/" widget_install_class="EWRporta2_Widget_Install_TaigaChat" widget_install_method="installCode" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options/>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_TaigaOnline"><![CDATA[<xen:include template="dark_taigachat_widget_online">
+	<xen:map from="$wUncached" to="$taigachat" />         
+</xen:include>]]></template>
+  </templates>
+</widget>

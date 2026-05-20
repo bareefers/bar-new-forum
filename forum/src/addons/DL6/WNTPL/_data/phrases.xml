@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="widget_def.new_posts_pf_wrtpl" version_id="1050070" version_string="1.0.5"><![CDATA[New posts with prefix limit]]></phrase>
+  <phrase title="widget_def.new_threads_pf_wrtpl" version_id="1000000" version_string="1.0.0"><![CDATA[New threads with prefix limit]]></phrase>
+  <phrase title="widget_def_desc.new_posts_pf_wrtpl" version_id="1050070" version_string="1.0.5"><![CDATA[Displays a block containing a list of X threads with Y prefixes (optional) which have most recently been posted in.]]></phrase>
+  <phrase title="widget_def_desc.new_threads_pf_wrtpl" version_id="1000000" version_string="1.0.0"><![CDATA[Displays a block containing a list of X threads with Y prefixes which have most recently been created.]]></phrase>
+  <phrase title="wntpl_character_length" version_id="1000011" version_string="1.0.1"><![CDATA[Character length]]></phrase>
+  <phrase title="wntpl_character_length_explain" version_id="1000011" version_string="1.0.1"><![CDATA[The maximum number of characters that can be in a post in the expanded view. This includes BB code. Use 0 to disable the limit.]]></phrase>
+  <phrase title="wntpl_latest_replies_filter_explain" version_id="1050070" version_string="1.0.5"><![CDATA[A list of the latest replies which have been recently posted in the threads (works with guests).]]></phrase>
+  <phrase title="wntpl_new_posts_filter_latest_replies" version_id="1050070" version_string="1.0.5"><![CDATA[Latest replies]]></phrase>
+  <phrase title="wntpl_new_threads_prefix_limit_widget_must_be_configured_with_least_one_prefix_id" version_id="1000000" version_string="1.0.0"><![CDATA[The New Threads widget must be configured with least one prefix ID.]]></phrase>
+  <phrase title="wntpl_no_prefix_error_message" version_id="1040070" version_string="1.0.4"><![CDATA[No prefix has been set yet.]]></phrase>
+  <phrase title="wntpl_prefix_limit" version_id="1000000" version_string="1.0.0"><![CDATA[Prefix Limit]]></phrase>
+  <phrase title="wntpl_prefix_limit_explain" version_id="1000000" version_string="1.0.0"><![CDATA[Only include threads with the selected prefixes.]]></phrase>
+  <phrase title="wntpl_read_the_rest_of_this_post" version_id="1000011" version_string="1.0.1"><![CDATA[Read the rest of this post...]]></phrase>
+  <phrase title="wntpl_tag_limit" version_id="1000011" version_string="1.0.1"><![CDATA[Tag limit]]></phrase>
+  <phrase title="wntpl_tag_limit_explain" version_id="1000030" version_string="1.0.3"><![CDATA[Only include threads with one or more of the specified tags. Multiple tags may be separated by commas.]]></phrase>
+  <phrase title="wntpl_url_path" version_id="1000000" version_string="1.0.0"><![CDATA[URL Path]]></phrase>
+  <phrase title="wntpl_url_path_explain" version_id="1000000" version_string="1.0.0"><![CDATA[Adds a custom url path for the header]]></phrase>
+  <phrase title="wntpl_widget.latest_replies" version_id="1050070" version_string="1.0.5" global_cache="1"><![CDATA[Latest replies]]></phrase>
+  <phrase title="wrtpl_error_message_no_prefix_option" version_id="1040070" version_string="1.0.4"><![CDATA[The widget must be configured with least one prefix.]]></phrase>
+</phrases>

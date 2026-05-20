@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="UsersOnline" widget_title="Users Online" widget_desc="Displays the current visitors list" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="usersonline_staff" edit_format="onoff" data_type="boolean" display_order="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Show Staff Online Now</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_UsersOnline"><![CDATA[<xen:include template="sidebar_online_users">
+	<xen:map from="$wUncached" to="$onlineUsers" />
+</xen:include>]]></template>
+  </templates>
+</widget>

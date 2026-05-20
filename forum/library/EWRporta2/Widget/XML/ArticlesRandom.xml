@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="ArticlesRandom" widget_title="Articles Random" widget_desc="Displays a single random promoted article" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="articlesrandom_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="1">
+      <default_value>7</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Date Limit</title>
+      <explain><![CDATA[How far back (in days) do you wish to include for the search?]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_ArticlesRandom"><![CDATA[<xen:require css="message_user_info.css" />
+<xen:require css="EWRwidget_ArticlesRandom.css" />
+
+<div class="articlesRandom widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="sectionMain">
+		<div class="secondaryContent">
+			<xen:if hascontent="true">
+				<div class="messageUserBlock"><div class="avatarHolder {xen:if '{$wUncached.article.article_icon.type} == "avatar" && !{$xenOptions.EWRporta2_articles_fullsize}', 'avatarHolderS'}">
+					<xen:contentcheck>
+					<xen:if is="{$wUncached.article.article_icon.type} == 'avatar'">
+						<xen:avatar user="$wUncached.article" size="{xen:if '{$xenOptions.EWRporta2_articles_fullsize}', 'm', 's'}" class="Tooltip" title="{$wUncached.article.username}" itemprop="photo" />
+					<xen:elseif is="{$wUncached.article.article_icon.type} == 'attach'" />
+						<div class="attachHolder">
+							<img src="{xen:if '{$xenOptions.EWRporta2_articles_fullsize}', '{xen:link attachments, $wUncached.article.article_icon.data}', '{$wUncached.article.article_icon.data.thumbnailUrl}'}"
+								alt="{$wUncached.article.article_icon.data.filename}" />
+						</div>
+					<xen:elseif is="{$wUncached.article.article_icon.type} == 'medio'" />
+						<div class="medioHolder OverlayTrigger" style="background-image: url('{xen:helper 'medio2', $wUncached.article.article_icon.data}');">
+								<img src="styles/8wayrun/EWRmedio_play.png" />
+						</div>
+					</xen:if>
+					</xen:contentcheck>
+				</div></div>
+			</xen:if>
+			
+			<a href="{xen:link threads, $wUncached.article}" class="title"><b>{$wUncached.article.title}</b></a>
+				
+			<div class="message">{xen:raw $wUncached.article.messageHtml}</div>
+			
+			<a href="{xen:link threads, $wUncached.article}" class="continue"><b>{xen:phrase porta2_break_text_default}...</b></a>
+		</div>
+	</div>
+</div>]]></template>
+    <template title="EWRwidget_ArticlesRandom.css"><![CDATA[.articlesRandom .messageUserBlock { float: right; margin-left: 10px; line-height: 0; }
+.articlesRandom .messageUserBlock img { max-height: 76px; }
+.articlesRandom .messageUserBlock .medioHolder { background-size: 100%; }
+
+
+.articlesRandom .title { display: block; font-size: 1.4em; margin-bottom: 5px; }
+.articlesRandom .message { height: 80px; font-size: 13px; overflow: hidden; }
+.articlesRandom .continue { display: block; text-align: right; }]]></template>
+  </templates>
+</widget>

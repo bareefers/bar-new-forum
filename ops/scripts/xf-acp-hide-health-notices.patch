@@ -1,0 +1,62 @@
+--- a/src/XF/Admin/App.php
++++ b/src/XF/Admin/App.php
+@@ -9,7 +9,6 @@ use XF\Http\Response;
+ use XF\Mvc\Renderer\AbstractRenderer;
+ use XF\Mvc\Reply\AbstractReply;
+ use XF\Mvc\Reply\View;
+-use XF\Repository\UpgradeCheckRepository;
+ use XF\Util\Php;
+ 
+ use function is_array;
+@@ -267,9 +266,7 @@ class App extends \XF\App
+ 		$params['listenersDisabled'] = $this->config('enableListeners') ? false : true;
+ 		$params['mailDisabled'] = $this->config('enableMail') ? false : true;
+ 
+-		$upgradeCheckRepo = $this->repository(UpgradeCheckRepository::class);
+-		$upgradeCheck = $upgradeCheckRepo->canCheckForUpgrades() ? $upgradeCheckRepo->getLatestUpgradeCheck() : null;
+-		$params['upgradeCheck'] = $upgradeCheck;
++		$params['upgradeCheck'] = null;
+ 
+ 		$this->fire('app_admin_render_page', [$this, &$params, &$reply, &$renderer]);
+ 
+--- a/src/XF/Admin/Controller/IndexController.php
++++ b/src/XF/Admin/Controller/IndexController.php
+@@ -13,11 +13,9 @@ use XF\Mvc\Entity\Finder;
+ use XF\Mvc\Reply\AbstractReply;
+ use XF\Repository\AddOnRepository;
+ use XF\Repository\ErrorLogRepository;
+-use XF\Repository\FileCheckRepository;
+ use XF\Repository\SessionActivityRepository;
+ use XF\Repository\StatsRepository;
+ use XF\Repository\TemplateRepository;
+-use XF\Repository\UpgradeCheckRepository;
+ use XF\Service\Stats\GrapherService;
+ use XF\Stats\Grouper\AbstractGrouper;
+ use XF\Util\Php;
+@@ -33,10 +31,7 @@ class IndexController extends AbstractController
+ 		// TODO: put these bits and pieces into configurable / selectable widgets
+ 		$visitor = \XF::visitor();
+ 
+-		$upgradeCheckRepo = \XF::repository(UpgradeCheckRepository::class);
+-		$upgradeCheck = $upgradeCheckRepo->canCheckForUpgrades()
+-			? $upgradeCheckRepo->getLatestUpgradeCheck()
+-			: null;
++		$upgradeCheck = null;
+ 
+ 		$showUnicodeWarning = (
+ 			$visitor->hasAdminPermission('serverInfo')
+@@ -85,14 +82,7 @@ class IndexController extends AbstractController
+ 			$isImportRunning = $importManager->isImportRunning();
+ 		}
+ 
+ 		$fileChecks = \XF::em()->getEmptyCollection();
+-		if ($visitor->hasAdminPermission('checksAndTests'))
+-		{
+-			$fileCheckRepo = \XF::repository(FileCheckRepository::class);
+-			$fileCheckFinder = $fileCheckRepo->findFileChecksForList();
+-			$fileChecks = $fileCheckFinder->fetch(5);
+-		}
+-
+ 		$requirementErrors = [];
+ 		if ($visitor->hasAdminPermission('serverInfo'))
+ 		{

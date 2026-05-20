@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<colorizeit>
+	<skip>
+		<dir>acp-icons</dir>
+		<dir>color-picker</dir>
+		<dir>editor</dir>
+		<dir>gradients</dir>
+		<dir>icons</dir>
+		<dir>overlay</dir>
+		<dir>patterns</dir>
+		<dir>permissions</dir>
+		<dir>smilies</dir>
+		<dir>smilies.doodle</dir>
+		<dir>widgets</dir>
+		<file>clear.png</file>
+		<file>logo.og.png</file>
+		<file>warning_stripes.png</file>
+		<file>XenForo-small.png</file>
+		<file>xenforo-smilies-sprite.png</file>
+		<file>XenForo.png</file>
+		<file>xenforo-ui-sprite.png</file>
+		<file>gplus.png</file>
+		<file>magnifier.png</file>
+		<file>twitter-bird.png</file>
+		<template>thread_prefixes.css</template>
+		<template>editor_ui.css</template>
+		<template>xenforo.css</template>
+		<template>nflj_showcase_layout_grid_view_item.css</template>
+		<template>sonnb_xengallery_album_list_item.css</template>
+		<template>sonnb_xengallery_photo_view.css</template>
+		<template>xengallery_album_thumb_item.css</template>
+		<template>xengallery_media_thumb_item.css</template>
+	</skip>
+</colorizeit>

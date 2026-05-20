@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use XF\Admin\Controller\AbstractController;
+use XF\Mvc\ParameterBag;
+use XF\Mvc\Reply\AbstractReply;
+
+class {{ class }} extends AbstractController
+{
+	protected function preDispatchController(string $action, ParameterBag $params): void
+	{
+		// $this->assertAdminPermission('{{ permissionId }}');
+	}
+
+	public function actionIndex(ParameterBag $params): AbstractReply
+	{
+		$viewParams = [];
+
+		return $this->view(
+			'{{ addOnId }}:{{ viewClass }}',
+			'{{ templateName }}',
+			$viewParams
+		);
+	}
+}

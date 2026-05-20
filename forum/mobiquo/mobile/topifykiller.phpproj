@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Name>topifykiller</Name>
+    <ProjectGuid>{a7a88af0-397b-4a04-8421-f124a8875236}</ProjectGuid>
+    <RootNamespace>
+    </RootNamespace>
+    <OutputType>Library</OutputType>
+    <ProjectTypeGuids>{A0786B88-2ADB-4C21-ABE8-AA2D79766269}</ProjectTypeGuids>
+    <Runtime>PHP</Runtime>
+    <RuntimeVersion>7.0</RuntimeVersion>
+    <SaveServerSettingsInUserFile>false</SaveServerSettingsInUserFile>
+    <EnvName>Custom</EnvName>
+    <PHPDevHostName>localhost</PHPDevHostName>
+    <PHPDevAutoPort>true</PHPDevAutoPort>
+    <CustomServerUrl>http://localhost/mobile</CustomServerUrl>
+    <CustomXdebugPort>9000</CustomXdebugPort>
+    <PublishEvent>BeforeRun</PublishEvent>
+    <DebugMappingMethod>Automatic</DebugMappingMethod>
+    <PublishBeforeDebugProfile>plugini.com</PublishBeforeDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <IncludeDebugInformation>true</IncludeDebugInformation>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <IncludeDebugInformation>false</IncludeDebugInformation>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="cssrand.php" />
+    <Compile Include="dbconnect.default.php" />
+    <Compile Include="lang\en.php" />
+    <Compile Include="libs\util.class.php" />
+    <Compile Include="original\css\tapatalk.css" />
+    <Compile Include="original\error.html" />
+    <Compile Include="original\forumlist.html" />
+    <Compile Include="original\login.html" />
+    <Compile Include="original\password-change.html" />
+    <Compile Include="original\password-reset.html" />
+    <Compile Include="original\post.html" />
+    <Compile Include="original\profile.html" />
+    <Compile Include="original\threadlist.html" />
+    <Compile Include="src\css\bootstrap-horizon.css" />
+    <Compile Include="src\css\bootstrap-theme.css" />
+    <Compile Include="src\css\bootstrap-theme.css.map" />
+    <Compile Include="src\css\bootstrap.css" />
+    <Compile Include="src\css\bootstrap.css.map" />
+    <Compile Include="src\css\font-awesome.css" />
+    <Compile Include="src\css\icomoon.css" />
+    <Compile Include="src\css\jasny-bootstrap.css" />
+    <Compile Include="src\css\jasny-bootstrap.css.map" />
+    <Compile Include="src\css\tapatalk.css" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.breadcrumb.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.conversations.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.forum.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.navigator.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.notification.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.pagination.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.post.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.profile.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.slidemenu.js" />
+    <Compile Include="src\js\modules\ui\tapatalk.ui.topic.js" />
+    <Compile Include="src\js\modules\tapatalk.api.js" />
+    <Compile Include="src\js\modules\tapatalk.cache.js" />
+    <Compile Include="src\js\modules\tapatalk.helper.js" />
+    <Compile Include="src\js\modules\tapatalk.main.js" />
+    <Compile Include="src\js\BBCode2HTML.js" />
+    <Compile Include="src\js\bootstrap.js" />
+    <Compile Include="src\js\draggable.js" />
+    <Compile Include="src\js\jasny-bootstrap.js" />
+    <Compile Include="src\js\jquery.easing.js" />
+    <Compile Include="src\js\jquery.history.js" />
+    <Compile Include="src\js\jquery.js" />
+    <Compile Include="src\js\tapatalk.js" />
+    <Compile Include="src\js\zoomage.js" />
+    <Compile Include="src\less\tapatalk.less" />
+    <Compile Include="template\tapatalk\anntemplate.html" />
+    <Compile Include="template\tapatalk\convdetiletemplate.html" />
+    <Compile Include="template\tapatalk\convlisttemplate.html" />
+    <Compile Include="template\tapatalk\forumtemplate.html" />
+    <Compile Include="template\tapatalk\posttemplate.html" />
+    <Compile Include="template\tapatalk\profiletemplate.html" />
+    <Compile Include="template\tapatalk\stickietemplate.html" />
+    <Compile Include="template\tapatalk\topictemplate.html" />
+    <Compile Include=".gitignore" />
+    <Compile Include="config.php" />
+    <Compile Include="gulpfile.js" />
+    <Compile Include="index.php" />
+    <Compile Include="package.json" />
+    <Compile Include="xhragent.php" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="dist\" />
+    <Folder Include="dist\css\" />
+    <Folder Include="dist\fonts\" />
+    <Folder Include="dist\img\" />
+    <Folder Include="dist\js\" />
+    <Folder Include="lang" />
+    <Folder Include="libs" />
+    <Folder Include="original\css" />
+    <Folder Include="original" />
+    <Folder Include="src\css" />
+    <Folder Include="src\js\modules\ui" />
+    <Folder Include="src\js\modules" />
+    <Folder Include="src\js" />
+    <Folder Include="src\less" />
+    <Folder Include="src" />
+    <Folder Include="template" />
+    <Folder Include="template\desktop\" />
+    <Folder Include="template\tapatalk\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="dist\css\bootstrap-horizon.min.css" />
+    <Content Include="dist\css\bootstrap-theme.min.css" />
+    <Content Include="dist\css\bootstrap.min.css" />
+    <Content Include="dist\css\desktop.min.css" />
+    <Content Include="dist\css\font-awesome.min.css" />
+    <Content Include="dist\css\icomoon.min.css" />
+    <Content Include="dist\css\jasny-bootstrap.min.css" />
+    <Content Include="dist\css\tapatalk.min.css" />
+    <Content Include="dist\fonts\fontawesome-webfont.eot" />
+    <Content Include="dist\fonts\fontawesome-webfont.svg" />
+    <Content Include="dist\fonts\fontawesome-webfont.ttf" />
+    <Content Include="dist\fonts\fontawesome-webfont.woff" />
+    <Content Include="dist\fonts\fontawesome-webfont.woff2" />
+    <Content Include="dist\fonts\FontAwesome.otf" />
+    <Content Include="dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="dist\fonts\icomoon.eot" />
+    <Content Include="dist\fonts\icomoon.svg" />
+    <Content Include="dist\fonts\icomoon.ttf" />
+    <Content Include="dist\fonts\icomoon.woff" />
+    <Content Include="dist\img\ajax-loader.gif" />
+    <Content Include="dist\img\default_avatar.png" />
+    <Content Include="dist\img\icon_subscribed.png" />
+    <Content Include="dist\js\BBCode2HTML.min.js" />
+    <Content Include="dist\js\bootstrap.min.js" />
+    <Content Include="dist\js\draggable.min.js" />
+    <Content Include="dist\js\img-touch-canvas.min.js" />
+    <Content Include="dist\js\jasny-bootstrap.min.js" />
+    <Content Include="dist\js\jquery-ui.min.js" />
+    <Content Include="dist\js\jquery.ba-hashchange.min.js" />
+    <Content Include="dist\js\jquery.easing.min.js" />
+    <Content Include="dist\js\jquery.history.min.js" />
+    <Content Include="dist\js\jquery.kinetic.min.js" />
+    <Content Include="dist\js\jquery.min.js" />
+    <Content Include="dist\js\jquery.validate.min.js" />
+    <Content Include="dist\js\knockout-min.js" />
+    <Content Include="dist\js\knockout.mapping.min.js" />
+    <Content Include="dist\js\randcolors.min.js" />
+    <Content Include="dist\js\slideout.min.js" />
+    <Content Include="dist\js\tapatalk.min.js" />
+    <Content Include="dist\js\zoomage.min.js" />
+    <Content Include="src\css\desktop.css" />
+    <Content Include="src\js\randcolors.js" />
+    <Content Include="src\less\desktop.less" />
+    <Content Include="template\desktop\anntemplate.html" />
+    <Content Include="template\desktop\convdetiletemplate.html" />
+    <Content Include="template\desktop\convlisttemplate.html" />
+    <Content Include="template\desktop\forumtemplate.html" />
+    <Content Include="template\desktop\posttemplate.html" />
+    <Content Include="template\desktop\profiletemplate.html" />
+    <Content Include="template\desktop\stickietemplate.html" />
+    <Content Include="template\desktop\topictemplate.html" />
+  </ItemGroup>
+</Project>

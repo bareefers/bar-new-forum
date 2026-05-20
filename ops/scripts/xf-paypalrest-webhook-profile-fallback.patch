@@ -1,0 +1,22 @@
+--- a/src/XF/Payment/PayPalRest.php
++++ b/src/XF/Payment/PayPalRest.php
+@@ -567,9 +567,20 @@
+ 		$paymentProfile = $state->getPaymentProfile();
+ 
+ 		if (!$paymentProfile)
+ 		{
+-			return $state;
++			// PayPal webhooks often omit XenForo purchase request keys in resource; signature verification still needs a profile.
++			$finder = \XF::finder(\XF\Finder\PaymentProfileFinder::class)->where('provider_id', 'paypalrest');
++			if ($finder->total() === 1)
++			{
++				$paymentProfile = $finder->fetchOne();
++				$state->paymentProfile = $paymentProfile;
++			}
++			else
++			{
++				return $state;
++			}
+ 		}
+ 
+ 		$state->webhookHeaders = [

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="simplestats" controller="PB\SimpleStats:Index" context="pb_ss"/>
+</routes>

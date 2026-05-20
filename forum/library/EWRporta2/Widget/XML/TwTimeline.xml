@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="TwTimeline" widget_title="Twitter Timeline" widget_desc="Displays a timeline widget from Twitter" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="">
+  <listeners/>
+  <options>
+    <option option_id="twtimeline_widget" edit_format="textbox" data_type="string" display_order="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Widget ID</title>
+      <explain><![CDATA[You must create a custom twitter widget and get an ID from <a href="https://twitter.com/settings/widgets" target="_blank">here</a>.]]></explain>
+    </option>
+    <option option_id="twtimeline_falltext" edit_format="textbox" data_type="string" display_order="2">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Fallback Text</title>
+      <explain><![CDATA[Text that will be displayed to the user if they don't have javascript enabled.]]></explain>
+    </option>
+    <option option_id="twtimeline_related" edit_format="textbox" data_type="string" display_order="3">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <title>Related Users</title>
+      <explain><![CDATA[List of twitter names to be suggested after a user post a tweet. (comma separated)]]></explain>
+    </option>
+    <option option_id="twtimeline_height" edit_format="spinbox" data_type="unsigned_integer" display_order="4">
+      <default_value>300</default_value>
+      <edit_format_params>min=200</edit_format_params>
+      <sub_options></sub_options>
+      <title>Height</title>
+      <explain><![CDATA[The width of the widget will be sized automatically to fix it's parent element.]]></explain>
+    </option>
+    <option option_id="twtimeline_options" edit_format="checkbox" data_type="array" display_order="5">
+      <default_value>a:5:{s:6:"scroll";b:0;s:6:"header";s:1:"1";s:6:"footer";s:1:"1";s:6:"border";b:0;s:11:"transparent";s:1:"1";}</default_value>
+      <edit_format_params>scroll=Hide Scrollbar
+header=Hide Header
+footer=Hide Footer
+border=Hide Borders
+transparent=Transparent</edit_format_params>
+      <sub_options>scroll
+header
+footer
+border
+transparent</sub_options>
+      <title>Options</title>
+      <explain><![CDATA[]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_TwTimeline"><![CDATA[<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent">
+		<h3>{$wTitle}</h3>
+
+		<a class="twitter-timeline" href="http://twitter.com" height="{$wOptions.twtimeline_height}" data-dnt="true" data-theme="{xen:property fbColorScheme}"
+			data-widget-id="{$wOptions.twtimeline_widget}" data-related="{$wOptions.twtimeline_related}" data-chrome="{$wUncached}">
+				{$wOptions.twtimeline_falltext}
+		</a>
+		<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+	</div>
+</div>]]></template>
+  </templates>
+</widget>

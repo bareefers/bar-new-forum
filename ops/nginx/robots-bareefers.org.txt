@@ -1,0 +1,10 @@
+# https://www.bareefers.org/robots.txt — public web root
+# Advisory only; nginx rate-limits matching crawlers on /forum/.
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.bareefers.org/forum/sitemap.php

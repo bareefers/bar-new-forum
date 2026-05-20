@@ -1,0 +1,25 @@
+<xf:textboxrow name="options[client_id]" value="{$profile.options.client_id}"
+	label="{{ phrase('client_id') }}"
+	hint="{{ phrase('required') }}">
+</xf:textboxrow>
+
+<xf:textboxrow name="options[secret_key]" value="{$profile.options.secret_key}"
+	label="{{ phrase('secret_key') }}"
+	hint="{{ phrase('required') }}">
+	<xf:explain>
+		{{ phrase('paypalrest_secret_key_explain') }}
+	</xf:explain>
+</xf:textboxrow>
+
+<hr class="formRowSep" />
+
+<hr class="formRowSep" />
+
+<xf:checkboxrow>
+	<xf:option label="{{ phrase('enable_webhook_verification') }}" name="enable_webhook" selected="$profile.options.webhook_id" />
+	<xf:explain>{{ phrase('enable_webhook_verification_explain') }}</xf:explain>
+</xf:checkboxrow>
+
+<xf:textboxrow name="options[webhook_id]" value="{$profile.options.webhook_id}"
+	label="{{ phrase('webhook_id') }}"
+	explain="{{ phrase('paypalrest_webhook_id_explain') }}" />

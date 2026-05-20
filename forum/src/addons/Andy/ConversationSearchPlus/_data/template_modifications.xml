@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="conversation_list" modification_key="ConversationSearchPlus_conversation_list" description="ConversationSearchPlus_conversation_list" execution_order="10" enabled="1" action="str_replace">
+    <find><![CDATA[			<div class="buttonGroup">
+				<xf:macro template="inline_mod_macros" name="button"
+					arg-variant="inlineModButton--withLabel"
+					arg-label="{{ phrase('selected') }}"
+					arg-tooltip="{{ false }}" />
+			</div>]]></find>
+    <replace><![CDATA[			<xf:if is="{{ $xf.visitor.hasPermission('conversationSearchPlus', 'view') }}">
+				<xf:button href="{{ link('conversationsearchplus') }}"
+					class="button--link">
+					{{ phrase('conversationsearchplus_conversation_search_plus') }}
+				</xf:button>
+			</xf:if>
+$0]]></replace>
+  </modification>
+</template_modifications>

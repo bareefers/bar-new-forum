@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template_modifications>
+  <modification type="public" template="account_upgrades" modification_key="exup_account_upgrades_b" description="Add a &quot;Extend&quot; button to existing upgrades." execution_order="6507" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<xf:foreach loop="\$purchased.*?phrase\('expires_never.*?)([\t ]*</xf:formrow>)#si]]></find>
+    <replace><![CDATA[$1<xf:include template="expiringUserUpgrades_account_upgrades_extend_button" />
+$2]]></replace>
+  </modification>
+  <modification type="public" template="helper_account" modification_key="expiringUserUpgrades_helper_account" description="Add Expiring User Upgrades email preferances under Account settings" execution_order="6507" enabled="1" action="preg_replace">
+    <find><![CDATA[#<xf:macro name="email_options_row.*?<\/xf:explain>#s]]></find>
+    <replace><![CDATA[$0
+<xf:if is="$xf.visitor.canChangeSVExUpEmailPreferences()">
+	<xf:option name="option[sv_exup_email_on_expiring_expired_upgrade]" checked="{$xf.visitor.Option.sv_exup_email_on_expiring_expired_upgrade}">{{ phrase('expiringUserUpgrades_receive_expiring_and_expired_user_upgrades_mailings_option') }}</xf:option>
+	<xf:option name="option[sv_exup_email_on_upgrade_purchase]" checked="{$xf.visitor.Option.sv_exup_email_on_upgrade_purchase}">{{ phrase('expiringUserUpgrades_receive_user_upgrade_purchase_mailings_option') }}</xf:option>
+	<xf:option name="option[sv_exup_email_on_upgrade_reversal]" checked="{$xf.visitor.Option.sv_exup_email_on_upgrade_reversal}">{{ phrase('expiringUserUpgrades_receive_user_upgrade_reversal_mailings_option') }}</xf:option>
+</xf:if>]]></replace>
+  </modification>
+  <modification type="admin" template="option_template_registrationDefaults" modification_key="sv_exup_option_template_registrationDefaults" description="Add default Expiring User Upgrades settings for User Registration" execution_order="6507" enabled="1" action="str_replace">
+    <find><![CDATA[<div class="u-inputSpacer">]]></find>
+    <replace><![CDATA[$0
+		<xf:include template="expiringUserUpgrades_option_template_registrationDefaults" />]]></replace>
+  </modification>
+  <modification type="admin" template="user_edit" modification_key="expiringUserUpgrades_user_edit" description="Add Expiring User Upgrades email preferances under user_edit template" execution_order="6507" enabled="1" action="preg_replace">
+    <find><![CDATA[#(email_on_conversation.*?)(\s*</xf:checkboxrow>)#si]]></find>
+    <replace><![CDATA[$1
+<xf:option name="option[sv_exup_email_on_expiring_expired_upgrade]" checked="{$user.Option.sv_exup_email_on_expiring_expired_upgrade}">{{ phrase('expiringUserUpgrades_receive_expiring_and_expired_user_upgrades_mailings_option') }}</xf:option>
+<xf:option name="option[sv_exup_email_on_upgrade_purchase]" checked="{$user.Option.sv_exup_email_on_upgrade_purchase}">{{ phrase('expiringUserUpgrades_receive_user_upgrade_purchase_mailings_option') }}</xf:option>
+<xf:option name="option[sv_exup_email_on_upgrade_reversal]" checked="{$user.Option.sv_exup_email_on_upgrade_reversal}">{{ phrase('expiringUserUpgrades_receive_user_upgrade_reversal_mailings_option') }}</xf:option>
+$2]]></replace>
+  </modification>
+  <modification type="admin" template="user_upgrade_edit" modification_key="exup_user_upgrade_edit_1" execution_order="6507" enabled="1" action="preg_replace">
+    <find><![CDATA[#(<div class="block-body">.*?)([\t ]*</div>\s*<xf:submitrow icon="save")#si]]></find>
+    <replace><![CDATA[$1
+<xf:include template="exup_user_upgrade_edit" />
+$2]]></replace>
+  </modification>
+</template_modifications>

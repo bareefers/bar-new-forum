@@ -1,0 +1,56 @@
+// -----------------------------------------------------------------------------
+// XenForo 2.x — conversations inbox: better mobile touch targets for inline-mod
+// (Chrome iOS). Merge into public:extra.less on bareefers.org, recompile style,
+// flush CSS cache (see .cursor/rules/bareefers-org-server.mdc).
+//
+// Does NOT implement “tap whole row to toggle” — that needs a small custom JS
+// snippet in a template (e.g. PAGE_CONTAINER) or an add-on; CSS alone cannot
+// reliably intercept title links without breaking keyboard/accessibility.
+// -----------------------------------------------------------------------------
+
+// Inbox / conversation list (template name on <html>)
+body[data-template="conversation_list"]
+{
+    @media (max-width: @xf-responsiveMedium)
+    {
+        // Enlarge the moderation checkbox hit area (Apple ~44px guideline)
+        .structItem--conversation .structItem-cell--icon
+        {
+            min-width: 44px;
+        }
+    }
+}
+
+/* Stronger fallback selectors used in production after template/CSS variance. */
+body[data-template="conversation_list"]
+{
+    @media (max-width: @xf-responsiveMedium)
+    {
+        .structItem--conversation .structItem-cell--icon .iconic--checkbox,
+        .structItem--conversation .structItem-cell--icon label.iconic
+        {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 44px;
+            min-height: 44px;
+            padding: 10px;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        .structItem--conversation .structItem-cell--icon .iconic--checkbox i,
+        .structItem--conversation .structItem-cell--icon label.iconic i
+        {
+            width: 22px;
+            height: 22px;
+        }
+
+        .structItem--conversation .structItem-cell--icon input[type="checkbox"],
+        .structItem--conversation .structItem-cell--icon input.js-inlineModToggle
+        {
+            width: 22px;
+            height: 22px;
+        }
+    }
+}

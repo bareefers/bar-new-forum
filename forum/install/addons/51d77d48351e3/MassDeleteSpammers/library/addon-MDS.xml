@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="MDS" title="Mass Delete Spam Users" version_string="1.0.0" version_id="1" url="" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation>
+    <navigation navigation_id="mdsList" parent_navigation_id="usersSection" display_order="15" link="users/mdslist" admin_permission_id="user" debug_only="0" hide_no_children="0"/>
+  </admin_navigation>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="mds_list"><![CDATA[<xen:title>{xen:phrase mds_title}</xen:title>
+
+<xen:require css="filter_list.css" />
+<xen:require css="mds_list.css" />
+<xen:require js="js/xenforo/filter_list.js" />
+
+<xen:form action="{xen:adminlink users/massdelete}" method="post" id="massDeleter" class="AutoValidator" data-redirect="On">	
+	<xen:if is="{$users}">
+		<div class="section">		
+			<h2 class="subHeading">
+				<label class="checkAll"><input type="checkbox" class="CheckAll" data-target="#AttachmentList" /> {xen:phrase select_all}</label>
+			</h2>		
+			<ol id="AttachmentList" class="FilterList Scrollable secondRow">
+				<xen:foreach loop="$users" value="$user">
+					<xen:listitem
+						id="{$user.user_id}"
+						label="{$user.username}"
+						href="{xen:adminlink 'users/edit', $user}"
+						snippet="{$user.email}"
+						>
+						<xen:beforelabel>
+							<img src="{xen:helper avatar, $user, s}" alt="" class="listAvatar" />
+						</xen:beforelabel>
+						<xen:html>
+							<span class="mds_span">
+								<input type="checkbox" name="user_ids[]" value="{$user.user_id}" class="AttachmentCheck" />
+							</span>
+							<span class="mds_span">
+								<a href="{xen:adminlink users/delete, $user}" class="delete OverlayTrigger" title="{xen:phrase delete}..."><span>{xen:phrase delete}...</span></a>
+							</span>
+							<span class="mds_msgcount">
+								{$user.message_count}								
+							</span>
+							<span class="mds_span">
+								<xen:if is="{$user.homepage}">{$user.homepage}</xen:if>
+								<xen:if is="{$user.signature}">{$user.signature}</xen:if>
+								<xen:if is="{$user.about}">{$user.about}</xen:if>
+							</span>
+						</xen:html>
+					</xen:listitem>
+				</xen:foreach>
+				<xen:if is="{$filterMore}">
+					<li class="listNote">{xen:phrase more_records_matching_filter_more_specific}</li>
+				</xen:if>
+			</ol>
+		
+			<p class="sectionFooter">{xen:phrase showing_x_of_y_items, 'count=<span class="FilterListCount">{xen:count $users}</span>', 'total={xen:number $count}'}</p>		
+		</div>
+				
+		<div class="footerControls">
+			<input type="submit" name="delete_selected" value="{xen:phrase mds_delete_selected_users}" class="button" style="float: right" />
+	
+			{xen:adminpagenav $stop, $count, $start, users/mdslist}
+		</div>
+	<xen:else />
+		<div class="noResults">{xen:phrase no_results_found}</div>
+	</xen:if>
+	
+</xen:form>]]></template>
+    <template title="mds_list.css"><![CDATA[.mds_span
+{
+float:right;
+max-width:500px;
+}
+
+.mds_span input {
+margin: 15px 10px;
+}
+
+.mds_msgcount {
+    float: right;
+    padding: 12px 8px;
+}]]></template>
+  </admin_templates>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="MassDeleteSpammers_Listener" callback_method="load_class_controller" active="1" description=""/>
+    <listener event_id="load_class_model" execute_order="10" callback_class="MassDeleteSpammers_Listener" callback_method="load_class_model" active="1" description=""/>
+  </code_event_listeners>
+  <cron/>
+  <email_templates/>
+  <optiongroups>
+    <option option_id="MDS_limit" edit_format="spinbox" data_type="integer" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="spam" display_order="1"/>
+    </option>
+    <option option_id="MDS_perpage" edit_format="spinbox" data_type="integer" can_backup="1">
+      <default_value>20</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="spam" display_order="1"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups/>
+    <permissions/>
+    <interface_groups/>
+  </permissions>
+  <phrases>
+    <phrase title="admin_navigation_mdsList" version_id="1" version_string="1.0.0"><![CDATA[Mass Delete Spam Users]]></phrase>
+    <phrase title="mds_delete_selected_users" version_id="1" version_string="1.0.0"><![CDATA[Delete Selected Users]]></phrase>
+    <phrase title="mds_title" version_id="1" version_string="1.0.0"><![CDATA[Mass Delete Spam Users]]></phrase>
+    <phrase title="option_MDS_limit" version_id="1" version_string="1.0.0"><![CDATA[Message Count limit]]></phrase>
+    <phrase title="option_MDS_limit_explain" version_id="1" version_string="1.0.0"><![CDATA[<b>Message Count limit to find Spammers for Mass Delete. You can delete all users with posts less than or equal to this.</b>]]></phrase>
+    <phrase title="option_MDS_perpage" version_id="1" version_string="1.0.0"><![CDATA[Users Per Page]]></phrase>
+    <phrase title="option_MDS_perpage_explain" version_id="1" version_string="1.0.0"><![CDATA[These many users would be shown per page. Hence these many can be simultaneously deleted]]></phrase>
+  </phrases>
+  <route_prefixes/>
+  <style_properties/>
+  <templates/>
+  <bb_code_media_sites/>
+</addon>

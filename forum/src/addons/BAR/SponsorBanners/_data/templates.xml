@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="bar_sb_banner_list" version_id="1000029" version_string="1.1.9"><![CDATA[<xf:title>{{ phrase('bar_sb_banners') }}</xf:title>
+<xf:pageaction>
+	<xf:button href="{{ link('bar-sponsor-banners/add') }}" icon="add">{{ phrase('bar_sb_add_banner') }}</xf:button>
+</xf:pageaction>
+
+<div class="block">
+	<h3 class="block-formSectionHeader">
+		<span class="collapseTrigger collapseTrigger--block" data-xf-click="toggle" data-target="< :up:next">
+			{{ phrase('bar_sb_collapsible_setup_title') }}
+		</span>
+		<span class="block-desc">{{ phrase('bar_sb_collapsible_setup_desc') }}</span>
+	</h3>
+	<div class="block-body block-body--collapsible">
+		<div class="blockMessage blockMessage--important">
+			<h3 class="blockMessage-header">{{ phrase('bar_sb_one_place_title') }}</h3>
+			<div class="blockMessage-inner">
+				<p>{{ phrase('bar_sb_one_place_intro') }}</p>
+				<p><strong>{{ phrase('bar_sb_paste_this_heading') }}</strong><br />{{ phrase('bar_sb_paste_this_detail') }}</p>
+				<pre class="codeBox" style="user-select: all; white-space: pre-wrap; word-break: break-all;">&lt;xf:widget class="BAR\SponsorBanners\Widget\SponsorBanners" /&gt;</pre>
+				<p class="formRow-explain">{{ phrase('bar_sb_paste_class_explain') }}</p>
+				<xf:if is="$sponsorWidgets.count()">
+					<p>
+						<xf:button href="{{ link('widgets/edit', $firstSponsorWidget) }}" icon="edit">{{ phrase('bar_sb_open_widget_settings') }}</xf:button>
+					</p>
+				<xf:else />
+					<p><strong>{{ phrase('bar_sb_no_widget_yet') }}</strong></p>
+					<p>{{ phrase('bar_sb_no_widget_explain') }}</p>
+					<xf:button href="{{ link('widgets/add', null, {'definition_id': 'bar_sponsor_banners'}) }}" icon="add" class="button--cta">{{ phrase('bar_sb_create_sponsor_widget') }}</xf:button>
+				</xf:if>
+			</div>
+		</div>
+	</div>
+</div>
+
+<xf:if is="$banners.count()">
+	<div class="block">
+		<div class="block-container">
+			<div class="block-body">
+				<xf:datalist data-xf-init="responsive-data-list">
+					<xf:datarow rowtype="header">
+						<xf:cell class="dataList-cell--min">{{ phrase('bar_sb_list_position') }}</xf:cell>
+						<xf:cell>{{ phrase('bar_sb_banner_title') }}</xf:cell>
+						<xf:cell>{{ phrase('bar_sb_target_url') }}</xf:cell>
+						<xf:cell>{{ phrase('bar_sb_visibility') }}</xf:cell>
+						<xf:action />
+					</xf:datarow>
+					<xf:foreach loop="$banners" value="$banner" i="$i">
+						<xf:datarow>
+							<xf:cell class="dataList-cell--min">{$i}</xf:cell>
+							<xf:cell>
+								<div class="{{ !$banner.is_active ? 'u-muted' : '' }}"><a href="{{ link('bar-sponsor-banners/edit', $banner) }}">{$banner.title}</a></div>
+								<xf:if is="$banner.remote_url">
+									<div class="u-muted">{$banner.remote_url}</div>
+								</xf:if>
+								<xf:if is="$banner.image_path">
+									<div class="u-muted">{{ $banner.image_path }}</div>
+								</xf:if>
+							</xf:cell>
+							<xf:cell><a href="{$banner.target_url}" target="_blank">{$banner.target_url}</a></xf:cell>
+							<xf:cell>
+								<div class="u-marginBottomSmall">
+									<xf:if is="$banner.is_active"><strong>{{ phrase('bar_sb_list_status_visible') }}</strong><xf:else /><span class="u-muted">{{ phrase('bar_sb_list_status_hidden') }}</span></xf:if>
+								</div>
+								<xf:form action="{{ link('bar-sponsor-banners/toggle-active', $banner) }}" ajax="true" class="u-displayInline">
+									<xf:if is="$banner.is_active">
+										<xf:button type="submit" class="button--small" icon="cancel">{{ phrase('bar_sb_hide_from_site') }}</xf:button>
+									<xf:else />
+										<xf:button type="submit" class="button--small button--cta" icon="confirm">{{ phrase('bar_sb_show_on_site') }}</xf:button>
+									</xf:if>
+								</xf:form>
+							</xf:cell>
+							<xf:action href="{{ link('bar-sponsor-banners/edit', $banner) }}">{{ phrase('edit') }}</xf:action>
+							<xf:action href="{{ link('bar-sponsor-banners/delete', $banner) }}" overlay="true">{{ phrase('delete') }}</xf:action>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</div>
+<xf:else />
+	<xf:inforow>{{ phrase('bar_sb_no_banners') }}</xf:inforow>
+</xf:if>]]></template>
+  <template type="admin" title="bar_sb_banner_edit" version_id="1000020" version_string="1.1.0"><![CDATA[<xf:title>
+	<xf:if is="$banner.banner_id">{{ phrase('bar_sb_edit_banner') }}<xf:else />{{ phrase('bar_sb_add_banner') }}</xf:if>
+</xf:title>
+
+<xf:form action="{{ link('bar-sponsor-banners/save', $banner) }}" ajax="true" class="block" upload="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow>{{ phrase('bar_sb_display_order_auto_explain') }}</xf:inforow>
+			<xf:textboxrow name="title" value="{$banner.title}" label="{{ phrase('bar_sb_banner_title') }}" />
+			<xf:textboxrow name="remote_url" value="{$banner.remote_url}" maxlength="512"
+				label="{{ phrase('bar_sb_remote_url') }}"
+				explain="{{ phrase('bar_sb_remote_url_explain') }}" />
+			<xf:textboxrow name="target_url" value="{$banner.target_url}" label="{{ phrase('bar_sb_target_url') }}"
+				explain="{{ phrase('bar_sb_target_url_explain') }}" />
+			<xf:textboxrow name="alt_text" value="{$banner.alt_text}" label="{{ phrase('bar_sb_alt_text') }}"
+				explain="{{ phrase('bar_sb_alt_text_explain') }}" />
+			<xf:numberboxrow name="display_width" value="{$banner.display_width}" min="0" max="2000"
+				label="{{ phrase('bar_sb_display_width') }}"
+				explain="{{ phrase('bar_sb_display_dims_explain') }}" />
+			<xf:numberboxrow name="display_height" value="{$banner.display_height}" min="0" max="2000"
+				label="{{ phrase('bar_sb_display_height') }}"
+				explain="{{ phrase('bar_sb_display_height_explain') }}" />
+			<xf:checkboxrow explain="{{ phrase('bar_sb_show_on_site_explain') }}">
+				<xf:option name="is_active" value="1" selected="{$banner.is_active}" label="{{ phrase('bar_sb_show_on_site_checkbox') }}" />
+			</xf:checkboxrow>
+			<xf:uploadrow name="banner_image" accept=".jpg,.jpeg,.png,.gif,.webp" label="{{ phrase('bar_sb_image') }}"
+				explain="{{ phrase('bar_sb_image_explain') }}" />
+			<xf:if is="$fileDimensions">
+				<xf:formrow label="{{ phrase('bar_sb_source_dimensions') }}">
+					{$fileDimensions.width} × {$fileDimensions.height} px
+				</xf:formrow>
+			</xf:if>
+			<xf:if is="$banner.public_image_src">
+				<xf:formrow label="{{ phrase('bar_sb_preview') }}">
+					<img src="{$banner.public_image_src}" alt="{$banner.alt_text}" style="max-width: 400px; max-height: 240px; width: auto; height: auto;" />
+				</xf:formrow>
+			</xf:if>
+			<xf:if is="$banner.banner_id">
+				<hr class="formRowSep" />
+				<xf:inforow>{{ phrase('bar_sb_delete_hint') }}</xf:inforow>
+				<xf:formrow>
+					<xf:button href="{{ link('bar-sponsor-banners/delete', $banner) }}" overlay="true" class="button--cta button--destructive" icon="delete">{{ phrase('bar_sb_delete_banner') }}</xf:button>
+				</xf:formrow>
+			</xf:if>
+		</div>
+		<xf:submitrow icon="save" sticky="true" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="bar_sb_banner_delete" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('bar_sb_delete_banner') }}</xf:title>
+<xf:form action="{{ link('bar-sponsor-banners/delete', $banner) }}" class="block" ajax="true">
+	<div class="block-container">
+		<div class="block-body">
+			<xf:inforow>{{ phrase('bar_sb_delete_banner_confirm', {'title': $banner.title}) }}</xf:inforow>
+		</div>
+		<xf:submitrow submit="{{ phrase('delete') }}" icon="delete" />
+	</div>
+</xf:form>]]></template>
+  <template type="admin" title="widget_def_options_bar_sponsor_banners" version_id="1000015" version_string="1.0.5"><![CDATA[<hr class="formRowSep" />
+
+<xf:numberboxrow name="options[max_width]" value="{$options.max_width}" min="0" max="2000"
+	label="{{ phrase('bar_sb_widget_max_width') }}"
+	explain="{{ phrase('bar_sb_widget_max_width_explain') }}" />
+
+<xf:radiorow name="options[rotation_mode]" value="{$options.rotation_mode}"
+	label="{{ phrase('bar_sb_widget_rotation_mode') }}"
+	explain="{{ phrase('bar_sb_widget_rotation_mode_explain') }}">
+
+	<xf:option value="single" label="{{ phrase('bar_sb_widget_rotation_single') }}" />
+	<xf:option value="all" label="{{ phrase('bar_sb_widget_rotation_all') }}" />
+</xf:radiorow>]]></template>
+  <template type="public" title="bar_sb_public_macros" version_id="1000027" version_string="1.1.7"><![CDATA[<xf:macro name="carousel" arg-banners="" arg-class="" arg-max_width="0">
+	<xf:if is="$banners is not empty">
+	<xf:if is="$banners.count()">
+		<div class="barSponsorBanners {$class}">
+			<xf:foreach loop="$banners" value="$banner">
+				<xf:set var="$targetUrl" value="{{ $banner.target_url ? $banner.target_url : '#' }}" />
+				<xf:set var="$altText" value="{{ $banner.alt_text ? $banner.alt_text : $banner.title }}" />
+				<xf:set var="$capW" value="0" />
+				<xf:if is="$banner.display_width AND $max_width">
+					<xf:if is="$banner.display_width < $max_width">
+						<xf:set var="$capW" value="{$banner.display_width}" />
+					<xf:else />
+						<xf:set var="$capW" value="{$max_width}" />
+					</xf:if>
+				<xf:elseif is="$banner.display_width" />
+					<xf:set var="$capW" value="{$banner.display_width}" />
+				<xf:elseif is="$max_width" />
+					<xf:set var="$capW" value="{$max_width}" />
+				</xf:if>
+				<xf:set var="$imgStyle" value="" />
+				<xf:if is="$capW">
+					<xf:set var="$imgStyle" value="max-width: {$capW}px; " />
+				</xf:if>
+				<xf:if is="$banner.display_height">
+					<xf:set var="$imgStyle" value="{$imgStyle}max-height: {$banner.display_height}px; " />
+				</xf:if>
+				<xf:set var="$imgStyle" value="{$imgStyle}height: auto; width: auto;" />
+				<div class="alignCenter">
+					<a href="{$targetUrl}" class="barSponsorBanners-item" target="_blank" rel="nofollow ugc" data-blank-handler="true">
+						<xf:if is="$banner.remote_url">
+							<img src="{$banner.remote_url}" alt="{$altText}" loading="lazy" style="{$imgStyle}" />
+						<xf:elseif is="$banner.image_path" />
+							<img src="{{ base_url($banner.image_path) }}" alt="{$altText}" loading="lazy" style="{$imgStyle}" />
+						</xf:if>
+					</a>
+				</div>
+			</xf:foreach>
+		</div>
+	</xf:if>
+	</xf:if>
+</xf:macro>]]></template>
+  <template type="public" title="bar_sb_widget" version_id="1000027" version_string="1.1.7"><![CDATA[<xf:macro template="bar_sb_public_macros" name="carousel" arg-banners="{$banners}" arg-class="bar-sponsor-banners-widget" arg-max_width="{$options.max_width}" />]]></template>
+</templates>

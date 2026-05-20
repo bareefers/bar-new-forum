@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+    <template type="admin" title="tapatalk_option_multi_forum_select" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[<xf:title>{{ $optionTitle }}</xf:title>
+    <xf:selectrow name="{$fieldPrefix}[{$optionId}]"
+				value="{$entry.choices|raw}"
+				multiple="true" size="8" style="width: 350px"
+				explain="{{ $optionExplain }}"
+				label="{{ $optionTitle }}">
+
+				<xf:foreach loop="$entry.forum_list" key="$id" value="$forumName">
+						<xf:option value="{$id}">{$forumName}</xf:option>
+				</xf:foreach>
+	</xf:selectrow><xf:hiddenval name="options_listed[]">{$optionId}</xf:hiddenval>]]></template>
+
+    <template type="admin" title="tapatalk_option_multi_group_select" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[<xf:title>{{ $optionTitle }}</xf:title>
+    <xf:selectrow name="{$fieldPrefix}[{$optionId}]"
+				value="{$entry.choices|raw}"
+				multiple="true" size="8" style="width: 350px"
+				explain="{{ $optionExplain }}"
+				label="{{ $optionTitle }}">
+
+				<xf:foreach loop="$entry.group_list" key="$id" value="$groupName">
+						<xf:option value="{$id}">{$groupName}</xf:option>
+				</xf:foreach>
+	</xf:selectrow><xf:hiddenval name="options_listed[]">{$optionId}</xf:hiddenval>]]></template>
+
+
+    <template type="admin" title="tapatalk_option_null_string" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[]]></template>
+
+    <template type="public" title="tapatalk_mbq_view" version_id="2000010" version_string="0.1.0 Beta">
+        <![CDATA[]]></template>
+
+</templates>

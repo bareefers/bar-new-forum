@@ -1,0 +1,1439 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="EWRatendo" title="[8wayRun.Com] XenAtendo (Events)" version_string="1.5.0" version_id="50" url="http://xenforo.com/community/resources/99/" install_callback_class="EWRatendo_Install" install_callback_method="installCode" uninstall_callback_class="EWRatendo_Install" uninstall_callback_method="uninstallCode">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates>
+    <template title="option_list_option_multi_EWRatendo"><![CDATA[<xen:selectunit label="{$preparedOption.title}" name="{$fieldPrefix}[{$preparedOption.option_id}]" value="{xen:raw $preparedOption.option_value}"
+hint="{$preparedOption.hint}" size="10" multiple="true">
+	<xen:options source="$formatParams" />
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+	<xen:html>
+		<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+		{xen:raw $editLink}
+	</xen:html>
+</xen:selectunit>]]></template>
+    <template title="option_list_option_multi_EWRatendo2"><![CDATA[<xen:foreach loop="$forums" value="$forum">
+	<xen:controlunit label="{$forum.title}">
+		<xen:html>
+			{xen:phrase display_cutoff}: 
+			<xen:spinbox name="{$fieldPrefix}[{$preparedOption.option_id}][{$forum.node_id}][cutoff]" value="{$forum.cutoff}" size="1" min="0" />
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+			<input type="checkbox" name="{$fieldPrefix}[{$preparedOption.option_id}][{$forum.node_id}][topctrl]" value="1" {xen:if {$forum.topctrl}, 'checked="checked"'} /> 
+			{xen:phrase override_topctrl}
+
+			<input type="hidden" name="{$listedFieldName}" value="{$preparedOption.option_id}" />
+			{xen:raw $editLink}
+		</xen:html>
+	</xen:controlunit>
+</xen:foreach>
+
+<xen:controlunit label="">
+	<xen:explain>{xen:raw $preparedOption.explain}</xen:explain>
+</xen:controlunit>]]></template>
+  </admin_templates>
+  <code_events/>
+  <code_event_listeners>
+    <listener event_id="init_dependencies" execute_order="10" callback_class="EWRatendo_Listener_Init" callback_method="listen" active="1" description="Denormalization"/>
+    <listener event_id="load_class_controller" execute_order="10" callback_class="EWRatendo_Listener_Controller" callback_method="controller" active="1" description="Controller"/>
+    <listener event_id="load_class_datawriter" execute_order="10" callback_class="EWRatendo_Listener_DataWriter" callback_method="datawriter" active="1" description="DataWriter"/>
+    <listener event_id="navigation_tabs" execute_order="95" callback_class="EWRatendo_Listener_NavTabs" callback_method="listen" active="1" description="Navigation Tabs"/>
+    <listener event_id="template_hook" execute_order="10" callback_class="EWRatendo_Listener_Template" callback_method="template_hook" active="1" description="Template Hooks"/>
+    <listener event_id="template_post_render" execute_order="10" callback_class="EWRatendo_Listener_Template" callback_method="template_post_render" active="1" description="Template Post Render"/>
+  </code_event_listeners>
+  <cron>
+    <entry entry_id="EWRatendo_recurs" cron_class="EWRatendo_CronEntry_Recurs" cron_method="build" active="1"><![CDATA[{"day_type":"dom","dom":["-1"],"hours":["5"],"minutes":["0"]}]]></entry>
+  </cron>
+  <email_templates/>
+  <optiongroups>
+    <group group_id="EWRatendo" display_order="10000" debug_only="0"/>
+    <option option_id="EWRatendo_24hour" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="204"/>
+    </option>
+    <option option_id="EWRatendo_archiveevents" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="106"/>
+    </option>
+    <option option_id="EWRatendo_birthdaycutoff" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>12</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="103"/>
+    </option>
+    <option option_id="EWRatendo_birthdays" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="104"/>
+    </option>
+    <option option_id="EWRatendo_cutoff" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>6</default_value>
+      <edit_format_params>min=0
+max=23</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="102"/>
+    </option>
+    <option option_id="EWRatendo_dateformat" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>M j, Y</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="202"/>
+    </option>
+    <option option_id="EWRatendo_default" edit_format="radio" data_type="string" can_backup="1">
+      <default_value>monthly</default_value>
+      <edit_format_params>monthly={xen:phrase monthly_view}
+weekly={xen:phrase weekly_view}
+upcoming={xen:phrase upcoming_events}</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="101"/>
+    </option>
+    <option option_id="EWRatendo_endlessevents" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="107"/>
+    </option>
+    <option option_id="EWRatendo_eventforums" edit_format="callback" data_type="array" can_backup="1">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRatendo_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="EWRatendo" display_order="1"/>
+    </option>
+    <option option_id="EWRatendo_eventforums2" edit_format="callback" data_type="array" can_backup="1" validation_class="EWRatendo_Option_ForumChooser2" validation_method="verifyOption">
+      <default_value>a:1:{i:1;a:2:{s:6:"cutoff";i:0;s:7:"topctrl";i:0;}}</default_value>
+      <edit_format_params>EWRatendo_Option_ForumChooser2::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <relation group_id="EWRatendo" display_order="2"/>
+    </option>
+    <option option_id="EWRatendo_extendedvenue" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>1</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="303"/>
+    </option>
+    <option option_id="EWRatendo_geoLocationUrl" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>http://maps.google.com/maps?q={location}&amp;output=embed</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="302"/>
+    </option>
+    <option option_id="EWRatendo_maxhours" edit_format="spinbox" data_type="string" can_backup="1">
+      <default_value>72</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="207"/>
+    </option>
+    <option option_id="EWRatendo_minhours" edit_format="spinbox" data_type="string" can_backup="1">
+      <default_value>6</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="206"/>
+    </option>
+    <option option_id="EWRatendo_minutes" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="205"/>
+    </option>
+    <option option_id="EWRatendo_recurrence" edit_format="spinbox" data_type="unsigned_integer" can_backup="1">
+      <default_value>3</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="105"/>
+    </option>
+    <option option_id="EWRatendo_threadformat" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>[{date}] {event} ({location})</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="201"/>
+    </option>
+    <option option_id="EWRatendo_timeformat" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value>h:i A</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="EWRatendo" display_order="203"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups>
+      <permission_group permission_group_id="EWRatendo"/>
+    </permission_groups>
+    <permissions>
+      <permission permission_group_id="EWRatendo" permission_id="canBypass" permission_type="flag" default_value="unset" interface_group_id="EWRatendo" display_order="2"/>
+      <permission permission_group_id="EWRatendo" permission_id="canMod" permission_type="flag" default_value="unset" interface_group_id="EWRatendo" display_order="4"/>
+      <permission permission_group_id="EWRatendo" permission_id="canPost" permission_type="flag" default_value="unset" interface_group_id="EWRatendo" display_order="1"/>
+      <permission permission_group_id="EWRatendo" permission_id="canRSVP" permission_type="flag" default_value="unset" interface_group_id="EWRatendo" display_order="3"/>
+    </permissions>
+    <interface_groups>
+      <interface_group interface_group_id="EWRatendo" display_order="10000"/>
+    </interface_groups>
+  </permissions>
+  <phrases>
+    <phrase title="address" version_id="1" version_string="1.0.1"><![CDATA[Address]]></phrase>
+    <phrase title="auto_create_event_thread_deleted" version_id="43" version_string="1.4.3"><![CDATA[[QUOTE][CENTER][SIZE=4]An administrator or the event organizer has deleted this event from the system.[/SIZE][/CENTER]
+
+[CENTER][SIZE=6][B]This thread has now been automatically locked.[/B][/SIZE][/CENTER][/QUOTE]]]></phrase>
+    <phrase title="birthdays" version_id="20" version_string="1.2.0"><![CDATA[Birthday(s)]]></phrase>
+    <phrase title="birthdays_on_x" version_id="20" version_string="1.2.0"><![CDATA[Birthdays on {month} {day}]]></phrase>
+    <phrase title="city_state" version_id="43" version_string="1.4.3"><![CDATA[City, State]]></phrase>
+    <phrase title="confirmed_attendees" version_id="1" version_string="1.0.1"><![CDATA[Confirmed Attendees]]></phrase>
+    <phrase title="create_event" version_id="1" version_string="1.0.1"><![CDATA[Create Event]]></phrase>
+    <phrase title="create_event_thread" version_id="3" version_string="1.0.3"><![CDATA[Create Event Thread]]></phrase>
+    <phrase title="cron_entry_EWRatendo_recurs" version_id="21" version_string="1.2.1"><![CDATA[XenAtendo: Rebuild Recurrences]]></phrase>
+    <phrase title="delete_event" version_id="1" version_string="1.0.1"><![CDATA[Delete Event]]></phrase>
+    <phrase title="delete_event_hint" version_id="43" version_string="1.4.3"><![CDATA[Are you sure you wish to delete this event?]]></phrase>
+    <phrase title="delete_rsvps" version_id="1" version_string="1.0.1"><![CDATA[Delete RSVPs]]></phrase>
+    <phrase title="delete_rsvps_hint" version_id="43" version_string="1.4.3"><![CDATA[Are you sure you wish to delete these RSVPs?]]></phrase>
+    <phrase title="display_cutoff" version_id="47" version_string="1.4.7"><![CDATA[Display Cutoff]]></phrase>
+    <phrase title="enable_rsvp_system" version_id="37" version_string="1.3.7"><![CDATA[Enable RSVP System]]></phrase>
+    <phrase title="enable_rsvp_system_hint" version_id="31" version_string="1.3.1"><![CDATA[If selected, users will be able to respond with their attendance.]]></phrase>
+    <phrase title="event" version_id="1" version_string="1.0.1"><![CDATA[Event]]></phrase>
+    <phrase title="events" version_id="1" version_string="1.0.1"><![CDATA[Events]]></phrase>
+    <phrase title="events_archive" version_id="1" version_string="1.0.1"><![CDATA[Events Archive]]></phrase>
+    <phrase title="events_for_x" version_id="31" version_string="1.3.1"><![CDATA[Events for {date}]]></phrase>
+    <phrase title="events_on_x" version_id="26" version_string="1.2.6"><![CDATA[Events on {month} {day}, {year}]]></phrase>
+    <phrase title="event_already_passed" version_id="1" version_string="1.0.1"><![CDATA[This event has already begun, or has already passed; RSVP has been since closed.]]></phrase>
+    <phrase title="event_awaiting_approval" version_id="42" version_string="1.4.2"><![CDATA[This event is awaiting approval before it gets added to the calendar.]]></phrase>
+    <phrase title="event_disabled_rsvp" version_id="37" version_string="1.3.7"><![CDATA[The organizer for this event has disabled the RSVP system; RSVP has been closed.]]></phrase>
+    <phrase title="event_title_hint" version_id="44" version_string="1.4.4"><![CDATA[Do not include date/location info in the event title. It will be added automatically.]]></phrase>
+    <phrase title="far_into_the_future" version_id="30" version_string="1.3.0"><![CDATA[far into the future]]></phrase>
+    <phrase title="maybe" version_id="1" version_string="1.0.1"><![CDATA[Maybe]]></phrase>
+    <phrase title="monthly_view" version_id="20" version_string="1.2.0"><![CDATA[Monthly View]]></phrase>
+    <phrase title="on_" version_id="30" version_string="1.3.0"><![CDATA[on ]]></phrase>
+    <phrase title="option_EWRatendo_24hour" version_id="48" version_string="1.4.8"><![CDATA[Use 24-Hour Time Clocks]]></phrase>
+    <phrase title="option_EWRatendo_24hour_explain" version_id="48" version_string="1.4.8"><![CDATA[If enabled, when creating and editing events, clock times will be disabled in 24-hour mode (rather than 12-hour mode). You will still need to edit the time title format to match.]]></phrase>
+    <phrase title="option_EWRatendo_archiveevents" version_id="43" version_string="1.4.3"><![CDATA[Archive Recurring Events]]></phrase>
+    <phrase title="option_EWRatendo_archiveevents_explain" version_id="43" version_string="1.4.3"><![CDATA[If disabled, past instances of recurring events will NOT be stored in the archive.<br />Disabling this may clean up the clutter on your calendar and event archive.]]></phrase>
+    <phrase title="option_EWRatendo_birthdaycutoff" version_id="40" version_string="1.4.0"><![CDATA[Birthday Cutoff]]></phrase>
+    <phrase title="option_EWRatendo_birthdaycutoff_explain" version_id="40" version_string="1.4.0"><![CDATA[If a user has not been active in the past X months, they will not be listed for birthdays.]]></phrase>
+    <phrase title="option_EWRatendo_birthdays" version_id="21" version_string="1.2.1"><![CDATA[Display Birthdays on Monthly View]]></phrase>
+    <phrase title="option_EWRatendo_birthdays_explain" version_id="21" version_string="1.2.1"><![CDATA[You can enable/disable the birthday counts on the monthly calendar.]]></phrase>
+    <phrase title="option_EWRatendo_cutoff" version_id="21" version_string="1.2.1"><![CDATA[Calendar Hour Cutoff]]></phrase>
+    <phrase title="option_EWRatendo_cutoff_explain" version_id="21" version_string="1.2.1"><![CDATA[Any event that ends before this hour will not be considered to be taking place on a specific day. For example, if you have an event that starts on Friday at 2 PM, and ends on Sunday at 2 AM, it will not be considered to be taking place on Sunday, since the end time is before 6 AM. (That is of course, assuming this option is set to 6).]]></phrase>
+    <phrase title="option_EWRatendo_dateformat" version_id="21" version_string="1.2.1"><![CDATA[Date Title Format]]></phrase>
+    <phrase title="option_EWRatendo_dateformat_explain" version_id="21" version_string="1.2.1"><![CDATA[Format of date in thread titles. Be sure to follows <a href="http://php.net/manual/en/function.date.php">PHP's date()</a> rules.]]></phrase>
+    <phrase title="option_EWRatendo_default" version_id="20" version_string="1.2.0"><![CDATA[Default Calendar View]]></phrase>
+    <phrase title="option_EWRatendo_default_explain" version_id="20" version_string="1.2.0"><![CDATA[The default view mode when viewing the event calendar.]]></phrase>
+    <phrase title="option_EWRatendo_endlessevents" version_id="46" version_string="1.4.6"><![CDATA[Allow Endless Recurring Events]]></phrase>
+    <phrase title="option_EWRatendo_endlessevents_explain" version_id="46" version_string="1.4.6"><![CDATA[If enabled, users will be able to submit endless recurring events. These events will recur at<br />the specified intervals till the end of time. Otherwise, users will have to submit a stop date.]]></phrase>
+    <phrase title="option_EWRatendo_eventforums" version_id="22" version_string="1.2.2"><![CDATA[Event Forums]]></phrase>
+    <phrase title="option_EWRatendo_eventforums2" version_id="47" version_string="1.4.7"><![CDATA[Event Forums]]></phrase>
+    <phrase title="option_EWRatendo_eventforums2_explain" version_id="47" version_string="1.4.7"><![CDATA[Display Cutoff is the number of days of events to show at the top of an event forum.<br />
+By default, users can create event threads and normal threads in an event forum. If Override Top Control is checked, users will be unable to create normal threads on that event forum.]]></phrase>
+    <phrase title="option_EWRatendo_eventforums_explain" version_id="47" version_string="1.4.7"><![CDATA[Which forums should be classified for events?]]></phrase>
+    <phrase title="option_EWRatendo_extendedvenue" version_id="49" version_string="1.4.9"><![CDATA[Allow Extended Venue Information]]></phrase>
+    <phrase title="option_EWRatendo_extendedvenue_explain" version_id="49" version_string="1.4.9"><![CDATA[If unchecked, form fields for address, city, state and zip code will be hidden. Without this information events will not have a location map. Basic venue information will still be required.]]></phrase>
+    <phrase title="option_EWRatendo_geoLocationUrl" version_id="43" version_string="1.4.3"><![CDATA[Location Information URL]]></phrase>
+    <phrase title="option_EWRatendo_geoLocationUrl_explain" version_id="43" version_string="1.4.3"><![CDATA[The URL specified here will be used to give information (such as a map) about a physical location. The URL must include a <strong>{location}</strong> token.]]></phrase>
+    <phrase title="option_EWRatendo_maxhours" version_id="43" version_string="1.4.3"><![CDATA[Maximum Event Hours]]></phrase>
+    <phrase title="option_EWRatendo_maxhours_explain" version_id="43" version_string="1.4.3"><![CDATA[This is the maximum number of hours in which an event can be set.]]></phrase>
+    <phrase title="option_EWRatendo_minhours" version_id="21" version_string="1.2.1"><![CDATA[Minimum Event Hours]]></phrase>
+    <phrase title="option_EWRatendo_minhours_explain" version_id="21" version_string="1.2.1"><![CDATA[This is the minimum number of hours in which an event can be set.]]></phrase>
+    <phrase title="option_EWRatendo_minutes" version_id="48" version_string="1.4.8"><![CDATA[Allow 15-Minute Selection]]></phrase>
+    <phrase title="option_EWRatendo_minutes_explain" version_id="48" version_string="1.4.8"><![CDATA[By default, users can only set events to the hour. If you enable this option, they will be permitted to set events down to 15-minute intervals.]]></phrase>
+    <phrase title="option_EWRatendo_recurrence" version_id="21" version_string="1.2.1"><![CDATA[Recurrence Cutoff]]></phrase>
+    <phrase title="option_EWRatendo_recurrence_explain" version_id="21" version_string="1.2.1"><![CDATA[How many months to process recurring events on the calendar]]></phrase>
+    <phrase title="option_EWRatendo_threadformat" version_id="43" version_string="1.4.3"><![CDATA[Thread Title Format]]></phrase>
+    <phrase title="option_EWRatendo_threadformat_explain" version_id="43" version_string="1.4.3"><![CDATA[Format of thread titles. Use {date}, {location} and {event} to insert information.]]></phrase>
+    <phrase title="option_EWRatendo_timeformat" version_id="22" version_string="1.2.2"><![CDATA[Time Title Format]]></phrase>
+    <phrase title="option_EWRatendo_timeformat_explain" version_id="22" version_string="1.2.2"><![CDATA[Format of time in thread titles. Be sure to follows <a href="http://php.net/manual/en/function.date.php">PHP's date()</a> rules.]]></phrase>
+    <phrase title="option_group_EWRatendo" version_id="43" version_string="1.4.3"><![CDATA[[8wayRun.Com] XenAtendo (Events)]]></phrase>
+    <phrase title="option_group_EWRatendo_description" version_id="43" version_string="1.4.3"><![CDATA[[8wayRun.Com] XenAtendo (Events)]]></phrase>
+    <phrase title="override_topctrl" version_id="47" version_string="1.4.7"><![CDATA[Override Top Control]]></phrase>
+    <phrase title="permission_EWRatendo_canBypass" version_id="42" version_string="1.4.2"><![CDATA[Can Bypass Moderation]]></phrase>
+    <phrase title="permission_EWRatendo_canMod" version_id="1" version_string="1.0.1"><![CDATA[Can Moderate Events]]></phrase>
+    <phrase title="permission_EWRatendo_canPost" version_id="22" version_string="1.2.2"><![CDATA[Can Post Events]]></phrase>
+    <phrase title="permission_EWRatendo_canRSVP" version_id="26" version_string="1.2.6"><![CDATA[Can RSVP for Events]]></phrase>
+    <phrase title="permission_group_EWRatendo" version_id="1" version_string="1.0.1"><![CDATA[[8wayRun.Com] XenAtendo (RSVP)]]></phrase>
+    <phrase title="permission_interface_EWRatendo" version_id="43" version_string="1.4.3"><![CDATA[[8wayRun.Com] XenAtendo (Events)]]></phrase>
+    <phrase title="post_new_event" version_id="1" version_string="1.0.1"><![CDATA[Post New Event]]></phrase>
+    <phrase title="recur_this_event_every" version_id="22" version_string="1.2.2"><![CDATA[Recur This Event Every]]></phrase>
+    <phrase title="recur_this_event_every_hint" version_id="43" version_string="1.4.3"><![CDATA[If you set a stop date, this event will stop repeating after that time.]]></phrase>
+    <phrase title="refresh_map" version_id="1" version_string="1.0.1"><![CDATA[Refresh Map]]></phrase>
+    <phrase title="save_event" version_id="1" version_string="1.0.1"><![CDATA[Save Event]]></phrase>
+    <phrase title="start_end_time" version_id="1" version_string="1.0.1"><![CDATA[Start/End Time]]></phrase>
+    <phrase title="stop_after" version_id="43" version_string="1.4.3"><![CDATA[Stop After]]></phrase>
+    <phrase title="the_following_users_have_rsvpd_x" version_id="1" version_string="1.0.1"><![CDATA[The following users have RSVP'd "{state}"]]></phrase>
+    <phrase title="till" version_id="1" version_string="1.0.1"><![CDATA[till]]></phrase>
+    <phrase title="todays_birthdays" version_id="43" version_string="1.4.3"><![CDATA[Today's Birthdays]]></phrase>
+    <phrase title="upcoming_events" version_id="1" version_string="1.0.1"><![CDATA[Upcoming Events]]></phrase>
+    <phrase title="upcoming_events_for_the_next_x_days" version_id="21" version_string="1.2.1"><![CDATA[Upcoming events for the next {days} day(s)]]></phrase>
+    <phrase title="venue" version_id="1" version_string="1.0.1"><![CDATA[Venue]]></phrase>
+    <phrase title="viewing_event_calendar" version_id="26" version_string="1.2.6"><![CDATA[Viewing event calendar]]></phrase>
+    <phrase title="week" version_id="21" version_string="1.2.1"><![CDATA[Week]]></phrase>
+    <phrase title="weekly_view" version_id="20" version_string="1.2.0"><![CDATA[Weekly View]]></phrase>
+    <phrase title="within_x_y" version_id="30" version_string="1.3.0"><![CDATA[within {count} {range}]]></phrase>
+    <phrase title="you_can_not_rsvp_for_this_event" version_id="1" version_string="1.0.1"><![CDATA[You can not RSVP for this event]]></phrase>
+    <phrase title="zipcode" version_id="43" version_string="1.4.3"><![CDATA[Zipcode]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="public">
+      <prefix original_prefix="events" class="EWRatendo_Route_Events" build_link="data_only"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties/>
+  <templates>
+    <template title="EWRatendo.css" version_id="50" version_string="1.5.0"><![CDATA[.blockCtrl { text-align: right; margin-top: -40px; }
+.monthBlock .primaryContent { border: 1px solid {xen:property primaryLighter}; }
+.monthBlock .secondaryContent { border-left: 1px solid {xen:property primaryLighter}; border-bottom: 1px solid {xen:property primaryLighter}; }
+.monthBlock .weekday { text-align: center; }
+.monthBlock .offMonth { background: {xen:property primaryLighterStill}; }
+.monthBlock .weekends { background: {xen:property primaryLightest}; }
+.monthBlock .nowWeek { background: {xen:property secondaryLightest}; }
+.monthBlock .nowToday { {xen:property subHeading.background}; }
+.monthBlock .nowWeek .birthDays a, .monthBlock .nowWeek li a,
+.monthBlock .nowToday .birthDays a, .monthBlock .nowToday li a { color: {xen:property subHeading.color}; }
+.monthBlock .dayBlock { min-height: 45px; font-size: 0.8em; padding-bottom: 20px; position: relative; }
+.monthBlock .dayNumber { float: right; margin: -10px -10px 0px 5px; font-weight: bold; padding: 8px; }
+.monthBlock .overflow { position: absolute; font-weight: bold; }
+.monthBlock .overflow .count { font-size: 2em; }
+.monthBlock .birthDays { position: absolute; bottom: 0px; }
+.monthBlock td { vertical-align: top; width: 14%; }
+.monthBlock li { margin-bottom: 10px; max-height: 36px; overflow: hidden; }
+.monthBlock li:last-child { margin-bottom: 0px; }
+.monthBlock.sideBlock .hasEvent { font-size: 1.2em; font-weight: bold; }
+.monthBlock.sideBlock td { vertical-align: middle; text-align: center; padding: 5px; }
+
+.weekBlock .primaryContent { border-bottom: 1px solid {xen:property primaryLighter}; }
+.weekBlock .secondaryContent { border-bottom: 1px solid {xen:property primaryLighter}; }
+.weekBlock .birthdays { text-align: right; padding: 5px 5px 2px; }
+.weekBlock .dayBlock
+{
+	background: {xen:property primaryLighterStill};
+	border: 1px solid {xen:property primaryLighter};
+	border-radius: 5px;
+	float: left;
+	font-size: 5.0em;
+	margin: 10px 10px 0px;
+	text-align: center;
+	width: 110px;
+}
+.weekBlock .nowToday { background: {xen:property secondaryLighter}; }
+.weekBlock .avatar img { height: 20px; width: 20px; }
+.weekBlock ul { margin-left: 122px; }
+.weekBlock li .avatar { float: left; }
+.weekBlock li .avatar .s { height: 20px; width: 20px; background-position: center center; background-size: 20px 20px !important; }
+.weekBlock li .eventInfo { margin-left: 30px; padding: 5px; }
+{xen:helper clearfix, '.weekList'}
+
+.eventList .primaryContent { margin-top: -10px; font-size: 1.5em; }
+.eventList ul { margin-right: -10px; }
+.eventList li { width: 50%; float: left; }
+.eventList li .secondaryContent { margin-top: 10px; margin-right: 10px; padding: 0px; }
+.eventList li .eventInfo { padding: 4px; }
+.eventList li .eventDate { font-size: 0.9em; float: right; text-align: right; width: 100px; }
+.eventList li .eventTime { font-size: 1.1em; }
+.eventList li .eventName { white-space: nowrap; overflow: hidden; }
+.eventList li .eventText { white-space: nowrap; overflow: hidden; font-size: 0.8em; max-height: 28px; }
+{xen:helper clearfix, '.eventList ul'}
+
+.eventList .username { font-weight: bold; }
+.eventList .avatar { float: left; }
+.eventList .avatar .s,
+.eventDaily .avatar .s { background-position: center center; background-size: 48px 48px !important; }
+
+.rsvpList ul { margin-top: 10px; }
+.rsvpList li { position: relative; display: inline-block; width: 150px; }
+.rsvpList li .rsvpInfo { margin-left: 25px; padding: 4px; }
+
+.rsvpList .avatar { float: left; }
+.rsvpList .avatar img { height: 20px; width: 20px; }
+.rsvpList .username.Tooltip { font-weight: bold; font-style: italic; }
+
+.rsvpShortList { font-size: 0.9em; }
+.rsvpShortList ul { display: inline; }
+.rsvpShortList li { display: inline; }
+.rsvpShortList li::after { content: ','; }
+.rsvpShortList li:last-child::after { content: ''; }
+
+.eventModerated .subHeading { text-align: center; font-weight: bold; font-size: 1.5em; }
+
+.messageSimple textarea
+{
+	height: 54px;
+	width: 100%;
+	box-sizing: border-box;
+	*width: 98%;
+	resize: vertical;
+}
+.messageSimple .submitUnit { margin-top: 5px; text-align: right; }
+
+.xenForm .date
+{
+	background-image: url("styles/8wayrun/calendar.png");
+	background-position: right center;
+	background-repeat: no-repeat;
+}
+
+.ctrlUnit dd .hint
+{
+	font-size: 11px;
+	color: {xen:property mutedTextColor};
+	margin-left: {xen:property formCtrlIndent};
+	margin-top: 2px;
+}
+
+.copyright { text-align: center; font-size: 11px; margin: 10px; }]]></template>
+    <template title="EWRatendo_BbCode_Chat" version_id="43" version_string="1.4.3"><![CDATA[<div id="stream_player" style="{xen:if $chatStyle, $chatStyle}">
+	<xen:if is="{$event.service_stype} == 'flash'">
+		<object type="application/x-shockwave-flash" width="100%" height="{$event.service_height}" data="{$event.service_stream}">
+			<param name="movie" value="{$event.service_stream}" />
+			<param name="allowfullscreen" value="true" />
+			<param name="wmode" value="transparent" />
+			<param name="flashvars" value="{$event.service_sflashvars}" />
+		</object>
+	<xen:else is="{$event.service_stype} == 'iframe'" />
+		<iframe frameborder="0" scrolling="no"
+			width="100%" height="{$event.service_height}"
+			src="{$event.service_stream}">
+		</iframe>
+	</xen:if>
+</div>]]></template>
+    <template title="EWRatendo_BbCode_Stream" version_id="43" version_string="1.4.3"><![CDATA[<div id="stream_player" style="{xen:if $streamStyle, $streamStyle, 'text-align: center'}">
+	<xen:if is="{$event.service_movie}">
+		<object type="application/x-shockwave-flash" width="{$event.service_width}" height="{$event.service_height}" id="live_embed_player_flash" data="{$event.service_movie}">
+			<param name="movie" value="{$event.service_movie}" />
+			<param name="allowfullscreen" value="true" />
+			<param name="allowscriptaccess" value="always" />
+			<param name="wmode" value="transparent" />
+			<param name="flashvars" value="{$event.service_flashvars}" />
+		</object>
+	<xen:else />
+		{xen:raw $event.service_parameters}
+	</xen:if>
+</div>]]></template>
+    <template title="EWRatendo_Birthdays" version_id="20" version_string="1.2.0"><![CDATA[<xen:title>{xen:phrase birthdays_on_x, 'month={$month}', 'day={$day}'}</xen:title>
+<xen:h1>{xen:phrase birthdays_on_x, 'month={$month}', 'day={$day}'}</xen:h1>
+
+<div class="section">
+	<div class="subHeading">{xen:phrase birthdays}</div>
+
+	<ol class="overlayScroll">
+	<xen:foreach loop="$birthdays" value="$user">
+		<xen:include template="member_list_item">
+			<xen:set var="$extraTemplate">{xen:date $user.timeStamp, $user.format} <xen:if is="{$user.age}">({xen:phrase age}: {$user.age})</xen:if></xen:set>
+		</xen:include>
+	</xen:foreach>
+	</ol>
+
+	<div class="sectionFooter overlayOnly"><a class="button primary OverlayCloser">{xen:phrase close}</a></div>
+</div>]]></template>
+    <template title="EWRatendo_Bit" version_id="50" version_string="1.5.0"><![CDATA[<li>
+	<div class="secondaryContent">
+		<div class="eventInfo">
+			<xen:if is="!{$option.hideVenue}"><div class="eventDate"><i>{$event.event_venue}</i></div></xen:if>
+
+			<div class="eventName"><a href="{xen:link 'events', $event}"><b>{$event.event_title}</b></a></div>
+
+			<div class="eventText">
+				<xen:if is="{$event.event_address}">
+					<i>{$event.event_address}, {$event.event_citystate} {$event.event_zipcode}</i><br />
+				<xen:else/>
+					<i>{$event.event_venue}</i><br />
+				</xen:if>
+				<div class="eventTime">
+					{$event.formatted_strtime}
+					<span class="muted">({$event.formatted_timezone})</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</li>]]></template>
+    <template title="EWRatendo_Bit_RSVP" version_id="47" version_string="1.4.7"><![CDATA[<li>
+	<xen:avatar user="$rsvp" size="s" img="true" />
+
+	<div class="rsvpInfo">
+		<a href="{xen:link members, $rsvp}" class="username {xen:if $rsvp.rsvp_message, 'Tooltip'}" title="{$rsvp.rsvp_message}">{$rsvp.username}</a>
+	</div>
+</li>]]></template>
+    <template title="EWRatendo_Bit_RSVPshort" version_id="43" version_string="1.4.3"><![CDATA[<li class="{xen:if $rsvp.rsvp_message, 'Tooltip'}" title="{$rsvp.rsvp_message}">
+	<a href="{xen:link members, $rsvp}" class="username">{$rsvp.username}</a>
+</li>]]></template>
+    <template title="EWRatendo_Bit_Weekly" version_id="50" version_string="1.5.0"><![CDATA[<li>
+	<div class="avatar Av1s">
+		<span class="img s" style="background-image: url('{xen:helper avatar, $event, s}');"></span>
+	</div>
+
+	<div class="eventInfo">
+		<b>{$event.formatted_strtime}</b>:
+		<a href="{xen:link 'events', $event}"><b>{$event.event_title}</b></a>
+		(<xen:if is="{$event.event_address}">{$event.event_citystate}<xen:else/>{$event.event_venue}</xen:if>)
+	</div>
+</li>]]></template>
+    <template title="EWRatendo_Daily" version_id="26" version_string="1.2.6"><![CDATA[<xen:title>{xen:phrase events_on_x, 'month={$month}', 'day={$day}', 'year={$year}'}</xen:title>
+<xen:h1>{xen:phrase events_on_x, 'month={$month}', 'day={$day}', 'year={$year}'}</xen:h1>
+
+<xen:require css="EWRatendo.css" />
+
+<div class="section eventDaily">
+	<div class="subHeading">{xen:phrase events}</div>
+
+	<ol class="overlayScroll">
+	<xen:foreach loop="$events" value="$event">
+		<xen:include template="EWRatendo_Daily_Bit" />
+	</xen:foreach>
+	</ol>
+
+	<div class="sectionFooter overlayOnly"><a class="button primary OverlayCloser">{xen:phrase close}</a></div>
+</div>]]></template>
+    <template title="EWRatendo_Daily_Bit" version_id="50" version_string="1.5.0"><![CDATA[<xen:require css="xenforo_member_list_item.css" />
+
+<li class="primaryContent memberListItem">
+	<div class="avatar Av1s">
+		<span class="img s" style="background-image: url('{xen:helper avatar, $event, s}');"></span>
+	</div>
+
+	<div class="extra"><i>{$event.event_venue}</i></div>
+
+	<div class="member">
+		<h3 class="username"><a href="{xen:link 'events', $event}"><b>{$event.event_title}</b></a></h3>
+
+		<div class="userInfo dimmed">
+			<xen:if is="{$event.event_address}">
+				<i>{$event.event_address}, {$event.event_citystate}</i><br />
+			<xen:else/>
+				<i>{$event.event_venue}</i><br />
+			</xen:if>
+			<b>{$event.formatted_strtime}</b> {xen:phrase to} <b>{$event.formatted_endtime}</b> ({$event.formatted_timezone})
+		</div>		
+	</div>
+</li>]]></template>
+    <template title="EWRatendo_EventsCreate" version_id="50" version_string="1.5.0"><![CDATA[<xen:title>{xen:phrase create_event}</xen:title>
+<xen:h1>{xen:phrase create_event}</xen:h1>
+
+<xen:require css="EWRatendo.css" />
+<xen:require js="js/8wayrun/EWRatendo_ajax.js" />
+
+<div class="sectionMain">
+	<form action="{xen:link 'events/create'}" method="post" class="xenForm AutoValidator" data-redirect="true">
+		<fieldset>
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_title">{xen:phrase event}:</label></dt>
+				<dd><input type="text" name="event_title" class="textCtrl" id="ctrl_title" value="{$input.event_title}" />
+					<p class="hint">{xen:phrase event_title_hint}</p>
+				</dd>
+			</dl>
+
+			<dl class="ctrlUnit fullWidth">
+				<dt></dt>
+				<dd>{xen:raw $editorTemplate}</dd>
+			</dl>
+		</fieldset>
+
+		<fieldset>
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_venue">{xen:phrase venue}:</label></dt>
+				<dd><input type="text" name="event_venue" class="textCtrl" id="ctrl_venue" value="{$input.event_venue}" /></dd>
+			</dl>
+
+			<xen:if is="{$xenOptions.EWRatendo_extendedvenue}">
+				<dl class="ctrlUnit">
+					<dt><label for="ctrl_address">{xen:phrase address}:</label></dt>
+					<dd><input type="text" name="event_address" class="textCtrl GoogleMap" id="ctrl_address" value="{$input.event_address}" /></dd>
+				</dl>
+
+				<dl class="ctrlUnit">
+					<dt><label for="ctrl_citystate">{xen:phrase city_state}:</label></dt>
+					<dd><input type="text" name="event_citystate" class="textCtrl GoogleMap" id="ctrl_citystate" value="{$input.event_citystate}" /></dd>
+				</dl>
+
+				<dl class="ctrlUnit">
+					<dt><label for="ctrl_zipcode">{xen:phrase zipcode}:</label></dt>
+					<dd><input type="text" name="event_zipcode" class="textCtrl GoogleMap" id="ctrl_zipcode" value="{$input.event_zipcode}" /></dd>
+				</dl>
+
+				<dl class="ctrlUnit fullWidth">
+					<dt></dt>
+					<dd><iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="ctrl_googlemap"
+						src="{$input.location}"></iframe></dd>
+				</dl>
+			</xen:if>
+
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_strtime">{xen:phrase start_end_time}:</label></dt>
+				<dd>
+					<input type="date" size="10" name="event_date" class="textCtrl autoSize" value="{$input.event_date}" />
+					&nbsp;{xen:phrase at}&nbsp;
+
+					<xen:if is="{$xenOptions.EWRatendo_24hour}">
+						<select name="event_time" class="textCtrl autoSize">
+							<option value="24" {xen:selected "{$input.event_time} == '24'"}>00</option>
+							<option value="01" {xen:selected "{$input.event_time} == '01'"}>01</option>
+							<option value="02" {xen:selected "{$input.event_time} == '02'"}>02</option>
+							<option value="03" {xen:selected "{$input.event_time} == '03'"}>03</option>
+							<option value="04" {xen:selected "{$input.event_time} == '04'"}>04</option>
+							<option value="05" {xen:selected "{$input.event_time} == '05'"}>05</option>
+							<option value="06" {xen:selected "{$input.event_time} == '06'"}>06</option>
+							<option value="07" {xen:selected "{$input.event_time} == '07'"}>07</option>
+							<option value="08" {xen:selected "{$input.event_time} == '08'"}>08</option>
+							<option value="09" {xen:selected "{$input.event_time} == '09'"}>09</option>
+							<option value="10" {xen:selected "{$input.event_time} == '10'"}>10</option>
+							<option value="11" {xen:selected "{$input.event_time} == '11'"}>11</option>
+							<option value="13" {xen:selected "{$input.event_time} == '13'"}>13</option>
+							<option value="14" {xen:selected "{$input.event_time} == '14'"}>14</option>
+							<option value="15" {xen:selected "{$input.event_time} == '15'"}>15</option>
+							<option value="16" {xen:selected "{$input.event_time} == '16'"}>16</option>
+							<option value="17" {xen:selected "{$input.event_time} == '17'"}>17</option>
+							<option value="18" {xen:selected "{$input.event_time} == '18'"}>18</option>
+							<option value="19" {xen:selected "{$input.event_time} == '19'"}>19</option>
+							<option value="20" {xen:selected "{$input.event_time} == '20'"}>20</option>
+							<option value="21" {xen:selected "{$input.event_time} == '21'"}>21</option>
+							<option value="22" {xen:selected "{$input.event_time} == '22'"}>22</option>
+							<option value="23" {xen:selected "{$input.event_time} == '23'"}>23</option>
+						</select><xen:if
+						 is="{$xenOptions.EWRatendo_minutes}">:<select
+							 name="event_mins" class="textCtrl autoSize">
+								<option value="00" {xen:selected "{$input.event_mins} == '00'"}>00</option>
+								<option value="15" {xen:selected "{$input.event_mins} == '15'"}>15</option>
+								<option value="30" {xen:selected "{$input.event_mins} == '30'"}>30</option>
+								<option value="45" {xen:selected "{$input.event_mins} == '45'"}>45</option>
+							</select>
+						<xen:else />:00 
+						</xen:if>
+					<xen:else />
+						<select name="event_time" class="textCtrl autoSize">
+							<option value="12" {xen:selected "{$input.event_time} == '12'"}>12</option>
+							<option value="01" {xen:selected "{$input.event_time} == '01'"}>01</option>
+							<option value="02" {xen:selected "{$input.event_time} == '02'"}>02</option>
+							<option value="03" {xen:selected "{$input.event_time} == '03'"}>03</option>
+							<option value="04" {xen:selected "{$input.event_time} == '04'"}>04</option>
+							<option value="05" {xen:selected "{$input.event_time} == '05'"}>05</option>
+							<option value="06" {xen:selected "{$input.event_time} == '06'"}>06</option>
+							<option value="07" {xen:selected "{$input.event_time} == '07'"}>07</option>
+							<option value="08" {xen:selected "{$input.event_time} == '08'"}>08</option>
+							<option value="09" {xen:selected "{$input.event_time} == '09'"}>09</option>
+							<option value="10" {xen:selected "{$input.event_time} == '10'"}>10</option>
+							<option value="11" {xen:selected "{$input.event_time} == '11'"}>11</option>
+						</select><xen:if
+						 is="{$xenOptions.EWRatendo_minutes}">:<select
+							 name="event_mins" class="textCtrl autoSize">
+								<option value="00" {xen:selected "{$input.event_mins} == '00'"}>00</option>
+								<option value="15" {xen:selected "{$input.event_mins} == '15'"}>15</option>
+								<option value="30" {xen:selected "{$input.event_mins} == '30'"}>30</option>
+								<option value="45" {xen:selected "{$input.event_mins} == '45'"}>45</option>
+							</select>
+						<xen:else />:00 
+						</xen:if> 
+						<select name="event_ampm" class="textCtrl autoSize">
+							<option value="AM" {xen:selected "{$input.event_ampm} == 'AM'"}>AM</option>
+							<option value="PM" {xen:selected "{$input.event_ampm} == 'PM'"}>PM</option>
+						</select>
+					</xen:if>
+
+					&nbsp;{xen:phrase for}&nbsp;
+					<input type="text" size="1" name="event_length" value="{$input.event_length}" class="textCtrl autoSize SpinBox" step="1" max="{$xenOptions.EWRatendo_maxhours}" min="{$xenOptions.EWRatendo_minhours}" />
+					&nbsp;{xen:phrase hours}
+				</dd>
+			</dl>
+
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_timezone">{xen:phrase time_zone}:</label></dt>
+				<dd>
+					<select name="event_timezone" class="textCtrl" id="ctrl_timezone">
+						<xen:foreach loop="$timeZones" key="$identifier" value="$name">
+							<option value="{$identifier}" {xen:selected "{$identifier} == {$visitor.timezone}"}>{$name}</option>
+						</xen:foreach>
+					</select>
+				</dd>
+			</dl>
+		</fieldset>
+
+		<dl class="ctrlUnit submitUnit">
+			<dt></dt>
+			<dd>
+				<input type="submit" value="{xen:phrase save_event}" name="submit" accesskey="s" class="button primary" />
+			</dd>
+		</dl>
+
+		<fieldset>
+			<dl class="ctrlUnit">
+				<dt>{xen:phrase options}:</dt>
+				<dd><ul>
+
+					<li><label for="ctrl_recur"><input type="checkbox" name="event_recur" value="1" class="Disabler" id="ctrl_recur" {xen:checked "{$input.event_recur}"} /> {xen:phrase recur_this_event_every}:</label>
+						<ul id="ctrl_recur_Disabler">
+							<li>
+								<input type="text" size="5" name="event_recur_count" value="1" class="textCtrl autoSize" />
+								<select name="event_recur_units" class="textCtrl autoSize">
+									<option value="days" {xen:selected "{$input.event_recur_units} == 'days'"}>{xen:phrase days}</option>
+									<option value="weeks" {xen:selected "{$input.event_recur_units} == 'weeks'"}>{xen:phrase weeks}</option>
+									<option value="months" {xen:selected "{$input.event_recur_units} == 'months'"}>{xen:phrase months}</option>
+								</select>
+								&nbsp;&nbsp;&nbsp;
+								<xen:if is="{$xenOptions.EWRatendo_endlessevents}">
+									<label for="ctrl_expire"><input type="checkbox" name="event_expire" value="1" class="Disabler" id="ctrl_expire" {xen:if '{$input.event_expire}', 'checked'} /> {xen:phrase stop_after}:</label>
+									<span id="ctrl_expire_Disabler"><input type="date" size="10" name="event_recur_expire" class="textCtrl autoSize" value="{$input.event_recur_expire}" /></span>
+								<xen:else />
+									<input type="hidden" name="event_expire" value="1" />
+									<label for="ctrl_expire">{xen:phrase stop_after}:</label>
+									<input type="date" size="10" name="event_recur_expire" class="textCtrl autoSize" value="{$input.event_recur_expire}" />
+								</xen:if>
+							</li>
+						</ul>
+						<p class="hint">{xen:phrase recur_this_event_every_hint}</p>
+					</li>
+
+					<li>
+						<label for="ctrl_rsvp"><input type="checkbox" name="event_rsvp" value="1" id="ctrl_rsvp" {xen:if '{$input.event_rsvp}', 'checked'} /> {xen:phrase enable_rsvp_system}</label>
+						<p class="hint">{xen:phrase enable_rsvp_system_hint}</p>
+					</li>
+
+					<xen:if hascontent="true">
+					<li><label for="ctrl_thread"><input type="checkbox" name="create_thread" value="1" class="Disabler" id="ctrl_thread" {xen:if '{$selected}', 'checked'} /> {xen:phrase create_event_thread}:</label>
+						<ul id="ctrl_thread_Disabler">
+							<li>
+								<select name="event_node" class="textCtrl autoSize">
+									<xen:contentcheck>
+										<xen:foreach loop="$forums" value="$forum">
+											<option value="{$forum.node_id}" {xen:selected "{$selected} == {$forum.node_id}"}>{$forum.title}</option>
+										</xen:foreach>
+									</xen:contentcheck>
+								</select>
+							</li>
+						</ul>
+					</li>
+					</xen:if>
+
+				</ul></dd>
+			</dl>
+		</fieldset>
+
+		<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+	</form>
+</div>
+
+<xen:include template="EWRatendo_Footer" />
+
+<script type="text/javascript"><!--
+var geoLocUrl = '{xen:raw $xenOptions.EWRatendo_geoLocationUrl}';
+--></script>]]></template>
+    <template title="EWRatendo_EventsDelete" version_id="43" version_string="1.4.3"><![CDATA[<xen:title>{xen:phrase delete_event}: {$event.event_title}</xen:title>
+
+<form action="{xen:link 'events/delete', $event}" method="post" class="xenForm formOverlay">
+
+	<dl class="ctrlUnit">
+		<dt>{xen:phrase delete_event}</dt>
+		<dd>
+			{$event.event_title}
+			<p class="explain">{xen:phrase delete_event_hint}</p>
+		</dd>
+	</dl>
+
+	<dl class="ctrlUnit submitUnit">
+		<dt></dt>
+		<dd><input type="submit" value="{xen:phrase delete_event}" class="button primary" /></dd>
+	</dl>
+
+	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+</form>]]></template>
+    <template title="EWRatendo_EventsEdit" version_id="50" version_string="1.5.0"><![CDATA[<xen:title>{$event.event_title} - {xen:phrase edit}</xen:title>
+<xen:h1>{$event.event_title} - {xen:phrase edit}</xen:h1>
+
+<xen:navigation>
+	<xen:breadcrumb href="{xen:link 'full:events', $event}">{$event.event_title}</xen:breadcrumb>
+</xen:navigation>
+
+<xen:require css="EWRatendo.css" />
+<xen:require js="js/8wayrun/EWRatendo_ajax.js" />
+
+<div class="sectionMain">
+	<form action="{xen:link 'events/edit', $event}" method="post" class="xenForm AutoValidator" data-redirect="true">
+		<fieldset>
+			<xen:include template="title_prefix_edit">
+				<xen:set var="$selectedPrefix">{$thread.prefix_id}</xen:set>
+				<xen:set var="$idSuffix">event_edit</xen:set>
+			</xen:include>
+
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_title_event_edit">{xen:phrase event}:</label></dt>
+				<dd><input type="text" name="event_title" class="textCtrl" id="ctrl_title_event_edit" value="{$event.event_title}" />
+					<p class="hint">{xen:phrase event_title_hint}</p>
+				</dd>
+			</dl>
+
+			<xen:if is="{$editorTemplate}">
+				<dl class="ctrlUnit fullWidth">
+					<dt></dt>
+					<dd>{xen:raw $editorTemplate}</dd>
+				</dl>
+			</xen:if>
+		</fieldset>
+
+		<fieldset>
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_venue">{xen:phrase venue}:</label></dt>
+				<dd><input type="text" name="event_venue" class="textCtrl" id="ctrl_venue" value="{$event.event_venue}" /></dd>
+			</dl>
+
+			<xen:if is="{$xenOptions.EWRatendo_extendedvenue}">
+				<dl class="ctrlUnit">
+					<dt><label for="ctrl_address">{xen:phrase address}:</label></dt>
+					<dd><input type="text" name="event_address" class="textCtrl GoogleMap" id="ctrl_address" value="{$event.event_address}" /></dd>
+				</dl>
+
+				<dl class="ctrlUnit">
+					<dt><label for="ctrl_citystate">{xen:phrase city_state}:</label></dt>
+					<dd><input type="text" name="event_citystate" class="textCtrl GoogleMap" id="ctrl_citystate" value="{$event.event_citystate}" /></dd>
+				</dl>
+
+				<dl class="ctrlUnit">
+					<dt><label for="ctrl_zipcode">{xen:phrase zipcode}:</label></dt>
+					<dd><input type="text" name="event_zipcode" class="textCtrl GoogleMap" id="ctrl_zipcode" value="{$event.event_zipcode}" /></dd>
+				</dl>
+
+				<dl class="ctrlUnit fullWidth">
+					<dt></dt>
+					<dd><iframe width="100%" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="ctrl_googlemap"
+						src="{$event.location}"></iframe></dd>
+				</dl>
+			</xen:if>
+
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_strtime">{xen:phrase start_end_time}:</label></dt>
+				<dd>
+					<input type="date" size="10" name="event_date" class="textCtrl autoSize" value="{$event.event_date}" />
+					&nbsp;{xen:phrase at}&nbsp;
+
+					<xen:if is="{$xenOptions.EWRatendo_24hour}">
+						<select name="event_time" class="textCtrl autoSize">
+							<option value="24" {xen:selected "{$event.event_time} == '24'"}>00</option>
+							<option value="01" {xen:selected "{$event.event_time} == '01'"}>01</option>
+							<option value="02" {xen:selected "{$event.event_time} == '02'"}>02</option>
+							<option value="03" {xen:selected "{$event.event_time} == '03'"}>03</option>
+							<option value="04" {xen:selected "{$event.event_time} == '04'"}>04</option>
+							<option value="05" {xen:selected "{$event.event_time} == '05'"}>05</option>
+							<option value="06" {xen:selected "{$event.event_time} == '06'"}>06</option>
+							<option value="07" {xen:selected "{$event.event_time} == '07'"}>07</option>
+							<option value="08" {xen:selected "{$event.event_time} == '08'"}>08</option>
+							<option value="09" {xen:selected "{$event.event_time} == '09'"}>09</option>
+							<option value="10" {xen:selected "{$event.event_time} == '10'"}>10</option>
+							<option value="11" {xen:selected "{$event.event_time} == '11'"}>11</option>
+							<option value="13" {xen:selected "{$event.event_time} == '13'"}>13</option>
+							<option value="14" {xen:selected "{$event.event_time} == '14'"}>14</option>
+							<option value="15" {xen:selected "{$event.event_time} == '15'"}>15</option>
+							<option value="16" {xen:selected "{$event.event_time} == '16'"}>16</option>
+							<option value="17" {xen:selected "{$event.event_time} == '17'"}>17</option>
+							<option value="18" {xen:selected "{$event.event_time} == '18'"}>18</option>
+							<option value="19" {xen:selected "{$event.event_time} == '19'"}>19</option>
+							<option value="20" {xen:selected "{$event.event_time} == '20'"}>20</option>
+							<option value="21" {xen:selected "{$event.event_time} == '21'"}>21</option>
+							<option value="22" {xen:selected "{$event.event_time} == '22'"}>22</option>
+							<option value="23" {xen:selected "{$event.event_time} == '23'"}>23</option>
+						</select><xen:if
+						 is="{$xenOptions.EWRatendo_minutes}">:<select
+							 name="event_mins" class="textCtrl autoSize">
+								<option value="00" {xen:selected "{$event.event_mins} == '00'"}>00</option>
+								<option value="15" {xen:selected "{$event.event_mins} == '15'"}>15</option>
+								<option value="30" {xen:selected "{$event.event_mins} == '30'"}>30</option>
+								<option value="45" {xen:selected "{$event.event_mins} == '45'"}>45</option>
+							</select>
+						<xen:else />:00 
+						</xen:if>
+					<xen:else />
+						<select name="event_time" class="textCtrl autoSize">
+							<option value="12" {xen:selected "{$event.event_time} == '12'"}>12</option>
+							<option value="01" {xen:selected "{$event.event_time} == '01'"}>01</option>
+							<option value="02" {xen:selected "{$event.event_time} == '02'"}>02</option>
+							<option value="03" {xen:selected "{$event.event_time} == '03'"}>03</option>
+							<option value="04" {xen:selected "{$event.event_time} == '04'"}>04</option>
+							<option value="05" {xen:selected "{$event.event_time} == '05'"}>05</option>
+							<option value="06" {xen:selected "{$event.event_time} == '06'"}>06</option>
+							<option value="07" {xen:selected "{$event.event_time} == '07'"}>07</option>
+							<option value="08" {xen:selected "{$event.event_time} == '08'"}>08</option>
+							<option value="09" {xen:selected "{$event.event_time} == '09'"}>09</option>
+							<option value="10" {xen:selected "{$event.event_time} == '10'"}>10</option>
+							<option value="11" {xen:selected "{$event.event_time} == '11'"}>11</option>
+						</select><xen:if
+						 is="{$xenOptions.EWRatendo_minutes}">:<select
+							 name="event_mins" class="textCtrl autoSize">
+								<option value="00" {xen:selected "{$event.event_mins} == '00'"}>00</option>
+								<option value="15" {xen:selected "{$event.event_mins} == '15'"}>15</option>
+								<option value="30" {xen:selected "{$event.event_mins} == '30'"}>30</option>
+								<option value="45" {xen:selected "{$event.event_mins} == '45'"}>45</option>
+							</select>
+						<xen:else />:00 
+						</xen:if> 
+						<select name="event_ampm" class="textCtrl autoSize">
+							<option value="AM" {xen:selected "{$event.event_ampm} == 'AM'"}>AM</option>
+							<option value="PM" {xen:selected "{$event.event_ampm} == 'PM'"}>PM</option>
+						</select>
+					</xen:if>
+
+					&nbsp;{xen:phrase for}&nbsp;
+					<input type="text" size="1" name="event_length" value="{$event.event_length}" class="textCtrl autoSize SpinBox" step="1" max="{$xenOptions.EWRatendo_maxhours}" min="{$xenOptions.EWRatendo_minhours}" />
+					&nbsp;{xen:phrase hours}
+				</dd>
+			</dl>
+
+			<dl class="ctrlUnit">
+				<dt><label for="ctrl_timezone">{xen:phrase time_zone}:</label></dt>
+				<dd>
+					<select name="event_timezone" class="textCtrl" id="ctrl_timezone">
+						<xen:foreach loop="$timeZones" key="$identifier" value="$name">
+							<option value="{$identifier}" {xen:selected "{$identifier} == {$event.event_timezone}"}>{$name}</option>
+						</xen:foreach>
+					</select>
+				</dd>
+			</dl>
+		</fieldset>
+
+		<dl class="ctrlUnit submitUnit">
+			<dt></dt>
+			<dd>
+				<input type="submit" value="{xen:phrase save_event}" name="submit" accesskey="s" class="button primary" />
+				<a href="{xen:link 'events/unload', $event}" type="button" class="button OverlayTrigger">{xen:phrase delete_rsvps}...</a>
+				<a href="{xen:link 'events/delete', $event}" type="button" class="button OverlayTrigger">{xen:phrase delete_event}...</a>
+			</dd>
+		</dl>
+
+		<fieldset>
+			<dl class="ctrlUnit">
+				<dt>{xen:phrase options}:</dt>
+				<dd><ul>
+
+					<li><label for="ctrl_recur"><input type="checkbox" name="event_recur" value="1" class="Disabler" id="ctrl_recur" {xen:checked "{$event.recur_check}"} /> {xen:phrase recur_this_event_every}:</label>
+						<ul id="ctrl_recur_Disabler">
+							<li>
+								<input type="text" size="5" name="event_recur_count" value="{$event.event_recur_count}" class="textCtrl autoSize" />
+								<select name="event_recur_units" class="textCtrl autoSize">
+									<option value="days" {xen:selected "{$event.event_recur_units} == 'days'"}>{xen:phrase days}</option>
+									<option value="weeks" {xen:selected "{$event.event_recur_units} == 'weeks'"}>{xen:phrase weeks}</option>
+									<option value="months" {xen:selected "{$event.event_recur_units} == 'months'"}>{xen:phrase months}</option>
+								</select>
+								&nbsp;&nbsp;&nbsp;
+								<xen:if is="{$xenOptions.EWRatendo_endlessevents}">
+									<label for="ctrl_expire"><input type="checkbox" name="event_expire" value="1" class="Disabler" id="ctrl_expire" {xen:if '{$event.event_expire}', 'checked'} /> {xen:phrase stop_after}:</label>
+									<span id="ctrl_expire_Disabler"><input type="date" size="10" name="event_recur_expire" class="textCtrl autoSize" value="{$event.event_expire}" /></span>
+								<xen:else />
+									<input type="hidden" name="event_expire" value="1" />
+									<label for="ctrl_expire">{xen:phrase stop_after}:</label>
+									<input type="date" size="10" name="event_recur_expire" class="textCtrl autoSize" value="{$event.event_expire}" />
+								</xen:if>
+							</li>
+						</ul>
+						<p class="hint">{xen:phrase recur_this_event_every_hint}</p>
+					</li>
+
+					<li>
+						<label for="ctrl_rsvp"><input type="checkbox" name="event_rsvp" value="1" id="ctrl_rsvp" {xen:if '{$event.event_rsvp}', 'checked'} /> {xen:phrase enable_rsvp_system}</label>
+						<p class="hint">{xen:phrase enable_rsvp_system_hint}</p>
+					</li>
+
+				</ul></dd>
+			</dl>
+		</fieldset>
+
+		<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+	</form>
+</div>
+
+<xen:include template="EWRatendo_Footer" />
+
+<script type="text/javascript"><!--
+var geoLocUrl = '{xen:raw $xenOptions.EWRatendo_geoLocationUrl}';
+--></script>]]></template>
+    <template title="EWRatendo_EventsHistory" version_id="26" version_string="1.2.6"><![CDATA[<xen:title>{xen:phrase events_archive}</xen:title>
+<xen:h1>{xen:phrase events_archive}</xen:h1>
+
+<xen:if is="{$canPost}">
+	<xen:topctrl><a href="{xen:link 'events/create'}" class="callToAction"><span>{xen:phrase post_new_event}</span></a></xen:topctrl>
+</xen:if>
+
+<xen:require css="EWRatendo.css" />
+
+<xen:pagenav link="events/history" page="{$start}" perpage="{$stop}" total="{$count}" />
+
+<div class="sectionMain eventList">
+	<div class="primaryContent">{xen:phrase events_archive}...</div>
+	<ul>
+		<xen:foreach loop="$events" value="$event">
+			<xen:include template="EWRatendo_Bit" />
+		</xen:foreach>
+	</ul>
+</div>
+
+<xen:include template="EWRatendo_Footer" />]]></template>
+    <template title="EWRatendo_EventsUnload" version_id="43" version_string="1.4.3"><![CDATA[<xen:title>{xen:phrase delete_rsvps}: {$event.event_title}</xen:title>
+
+<form action="{xen:link 'events/unload', $event}" method="post" class="xenForm formOverlay">
+
+	<dl class="ctrlUnit">
+		<dt>{xen:phrase delete_rsvps}</dt>
+		<dd>
+			{$event.event_title}
+			<p class="explain">{xen:phrase delete_rsvps_hint}</p>
+		</dd>
+	</dl>
+
+	<dl class="ctrlUnit submitUnit">
+		<dt></dt>
+		<dd><input type="submit" value="{xen:phrase delete_rsvps}" class="button primary" /></dd>
+	</dl>
+
+	<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+</form>]]></template>
+    <template title="EWRatendo_EventsView" version_id="50" version_string="1.5.0"><![CDATA[<xen:title>{$event.event_title}</xen:title>
+<xen:h1>{$event.event_title}</xen:h1>
+
+<xen:require css="EWRatendo.css" />
+
+<xen:if is="{$event.event_state} == 'moderated'">
+	<div class="sectionMain eventModerated">
+		<div class="subHeading">{xen:phrase event_awaiting_approval}</div>
+	</div>
+<xen:else />
+	<xen:if is="{$event.event_id}">
+		<div class="sectionMain" style="text-align: center;">
+			<xen:if is="{$event.event_address} || {$event.event_citystate}">
+				<xen:include template="EWRatendo_EventsView_Map" />
+			<xen:else />
+				<xen:include template="EWRatendo_EventsView_NoMap" />
+			</xen:if>
+
+			<div style="clear: both;"></div>
+		</div>
+	</xen:if>
+
+	<xen:if is="{$rsvps.yes}">
+		<div class="sectionMain rsvpList">
+			<div class="subHeading">{xen:phrase the_following_users_have_rsvpd_x, 'state={xen:phrase yes}'}: {$event.event_rsvps} <xen:if is="{$event.event_guests}">(+{$event.event_guests} guests)</xen:if></div>
+
+			<ul>
+				<xen:foreach loop="$rsvps.yes" value="$rsvp">
+					<xen:include template="EWRatendo_Bit_RSVP" />
+				</xen:foreach>
+			</ul>
+
+			<div style="clear: both;"></div>
+		</div>
+	</xen:if>
+
+	<xen:if is="{$rsvps.maybe} || {$rsvps.no}">
+		<div class="sectionMain rsvpShortList">
+			<xen:if hascontent="true">
+				{xen:phrase the_following_users_have_rsvpd_x, 'state={xen:phrase maybe}'}:
+				<ul>
+					<xen:contentcheck>
+					<xen:foreach loop="$rsvps.maybe" value="$rsvp">
+						<xen:include template="EWRatendo_Bit_RSVPshort" />
+					</xen:foreach>
+					</xen:contentcheck>
+				</ul><br />
+			</xen:if>
+
+			<xen:if hascontent="true">
+				<xen:if is="{$rsvps.maybe}"><br /></xen:if>
+				{xen:phrase the_following_users_have_rsvpd_x, 'state={xen:phrase no}'}:
+				<ul>
+					<xen:contentcheck>
+					<xen:foreach loop="$rsvps.no" value="$rsvp">
+						<xen:include template="EWRatendo_Bit_RSVPshort" />
+					</xen:foreach>
+					</xen:contentcheck>
+				</ul>
+			</xen:if>
+		</div>
+	</xen:if>
+
+	<xen:if is="{$event.HTML}">
+		<xen:require css="xenforo.css" />
+		<xen:require css="bb_code.css" />
+
+		<div class="sectionMain baseHtml">
+			{xen:raw $event.HTML}
+		</div>
+	</xen:if>
+</xen:if>
+
+<xen:include template="EWRatendo_Footer" />]]></template>
+    <template title="EWRatendo_EventsView_Map" version_id="50" version_string="1.5.0"><![CDATA[<div style="float: right; width: 350px; margin-top: -4px;">
+	<div class="subHeading">
+		<xen:if is="{$event.canEdit}"><div style="float: right;">
+			(<a href="{xen:link 'events/edit', $event}">{xen:phrase edit}</a>)
+		</div></xen:if>
+
+		{$event.event_title}
+	</div>
+
+	<div class="secondaryContent">
+		<b>{xen:phrase start_date}:</b> {$event.formatted_strtime}<br />
+		<b>{xen:phrase end_date}:</b> {$event.formatted_endtime}<br />
+		<span class="muted" style="font-size: 0.9em;"><i>{xen:phrase time_zone}: {$event.event_timezone} {$event.formatted_timezone}</i></span><br />
+		<br />
+		<b>{xen:phrase location}:</b><br />
+		<i>{$event.event_venue}</i><br />{$event.event_address}<br />{$event.event_citystate} {$event.event_zipcode}<br />
+		<br />
+		<b>{xen:phrase posted_by}:</b> {xen:helper username, $event}<br />
+		<br />
+		<b>{xen:phrase confirmed_attendees}:</b> {$event.event_rsvps} <xen:if is="{$event.event_guests}">(+{$event.event_guests} guests)</xen:if>
+	</div>
+
+	<xen:include template="EWRatendo_EventsView_RSVP" />
+</div>
+
+<div style="margin-right: 360px;">
+	<iframe width="100%" height="345" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
+		src="{$event.location}"></iframe>
+</div>]]></template>
+    <template title="EWRatendo_EventsView_NoMap" version_id="50" version_string="1.5.0"><![CDATA[<div style="float: right; width: 350px; margin-top: -10px;">
+	<xen:include template="EWRatendo_EventsView_RSVP" />
+</div>
+
+
+<div style="margin-right: 360px;">
+	<div class="subHeading">
+		<xen:if is="{$event.canEdit}"><div style="float: right;">
+			(<a href="{xen:link 'events/edit', $event}">{xen:phrase edit}</a>)
+		</div></xen:if>
+
+		{$event.event_title}
+	</div>
+
+	<div class="secondaryContent" style="font-size: 1.2em;">
+		<div style="float: right; text-align: right;">
+			<i>{$event.event_venue}</i><br />
+			<b>{xen:phrase confirmed_attendees}:</b> {$event.event_rsvps} <xen:if is="{$event.event_guests}">(+{$event.event_guests} guests)</xen:if><br />
+			<span class="muted" style="font-size: 0.8em;"><i>{xen:phrase posted_by}: {xen:helper username, $event}</i></span>
+		</div>
+
+		<div style="text-align: left;">
+			<b>{xen:phrase start_date}:</b> {$event.formatted_strtime}<br />
+			<b>{xen:phrase end_date}:</b> {$event.formatted_endtime}<br />
+			<span class="muted" style="font-size: 0.8em;"><i>{xen:phrase time_zone}: {$event.event_timezone} {$event.formatted_timezone}</i></span>
+		</div>
+	</div>
+</div>]]></template>
+    <template title="EWRatendo_EventsView_RSVP" version_id="47" version_string="1.4.7"><![CDATA[<xen:if is="{$canRSVP} && !{$event.nowPast} && {$event.event_rsvp}">
+	<xen:require css="message_simple.css" />
+
+	<form action="{xen:link 'events/rsvp', $event}" method="post" style="margin-bottom: 0px;" class="messageSimple secondaryContent">
+		<xen:avatar user="$visitor" size="s" />
+		<div class="messageInfo">
+			<textarea name="message" class="textCtrl StatusEditor" placeholder="{xen:phrase post_comment}..." rows="3" cols="20" data-statusEditorCounter="#statusEditorCounter">{$rsvps.user.rsvp_message}</textarea>
+			<div style="float: left; margin: 10px 0px 0px -50px;">
+				<label for="ctrl_yes"><input type="radio" name="rsvp_state" class="textCtrl" value="yes" id="ctrl_yes" {xen:if "{$rsvps.user.rsvp_state} == 'yes'", 'checked'}> {xen:phrase yes}</label> &nbsp;
+				<label for="ctrl_maybe"><input type="radio" name="rsvp_state" class="textCtrl" value="maybe" id="ctrl_maybe" {xen:if "{$rsvps.user.rsvp_state} == 'maybe'", 'checked'}> {xen:phrase maybe}</label> &nbsp;
+				<label for="ctrl_no"><input type="radio" name="rsvp_state" class="textCtrl" value="no" id="ctrl_no" {xen:if "{$rsvps.user.rsvp_state} == 'no'", 'checked'}> {xen:phrase no}</label>
+			</div>
+			<div class="submitUnit">
+				<span id="statusEditorCounter" title="{xen:phrase characters_remaining}"></span>
+				<input type="hidden" name="rsvp_id" value="{$rsvps.user.rsvp_id}" />
+				<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+				<input type="submit" class="button primary" value="{xen:phrase post}" accesskey="s" />
+			</div>
+		</div>
+	</form>
+<xen:else />
+	<div class="secondaryContent" style="text-align: center; margin-top: 10px;">
+		<b>{xen:phrase you_can_not_rsvp_for_this_event}...</b><br />
+		<br />
+		<xen:if is="{$event.nowPast}">
+			{xen:phrase event_already_passed}
+		<xen:elseif is="!{$event.event_rsvp}" />
+			{xen:phrase event_disabled_rsvp}
+		<xen:else />
+			{xen:phrase do_not_have_permission}
+		</xen:if>
+	</div>
+</xen:if>]]></template>
+    <template title="EWRatendo_Footer" version_id="47" version_string="1.4.7"><![CDATA[<div class="atendoCopy copyright muted">
+	<a href="http://xenforo.com/community/resources/99/">XenAtendo</a>
+	&copy; Jason Axelrod from <a href="http://8wayrun.com/">8WAYRUN.COM</a>
+</div>]]></template>
+    <template title="EWRatendo_ForumView" version_id="35" version_string="1.3.5"><![CDATA[<xen:if is="{$events}">
+	<xen:require css="EWRatendo.css" />
+
+	<div class="sectionMain eventList">
+		<div class="primaryContent">{xen:phrase upcoming_events_for_the_next_x_days, 'days={$cutoff}'}...</div>
+		<ul>
+			<xen:foreach loop="$events" value="$event">
+				<xen:include template="EWRatendo_Bit" />
+			</xen:foreach>
+		</ul>
+	</div>
+
+	<xen:include template="EWRatendo_Footer" />
+</xen:if>]]></template>
+    <template title="EWRatendo_ForumView_TopCtrl" version_id="35" version_string="1.3.5"><![CDATA[<a href="{xen:link 'events/create/{$forum.node_id}'}" class="callToAction">
+	<span>{xen:phrase post_new_event}</span>
+</a>]]></template>
+    <template title="EWRatendo_Monthly" version_id="26" version_string="1.2.6"><![CDATA[<xen:title>{$mCurr.title}</xen:title>
+<xen:h1>{$mCurr.title}</xen:h1>
+
+<xen:if is="{$canPost}">
+	<xen:topctrl><a href="{xen:link 'events/create'}" class="callToAction"><span>{xen:phrase post_new_event}</span></a></xen:topctrl>
+</xen:if>
+
+<xen:require css="EWRatendo.css" />
+
+<div class="blockCtrl">
+	<form action="{xen:link 'events/monthly'}" method="post">
+		<select name="month" class="textCtrl autoSize">
+			<xen:foreach loop="$months" value="$m">
+				<option value="{$m.number}" <xen:if is="{$m.select}">selected</xen:if>>{$m.phrase}</option>
+			</xen:foreach>
+		</select>
+		<select name="year" class="textCtrl autoSize">
+			<xen:foreach loop="$years" value="$y">
+				<option value="{$y.number}" <xen:if is="{$y.select}">selected</xen:if>>{$y.number}</option>
+			</xen:foreach>
+		</select>
+		<input type="submit" value="{xen:phrase go}" name="submit" class="button primary" />
+		<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+
+		&nbsp; &nbsp;
+		<a href="{xen:link 'events/monthly'}" class="button primary">{xen:phrase today}</a>
+
+		&nbsp; &nbsp;
+		<a href="{xen:link 'events/monthly', $prev}" class="button primary">&lt;</a>
+		<a href="{xen:link 'events/monthly', $next}" class="button primary">&gt;</a>
+	</form>
+</div>
+
+<div class="sectionMain">
+	<table width="100%" class="monthBlock">
+		<tr>
+			<td class="subHeading weekday">{xen:phrase day_monday}</td>
+			<td class="subHeading weekday">{xen:phrase day_tuesday}</td>
+			<td class="subHeading weekday">{xen:phrase day_wednesday}</td>
+			<td class="subHeading weekday">{xen:phrase day_thursday}</td>
+			<td class="subHeading weekday">{xen:phrase day_friday}</td>
+			<td class="subHeading weekday">{xen:phrase day_saturday}</td>
+			<td class="subHeading weekday">{xen:phrase day_sunday}</td>
+		</tr>
+		<tr>
+			<xen:foreach loop="$mCurr.dates" value="$date">
+				<xen:if is="{$date.spacer}">
+					</tr><tr>
+				<xen:else />
+					<xen:include template="EWRatendo_Monthly_Bit" />
+				</xen:if>
+			</xen:foreach>
+		</tr>
+	</table>
+</div>
+
+<xen:include template="EWRatendo_Sidebar" />
+<xen:include template="EWRatendo_Footer" />]]></template>
+    <template title="EWRatendo_Monthly_Bit" version_id="44" version_string="1.4.4"><![CDATA[<td class="primaryContent
+	{xen:if '{$date.weekday} >= 6', 'weekends'}
+	{xen:if '{$date.week} === {$today.week} && {$date.year} == {$today.year}', 'nowWeek'}
+	{xen:if '{$date.month} == {$today.month} && {$date.day} == {$today.day} && {$date.year} == {$today.year}', 'nowToday'}
+	{xen:if '!{$date.month}', 'offMonth'}">
+
+	<div class="dayBlock">
+		<div class="secondaryContent dayNumber">
+			<xen:if is="{$date.week}">
+				<a href="{xen:link 'events/weekly', $date}">{$date.day}</a>
+			<xen:else />
+				{$date.day}
+			</xen:if>
+		</div>
+
+		<xen:if is="{$date.events}">
+			<xen:if is="{$date.count} > 1">
+				<span class="overflow">
+					<a href="{xen:link 'events/daily', $date}" class="OverlayTrigger">
+						<i><span class="count">{$date.count}</span> {xen:phrase events}</i>
+					</a>
+				</span>
+			<xen:else/>
+				<ul>
+					<xen:foreach loop="$date.events" value="$event">
+						<li><a href="{xen:link 'events', $event}">{$event.event_title}</a></li>
+					</xen:foreach>
+				</ul>
+			</xen:if>
+		</xen:if>
+
+		<xen:if is="{$date.birthdays}">
+			<div class="birthDays">
+				<a href="{xen:link 'events/birthdays', $date}" class="OverlayTrigger"><i>{$date.birthdays} {xen:phrase birthdays}</i></a>
+			</div>
+		</xen:if>
+	</div>
+</td>]]></template>
+    <template title="EWRatendo_Monthly_Bit_Small" version_id="46" version_string="1.4.6"><![CDATA[<table width="100%" class="monthBlock sideBlock">
+	<tr>
+		<td class="subHeading">M</td>
+		<td class="subHeading">T</td>
+		<td class="subHeading">W</td>
+		<td class="subHeading">T</td>
+		<td class="subHeading">F</td>
+		<td class="subHeading">S</td>
+		<td class="subHeading">S</td>
+	</tr>
+	<tr>
+		<xen:foreach loop="$dates" value="$date">
+			<xen:if is="{$date.spacer}">
+				</tr><tr>
+			<xen:else />
+				<td class="primaryContent
+					{xen:if '{$date.weekday} >= 6', 'weekends'}
+					{xen:if '{$date.week} === {$today.week} && {$date.year} == {$today.year}', 'nowWeek'}
+					{xen:if '{$date.month} == {$today.month} && {$date.day} == {$today.day} && {$date.year} == {$today.year}', 'nowToday'}
+					{xen:if '!{$date.month}', 'offMonth'}">
+					<xen:if is="{$date.week} && {$date.count}">
+						<xen:if is="{$portal}">
+							<a href="{xen:link 'events/daily', $date}" title="{xen:phrase events}: {$date.count}" class="hasEvent Tooltip OverlayTrigger">{$date.day}</a>
+						<xen:else />
+							<a href="{xen:link 'events/weekly', $date}" title="{xen:phrase events}: {$date.count}" class="hasEvent Tooltip">{$date.day}</a>
+						</xen:if>
+					<xen:elseif is="{$date.week}" />
+						{$date.day}
+					<xen:else />
+						<span class="muted">{$date.day}</span>
+					</xen:if>
+				</td>
+			</xen:if>
+		</xen:foreach>
+	</tr>
+</table>]]></template>
+    <template title="EWRatendo_Navtabs" version_id="50" version_string="1.5.0"><![CDATA[<ul class="secondaryContent blockLinksList">
+	<li><a href="{xen:link 'events/monthly'}">{xen:phrase monthly_view}</a></li>
+	<li><a href="{xen:link 'events/weekly'}">{xen:phrase weekly_view}</a></li>
+	<li><a href="{xen:link 'events/upcoming'}">{xen:phrase upcoming_events}</a></li>
+	<li><a href="{xen:link 'events/history'}">{xen:phrase events_archive}</a></li>
+</ul>]]></template>
+    <template title="EWRatendo_Sidebar" version_id="26" version_string="1.2.6"><![CDATA[<xen:sidebar>
+
+	<div class="section">
+		<div class="secondaryContent">
+			<h3><a href="{xen:link 'events/monthly', $mPrev}">{$mPrev.title}</a></h3>
+
+			<xen:include template="EWRatendo_Monthly_Bit_Small">
+				<xen:map from="$mPrev.dates" to="$dates" />
+			</xen:include>
+		</div>
+	</div>
+
+	<div class="section">
+		<div class="secondaryContent">
+			<h3><a href="{xen:link 'events/monthly', $mNext}">{$mNext.title}</a></h3>
+
+			<xen:include template="EWRatendo_Monthly_Bit_Small">
+				<xen:map from="$mNext.dates" to="$dates" />
+			</xen:include>
+		</div>
+	</div>
+
+<xen:if is="{$mLate}">
+	<div class="section">
+		<div class="secondaryContent">
+			<h3><a href="{xen:link 'events/monthly', $mLate}">{$mLate.title}</a></h3>
+
+			<xen:include template="EWRatendo_Monthly_Bit_Small">
+				<xen:map from="$mLate.dates" to="$dates" />
+			</xen:include>
+		</div>
+	</div>
+</xen:if>
+
+</xen:sidebar>]]></template>
+    <template title="EWRatendo_Upcoming" version_id="26" version_string="1.2.6"><![CDATA[<xen:title>{xen:phrase upcoming_events}</xen:title>
+<xen:h1>{xen:phrase upcoming_events}</xen:h1>
+
+<xen:if is="{$canPost}">
+	<xen:topctrl><a href="{xen:link 'events/create'}" class="callToAction"><span>{xen:phrase post_new_event}</span></a></xen:topctrl>
+</xen:if>
+
+<xen:require css="EWRatendo.css" />
+
+<xen:if is="{$events}">
+<xen:foreach loop="$events" key="$dateLimit" value="$subEvents">
+	<div class="sectionMain eventList">
+		<div class="primaryContent">{$dateLimit}...</div>
+		<ul>
+			<xen:foreach loop="$subEvents" value="$event">
+				<xen:include template="EWRatendo_Bit" />
+			</xen:foreach>
+		</ul>
+	</div>
+</xen:foreach>
+</xen:if>
+
+<xen:include template="EWRatendo_Footer" />]]></template>
+    <template title="EWRatendo_Weekly" version_id="26" version_string="1.2.6"><![CDATA[<xen:title>{$wCurr.title}</xen:title>
+<xen:h1>{$wCurr.title}</xen:h1>
+
+<xen:if is="{$canPost}">
+	<xen:topctrl><a href="{xen:link 'events/create'}" class="callToAction"><span>{xen:phrase post_new_event}</span></a></xen:topctrl>
+</xen:if>
+
+<xen:require css="EWRatendo.css" />
+
+<div class="blockCtrl">
+	<form action="{xen:link 'events/weekly'}" method="post">
+		<select name="week" class="textCtrl autoSize">
+			<xen:foreach loop="$weeks" value="$w">
+				<option value="{$w.number}" {xen:if '{$w.select}', 'selected'}>{$w.phrase}</option>
+			</xen:foreach>
+		</select>
+		<select name="year" class="textCtrl autoSize">
+			<xen:foreach loop="$years" value="$y">
+				<option value="{$y.number}" {xen:if '{$y.select}', 'selected'}>{$y.number}</option>
+			</xen:foreach>
+		</select>
+		<input type="submit" value="{xen:phrase go}" name="submit" class="button primary" />
+		<input type="hidden" name="_xfToken" value="{$visitor.csrf_token_page}" />
+
+		&nbsp; &nbsp; <a href="{xen:link 'events/weekly'}" class="button primary">{xen:phrase today}</a>
+
+		&nbsp; &nbsp;
+		<a href="{xen:link 'events/weekly', $prev}" class="button primary">&lt;</a>
+		<a href="{xen:link 'events/weekly', $next}" class="button primary">&gt;</a>
+	</form>
+</div>
+
+<div class="sectionMain weekBlock">
+	<div class="subHeading">{$wCurr.title}</div>
+
+	<xen:foreach loop="$wCurr.dates" value="$date">
+		<xen:if is="{$date.spacer}">
+			<div class="subHeading">{$date.spacer}</div>
+		<xen:else />
+			<xen:include template="EWRatendo_Weekly_Bit" />
+		</xen:if>
+	</xen:foreach>
+</div>
+
+<xen:include template="EWRatendo_Sidebar" />
+<xen:include template="EWRatendo_Footer" />]]></template>
+    <template title="EWRatendo_Weekly_Bit" version_id="40" version_string="1.4.0"><![CDATA[<div class="sectionFooter">{$date.weekday}</div>
+
+<div class="dayBlock
+	{xen:if '{$date.month} == {$today.month} && {$date.day} == {$today.day} && {$date.year} == {$today.year}', 'nowToday'}">
+	{$date.day}
+</div>
+
+<xen:if is="{$date.birthdays}">
+	<div class="secondaryContent birthdays">
+		<xen:if is="{$xenOptions.EWRatendo_birthdays}">
+			<div style="float: left; padding-top: 5px;">{xen:phrase birthdays}:</div>
+			<xen:foreach loop="$date.birthdays" value="$user">
+				<xen:avatar user="$user" size="s" img="true" class="Tooltip" text="{$user.username}{xen:if '{$user.age}', ' ({$user.age})'}" title="{$user.username}{xen:if '{$user.age}', ', {xen:phrase age}: {$user.age}'}" />
+			</xen:foreach>
+		<xen:else />
+			{xen:phrase birthdays}:
+			<a href="{xen:link 'events/birthdays', $date}" class="OverlayTrigger"><i>{$date.birthdays} {xen:phrase birthdays}</i></a>
+		</xen:if>
+	</div>
+</xen:if>
+
+<div class="primaryContent weekList">
+	<xen:if is="{$date.events}">
+		<ul>
+		<xen:foreach loop="$date.events" value="$event">
+			<xen:include template="EWRatendo_Bit_Weekly" />
+		</xen:foreach>
+		</ul>
+	</xen:if>
+</div>]]></template>
+  </templates>
+  <bb_code_media_sites/>
+</addon>

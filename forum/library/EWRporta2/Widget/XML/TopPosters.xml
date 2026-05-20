@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget widget_id="TopPosters" widget_title="Today's Top Posters" widget_desc="Displays a widget with the days top posters" widget_string="1" widget_version="1" widget_url="" widget_install_class="" widget_install_method="" widget_uninstall_class="" widget_uninstall_method="" ctime="+1 hours">
+  <listeners/>
+  <options>
+    <option option_id="topposters_source" edit_format="callback" data_type="array" display_order="1">
+      <default_value>a:1:{i:0;s:1:"0";}</default_value>
+      <edit_format_params>EWRporta2_Option_ForumChooser::renderOption</edit_format_params>
+      <sub_options>*</sub_options>
+      <title>Source Forums</title>
+      <explain><![CDATA[Only selected forums will be searched. (unspecify to select all)]]></explain>
+    </option>
+    <option option_id="topposters_hours" edit_format="spinbox" data_type="unsigned_integer" display_order="2">
+      <default_value>24</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Hours</title>
+      <explain><![CDATA[The number of hours back to include for post counts.]]></explain>
+    </option>
+    <option option_id="topposters_limit" edit_format="spinbox" data_type="unsigned_integer" display_order="3">
+      <default_value>8</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <title>Limit</title>
+      <explain><![CDATA[The maximum number of users to display in the widget.]]></explain>
+    </option>
+  </options>
+  <phrases/>
+  <templates>
+    <template title="EWRwidget_TopPosters"><![CDATA[<xen:require css="EWRwidget_TopPosters.css" />
+
+<xen:if hascontent="true">
+<div class="section widget_{$wWidget}" id="widget_{$wWidlink}">
+	<div class="secondaryContent avatarHeap">
+		<h3>{$wTitle}</h3>
+		
+		<ol>
+			<xen:contentcheck>
+			<xen:foreach loop="$wCached" value="$user">
+				<li>
+					<xen:avatar user="$user" size="s" class="Tooltip" text="{$user.username}" title="{$user.username}" />
+					<div class="count"><span>{$user.count}</span></div>
+				</li>
+			</xen:foreach>
+			</xen:contentcheck>
+		</ol>
+	</div>
+</div>
+</xen:if>]]></template>
+    <template title="EWRwidget_TopPosters.css"><![CDATA[.widget_TopPosters li { position: relative; }
+.widget_TopPosters li .count { position: absolute; bottom: -5px; left: 0; right: 0; text-align: center; }
+.widget_TopPosters li .count>span
+{
+	display: inline-block;
+	padding: 1px 5px;
+	background: {xen:property primaryLightest};
+	border: 1px solid {xen:property primaryLighterStill};
+	border-radius: 10px;
+	font-size: 12px;
+	line-height: 12px;
+	font-weight: bold;
+}]]></template>
+  </templates>
+</widget>

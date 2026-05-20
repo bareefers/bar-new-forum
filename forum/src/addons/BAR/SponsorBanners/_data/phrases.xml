@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="bar_sb_banners" version_id="1000010" version_string="1.0.0"><![CDATA[Sponsor banners]]></phrase>
+  <phrase title="bar_sb_add_banner" version_id="1000010" version_string="1.0.0"><![CDATA[Add banner]]></phrase>
+  <phrase title="bar_sb_edit_banner" version_id="1000010" version_string="1.0.0"><![CDATA[Edit banner]]></phrase>
+  <phrase title="bar_sb_banner_title" version_id="1000010" version_string="1.0.0"><![CDATA[Title]]></phrase>
+  <phrase title="bar_sb_target_url" version_id="1000010" version_string="1.0.0"><![CDATA[Target URL]]></phrase>
+  <phrase title="bar_sb_alt_text" version_id="1000010" version_string="1.0.0"><![CDATA[Alt text]]></phrase>
+  <phrase title="bar_sb_display_order" version_id="1000010" version_string="1.0.0"><![CDATA[Display order]]></phrase>
+  <phrase title="bar_sb_is_active" version_id="1000010" version_string="1.0.0"><![CDATA[Active]]></phrase>
+  <phrase title="bar_sb_image" version_id="1000010" version_string="1.0.0"><![CDATA[Banner image]]></phrase>
+  <phrase title="bar_sb_current_image" version_id="1000010" version_string="1.0.0"><![CDATA[Current image]]></phrase>
+  <phrase title="bar_sb_no_banners" version_id="1000010" version_string="1.0.0"><![CDATA[No sponsor banners yet.]]></phrase>
+  <phrase title="bar_sb_delete_banner" version_id="1000010" version_string="1.0.0"><![CDATA[Delete banner]]></phrase>
+  <phrase title="bar_sb_delete_banner_confirm" version_id="1000010" version_string="1.0.0"><![CDATA[Delete banner "{title}"?]]></phrase>
+  <phrase title="bar_sb_render_macro_hint" version_id="1000024" version_string="1.1.4"><![CDATA[On the public side, show sponsors from <b>Setup → Advertising</b> at position <b>Container breadcrumb (top): Above</b> (<code>container_breadcrumb_top_above</code>) using the copy line on <b>Appearance → Sponsor banners</b>. The <b>Sponsor banners</b> widget is for options only; leave its “Display in positions” empty unless you intentionally want extra placements. Advanced: <code>&lt;xf:macro template="bar_sb_public_macros" name="carousel" arg-banners="{$banners}" /&gt;</code> if you already have <code>$banners</code>.]]></phrase>
+  <phrase title="widget_def.bar_sponsor_banners" version_id="1000011" version_string="1.0.1"><![CDATA[Sponsor banners]]></phrase>
+  <phrase title="admin_navigation.barSponsorBanners" version_id="1000014" version_string="1.0.4"><![CDATA[Sponsor banners]]></phrase>
+  <phrase title="bar_sb_widget_max_width" version_id="1000014" version_string="1.0.4"><![CDATA[Max banner width (pixels)]]></phrase>
+  <phrase title="bar_sb_widget_max_width_explain" version_id="1000014" version_string="1.0.4"><![CDATA[Limits how wide each banner image can appear (the file on disk is unchanged). Use 0 for no limit. Typical values: 300–600.]]></phrase>
+  <phrase title="bar_sb_widget_rotation_mode" version_id="1000015" version_string="1.0.5"><![CDATA[Rotation]]></phrase>
+  <phrase title="bar_sb_widget_rotation_mode_explain" version_id="1000015" version_string="1.0.5"><![CDATA[Single matches the old BAR sponsor ad: one sponsor at a time, rotating. All lists every active banner in order.]]></phrase>
+  <phrase title="bar_sb_widget_rotation_single" version_id="1000015" version_string="1.0.5"><![CDATA[One at a time (rotate)]]></phrase>
+  <phrase title="bar_sb_widget_rotation_all" version_id="1000015" version_string="1.0.5"><![CDATA[Show all]]></phrase>
+  <phrase title="bar_sb_remote_url" version_id="1000017" version_string="1.0.7"><![CDATA[Image URL (optional)]]></phrase>
+  <phrase title="bar_sb_remote_url_explain" version_id="1000017" version_string="1.0.7"><![CDATA[HTTPS link to the banner image. If set, it is used for display instead of an uploaded file. You can still upload a fallback image.]]></phrase>
+  <phrase title="bar_sb_image_explain" version_id="1000017" version_string="1.0.7"><![CDATA[Upload a JPG, PNG, GIF, or WebP file. You must provide either an image URL or an upload (or both; the URL is shown when set).]]></phrase>
+  <phrase title="bar_sb_need_image_or_url" version_id="1000017" version_string="1.0.7"><![CDATA[Provide an image URL or upload a banner image.]]></phrase>
+  <phrase title="bar_sb_remote_scheme_invalid" version_id="1000017" version_string="1.0.7"><![CDATA[The image URL must start with http:// or https://.]]></phrase>
+  <phrase title="bar_sb_remote_unreachable" version_id="1000017" version_string="1.0.7"><![CDATA[Warning: the image URL could not be fetched ({message}). It may still work in browsers; consider uploading a copy if it fails for guests.]]></phrase>
+  <phrase title="bar_sb_remote_unreachable_generic" version_id="1000017" version_string="1.0.7"><![CDATA[Warning: the image URL could not be verified from the server. Consider uploading a copy if it does not load for everyone.]]></phrase>
+  <phrase title="bar_sb_remote_blocked" version_id="1000017" version_string="1.0.7"><![CDATA[Warning: the remote host returned 401/403 (hotlink protection). The image may not load for guests; consider uploading a copy.]]></phrase>
+  <phrase title="bar_sb_remote_http" version_id="1000017" version_string="1.0.7"><![CDATA[Warning: the image URL returned HTTP {code}. Consider uploading a copy if the image does not appear.]]></phrase>
+  <phrase title="bar_sb_remote_not_image" version_id="1000017" version_string="1.0.7"><![CDATA[Warning: the URL did not look like an image response. Consider uploading a file instead.]]></phrase>
+  <phrase title="bar_sb_remote_bad_content_type" version_id="1000017" version_string="1.0.7"><![CDATA[Warning: the server did not send an image Content-Type; the file may still display in browsers.]]></phrase>
+  <phrase title="bar_sb_display_width" version_id="1000017" version_string="1.0.7"><![CDATA[Max display width (px)]]></phrase>
+  <phrase title="bar_sb_display_height" version_id="1000017" version_string="1.0.7"><![CDATA[Max display height (px)]]></phrase>
+  <phrase title="bar_sb_display_dims_explain" version_id="1000017" version_string="1.0.7"><![CDATA[Optional cap on how wide this banner can render (0 = no extra cap beyond the widget). Typical sponsor sizes are a few hundred pixels so the page is not dominated.]]></phrase>
+  <phrase title="bar_sb_display_height_explain" version_id="1000017" version_string="1.0.7"><![CDATA[Optional max height (0 = none). Use with max width to keep logos readable.]]></phrase>
+  <phrase title="bar_sb_source_dimensions" version_id="1000017" version_string="1.0.7"><![CDATA[Uploaded file size (pixels)]]></phrase>
+  <phrase title="bar_sb_preview" version_id="1000017" version_string="1.0.7"><![CDATA[Preview]]></phrase>
+  <phrase title="bar_sb_list_position" version_id="1000019" version_string="1.0.9"><![CDATA[#]]></phrase>
+  <phrase title="bar_sb_visibility" version_id="1000028" version_string="1.1.8"><![CDATA[Forum visibility]]></phrase>
+  <phrase title="bar_sb_list_status_visible" version_id="1000028" version_string="1.1.8"><![CDATA[Shown in the sponsor area]]></phrase>
+  <phrase title="bar_sb_list_status_hidden" version_id="1000028" version_string="1.1.8"><![CDATA[Hidden (not in the sponsor rotation)]]></phrase>
+  <phrase title="bar_sb_hide_from_site" version_id="1000028" version_string="1.1.8"><![CDATA[Stop showing]]></phrase>
+  <phrase title="bar_sb_show_on_site" version_id="1000028" version_string="1.1.8"><![CDATA[Show in sponsor area]]></phrase>
+  <phrase title="bar_sb_display_order_auto_explain" version_id="1000019" version_string="1.0.9"><![CDATA[Banners are ordered automatically: new ones are added at the end, and the list is renumbered when one is deleted. You do not need to set display order yourself.]]></phrase>
+  <phrase title="bar_sb_show_on_site_checkbox" version_id="1000019" version_string="1.0.9"><![CDATA[Show this banner on the forum (sponsor widget)]]></phrase>
+  <phrase title="bar_sb_show_on_site_explain" version_id="1000019" version_string="1.0.9"><![CDATA[Turn this off to hide the banner from the sponsor area without deleting it. You can turn it back on anytime.]]></phrase>
+  <phrase title="bar_sb_now_visible_on_site" version_id="1000019" version_string="1.0.9"><![CDATA[This banner is now visible on the site.]]></phrase>
+  <phrase title="bar_sb_now_hidden_from_site" version_id="1000019" version_string="1.0.9"><![CDATA[This banner is now hidden from the site.]]></phrase>
+  <phrase title="bar_sb_target_url_explain" version_id="1000019" version_string="1.0.9"><![CDATA[Link to sponsor website. Use a full URL (https://…) so the banner opens the right page when someone clicks it.]]></phrase>
+  <phrase title="bar_sb_alt_text_explain" version_id="1000019" version_string="1.0.9"><![CDATA[Short description for screen readers and when images do not load. Usually the sponsor or campaign name; it can match the title above.]]></phrase>
+  <phrase title="bar_sb_delete_hint" version_id="1000028" version_string="1.1.8"><![CDATA[To remove this banner permanently, use Delete. To pause it without losing settings, turn off “Show this banner on the forum” above or use Stop showing on the banner list.]]></phrase>
+  <phrase title="bar_sb_collapsible_setup_title" version_id="1000029" version_string="1.1.9"><![CDATA[Advertising & paste line (click to expand)]]></phrase>
+  <phrase title="bar_sb_collapsible_setup_desc" version_id="1000029" version_string="1.1.9"><![CDATA[Only when you change Advertising or the widget; ignore if things already work.]]></phrase>
+  <phrase title="bar_sb_one_place_title" version_id="1000021" version_string="1.1.1"><![CDATA[One place for sponsors — this page]]></phrase>
+  <phrase title="bar_sb_one_place_intro" version_id="1000024" version_string="1.1.4"><![CDATA[Everything you add below is stored here. For the forum to show it, open <b>Setup → Advertising → BAR Sponsors 2026</b>, set <b>Display position</b> to <b>Container breadcrumb (top): Above</b> (inside the page container, directly above the top breadcrumb; XenForo id <code>container_breadcrumb_top_above</code>), delete all old sponsor code, paste the line in the gray box below, and save. Leave <b>Appearance → Widgets → Sponsor banners</b> with <b>no</b> display positions checked so banners appear only here (extra positions would duplicate them).]]></phrase>
+  <phrase title="bar_sb_paste_this_heading" version_id="1000021" version_string="1.1.1"><![CDATA[Copy this entire line]]></phrase>
+  <phrase title="bar_sb_paste_this_detail" version_id="1000021" version_string="1.1.1"><![CDATA[(Triple-click the box to select it, then copy.)]]></phrase>
+  <phrase title="bar_sb_open_widget_settings" version_id="1000021" version_string="1.1.1"><![CDATA[Open widget settings (where it appears on the page)]]></phrase>
+  <phrase title="bar_sb_no_widget_yet" version_id="1000021" version_string="1.1.1"><![CDATA[No “Sponsor banners” widget found yet.]]></phrase>
+  <phrase title="bar_sb_no_widget_explain" version_id="1000024" version_string="1.1.4"><![CDATA[Click the button once to create it (optional but recommended so you can tune rotation and max width in one place). After it exists, leave “Display in positions” empty so ads show only from Advertising at <b>Container breadcrumb (top): Above</b>. The gray line above still works without any widget positions checked.]]></phrase>
+  <phrase title="bar_sb_paste_class_explain" version_id="1000022" version_string="1.1.2"><![CDATA[This uses the add-on’s internal name so it always works from Advertising — even when the widget has no “Display in positions” checked (the old <code>key=…</code> line fails in that case).]]></phrase>
+  <phrase title="bar_sb_create_sponsor_widget" version_id="1000021" version_string="1.1.1"><![CDATA[Create Sponsor banners widget]]></phrase>
+</phrases>

@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="expiringUserUpgrades_option_template_registrationDefaults" version_id="2000901" version_string="2.0.9"><![CDATA[<xf:checkbox>
+		<xf:option name="{$inputName}[sv_exup_email_on_expiring_expired_upgrade]" selected="$option.option_value.sv_exup_email_on_expiring_expired_upgrade">{{ phrase('expiringUserUpgrades_receive_expiring_and_expired_user_upgrades_mailings_option') }}</xf:option>
+		<xf:option name="{$inputName}[sv_exup_email_on_upgrade_purchase]" selected="$option.option_value.sv_exup_email_on_upgrade_purchase">{{ phrase('expiringUserUpgrades_receive_user_upgrade_purchase_mailings_option') }}</xf:option>
+		<xf:option name="{$inputName}[sv_exup_email_on_upgrade_reversal]" selected="$option.option_value.sv_exup_email_on_upgrade_reversal">{{ phrase('expiringUserUpgrades_receive_user_upgrade_reversal_mailings_option') }}</xf:option>
+	</xf:checkbox>]]></template>
+  <template type="admin" title="exup_option_template_notify_by" version_id="2040100" version_string="2.4.1"><![CDATA[<xf:checkboxrow
+				label="{$option.title}"
+				hint="{$hintHtml}"
+				explain="{$explainHtml}"
+				html="{$listedHtml}"
+				>
+    <xf:option name="{$inputName}[alert][active]" value="alert" selected="{$option.option_value.alert.active}" label="{{ phrase('exup_alert') }}">
+		<xf:dependent>
+			<xf:textboxrow name="{$inputName}[alert][sender_username]" label="{{ phrase('exup_alert_sender_username') }}" value="{$option.option_value.alert.sender_username}" ac="single" autocomplete="off" maxlength="{{ max_length($xf.visitor, 'username') }}" hint="{{ phrase('optional') }}" />
+		</xf:dependent>
+	</xf:option>
+    <xf:option name="{$inputName}[email][active]" value="email" selected="{$option.option_value.email.active}">{{ phrase('exup_email') }}</xf:option>
+
+    <xf:option name="{$inputName}[conversation][active]" value="conversation" label="{{ phrase('exup_conversation') }}" selected="{$option.option_value.conversation.active}">
+        <xf:dependent>
+            <xf:textboxrow name="{$inputName}[conversation][sender_username]" label="{{ phrase('exup_conversation_sender_username') }}" value="{$option.option_value.conversation.sender_username}" ac="single" autocomplete="off" maxlength="{{ max_length($xf.visitor, 'username') }}" hint="{{ phrase('required') }}" />
+        </xf:dependent>
+    </xf:option>
+</xf:checkboxrow>]]></template>
+  <template type="admin" title="exup_option_template_upgradeUrl" version_id="2000000" version_string="2.0.0 Alpha"><![CDATA[<xf:radiorow
+			 label="{$option.title}"
+			 hint="{$hintHtml}"
+			 explain="{$explainHtml}"
+			 html="{$listedHtml}"
+			 name="{$inputName}[type]">
+
+	<xf:option label="{{ phrase('default_url') }} ({{ link_type('public', 'canonical:account/upgrades') }})" 
+			   value="default" 
+			   selected="{$option.option_value.type} == 'default'" />
+
+	<xf:option label="{{ phrase('custom_url:') }}" 
+				value="custom" 
+				selected="{$option.option_value.type} == 'custom'">
+		<xf:textbox name="{$inputName}[custom]" value="{$option.option_value.custom}" />
+	</xf:option>
+</xf:radiorow>]]></template>
+  <template type="admin" title="exup_user_upgrade_edit" version_id="2020100" version_string="2.2.1"><![CDATA[<xf:numberboxrow			   
+				   label="{{ phrase('exup_notify_days') }}" 
+				   name="exup_days" 
+				   value="{$upgrade.exup_days}" 
+				   step="1" min="0" max="30" 
+				   explain="{{ phrase('exup_notify_days_explain') }}" 
+				   />
+
+<xf:checkboxrow name="exup_excluded_payment_provider_ids" value="{$upgrade.exup_excluded_payment_provider_ids}"
+				label="{{ phrase('exup_excluded_payment_providers') }}"
+				explain="{{ phrase('exup_excluded_payment_providers_explain') }}" >
+
+	<xf:foreach loop="$profiles" key="$profileId" value="$profile">
+		<xf:option value="{$profileId}" label="{{ $profile.Provider.title !== $profile.title ? $profile.Provider.title . ' - ' . $profile.title : $profile.Provider.title }}" />
+	</xf:foreach>
+</xf:checkboxrow>]]></template>
+  <template type="email" title="exup_email_expired_subscription_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_expired_user_subscription_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_expired_user_subscription_body_html', {
+	'username': {$username},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_expiring_and_expired_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'sv_up_expired_expirying', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_expired_upgrade_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_expired_user_upgrade_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_expired_user_upgrade_body_html', {
+	'username': {$username},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_expiring_and_expired_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'sv_up_expired_expirying', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_expiring_subscription_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_expiring_user_subscription_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_expiring_user_subscription_body_html', {
+	'username': {$username},
+	'num_days': {$num_days},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_sv_subscription_expiring_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'sv_ups_expired_expirying', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_expiring_upgrade_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_expiring_user_upgrade_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_expiring_user_upgrade_body_html', {
+	'username': {$username},
+	'num_days': {$num_days},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_expiring_and_expired_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'sv_ups_expired_expirying', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_payment_reversal_subscription_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_payment_reversal_subscription_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_payment_reversal_subscription_body_html', {
+	'username': {$username},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_payment_reversal_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'user_upgrade_reversed', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_payment_reversal_upgrade_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_payment_reversal_upgrade_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_payment_reversal_upgrade_body_html', {
+	'username': {$username},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_payment_reversal_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'user_upgrade_reversed', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_purchased_subscription_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_purchased_user_subscription_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_purchased_user_subscription_body_html', {
+	'username': {$username},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_purchased_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'user_upgrade_purchased', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_purchased_upgrade_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_purchased_user_upgrade_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_purchased_user_upgrade_body_html', {
+	'username': {$username},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_purchased_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'user_upgrade_purchased', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_reversal_extend_subscription_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_payment_reversal_extend_subscription_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_payment_reversal_extend_subscription_body_html', {
+	'username': {$username},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_payment_reversal_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'user_upgrade_reversed', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="email" title="exup_email_reversal_extend_upgrade_body" version_id="2040000" version_string="2.4.0"><![CDATA[<mail:subject>
+	{{ phrase('exup_email_payment_reversal_extend_upgrade_subject', {
+		'boardTitle': $boardTitle
+	}) }}
+</mail:subject>
+
+{{ phrase('exup_email_payment_reversal_extend_upgrade_body_html', {
+	'username': {$username},
+    'upgrade_title': $isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $upgrade_title}) : $upgrade_title,
+    'board_title': {$boardTitle},
+    'board_url': {$boardUrl},
+	'upgrade_url': {$upgradeUrl}
+}) }}
+
+{{ phrase('expiringUserUpgrades_user_upgrade_payment_reversal_email_html_footer', {
+        'board': $xf.options.boardTitle,
+        'disable_this_link': link('canonical:email-stop/content', $xf.toUser, {'t': 'user_upgrade_reversed', 'id': $xf.toUser.user_id}),
+        'disable_all_link': link('canonical:email-stop/all', $xf.toUser)
+}) }}]]></template>
+  <template type="public" title="alert_exup_expired_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_expired_user_subscription', {
+	'username': $extra.username,
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'upgrade_url': $upgradeUrl
+}) }}
+
+<xf:if is="$extra.upgradeDenied">
+	{{ phrase('exup_current_not_available') }}
+</xf:if>]]></template>
+  <template type="public" title="alert_exup_expired_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_expired_user_upgrade', {
+	'username': $extra.username,
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'upgrade_url': $upgradeUrl
+}) }}
+
+<xf:if is="$extra.upgradeDenied">
+	{{ phrase('exup_current_not_available') }}
+</xf:if>]]></template>
+  <template type="public" title="alert_exup_expiring_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[<xf:if is="{$extra.upgradeDenied}">
+	<xf:include template="alert_exup_expiring_upgrade" />
+<xf:else/>
+	{{ phrase('exup_alert_expiring_user_subscription', {
+		'username': $extra.username,
+		'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+		'num_days': $extra.num_days,
+		'upgrade_url': $upgradeUrl
+	}) }}
+</xf:if>]]></template>
+  <template type="public" title="alert_exup_expiring_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_expiring_user_upgrade', {
+	'username': $extra.username,
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'num_days': $extra.num_days,
+	'upgrade_url': $upgradeUrl
+}) }}
+
+<xf:if is="$extra.upgradeDenied">
+    {{ phrase('exup_current_not_available') }}
+</xf:if>]]></template>
+  <template type="public" title="alert_exup_payment_reversal_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_payment_reversal_subscription', {
+	'username': {$extra.username},
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'upgrade_url': {$upgradeUrl}
+}) }}]]></template>
+  <template type="public" title="alert_exup_payment_reversal_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_payment_reversal_upgrade', {
+    'username': {$extra.username},
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'upgrade_url': {$upgradeUrl}
+}) }}]]></template>
+  <template type="public" title="alert_exup_purchased_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_purchased_user_subscription', {
+	'username': {$extra.username},
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'upgrade_url': {$upgradeUrl}
+}) }}]]></template>
+  <template type="public" title="alert_exup_purchased_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_purchased_user_upgrade', {
+	'username': {$extra.username},
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'upgrade_url': {$upgradeUrl}
+}) }}]]></template>
+  <template type="public" title="alert_exup_reversal_extend_subscription" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_payment_reversal_extend_subscription', {
+	'username': {$extra.username},
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'upgrade_url': {$upgradeUrl}
+}) }}]]></template>
+  <template type="public" title="alert_exup_reversal_extend_upgrade" version_id="2030001" version_string="2.3.0 RC1"><![CDATA[{{ phrase('exup_alert_payment_reversal_extend_upgrade', {
+	'username': {$extra.username},
+	'upgrade_title': $extra.isGift ? phrase('exup_gift_upgrade', {'upgrade_title': $extra.upgrade_title}) : $extra.upgrade_title,
+	'upgrade_url': {$upgradeUrl}
+}) }}]]></template>
+  <template type="public" title="expiringUserUpgrades_account_upgrades_extend_button" version_id="2010200" version_string="2.1.2"><![CDATA[<xf:set var="$extendFailReason" value="{{ $upgrade.getNonExtendReason() }}" />
+<xf:if is="!$extendFailReason">
+	
+	<xf:form action="{{ link('purchase', $upgrade, {'user_upgrade_id': $upgrade.user_upgrade_id}) }}" ajax="true" data-xf-init="payment-provider-container">
+		<div class="inputGroup">
+			<xf:if is="{{ count($upgrade.payment_profile_ids) > 1 }}">
+				<xf:select name="payment_profile_id">
+					<xf:option>{{ phrase('(choose_payment_method)') }}</xf:option>
+					<xf:foreach loop="$upgrade.payment_profile_ids" value="$profileId">
+						<xf:option value="{$profileId}">{$profiles.{$profileId}}</xf:option>
+					</xf:foreach>
+				</xf:select>
+
+				<span class="inputGroup-splitter"></span>
+				<xf:button type="submit" icon="purchase">{{ phrase('exup_extend') }}</xf:button>
+			<xf:else />
+				<xf:button type="submit" icon="purchase">{{ phrase('exup_extend') }}</xf:button>
+				<xf:hiddenval name="payment_profile_id">{$upgrade.payment_profile_ids|first}</xf:hiddenval>
+			</xf:if>
+		</div>
+	</xf:form>
+<xf:elseif is="$xf.options.ExUp_ShowExtendFailReason && $extendFailReason" />
+	{{ $extendFailReason }}
+</xf:if>]]></template>
+</templates>

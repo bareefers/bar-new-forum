@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<addon addon_id="InactiveMembers" title="Inactive Members" version_string="3.1" version_id="1" url="" install_callback_class="" install_callback_method="" uninstall_callback_class="" uninstall_callback_method="">
+  <admin_navigation/>
+  <admin_permissions/>
+  <admin_style_properties/>
+  <admin_templates/>
+  <admin_template_modifications/>
+  <code_events/>
+  <code_event_listeners/>
+  <cron>
+    <entry entry_id="InactiveMembers" cron_class="Andy_InactiveMembers_CronEntry_InactiveMembers" cron_method="runInactiveMembers" active="1"><![CDATA[{"day_type":"dom","dom":["1"],"hours":["8"],"minutes":["0"]}]]></entry>
+  </cron>
+  <email_templates>
+    <template title="inactivemembers_contact">
+      <subject><![CDATA[{xen:phrase contact_email_subject, 'subject={$subject}', 'board_title={$xenOptions.boardTitle}'}]]></subject>
+      <body_text><![CDATA[{xen:phrase contact_email_body_text,
+	'name={$user.username}',
+	'user_id={$user.user_id}',
+	'email={$user.email}',
+	'subject={$subject}',
+	'message={$message}',
+	'board_title={$xenOptions.boardTitle}'
+}]]></body_text>
+      <body_html><![CDATA[<h2 style="font-size: 18pt; font-weight: normal; margin: 10px 0">{$subject}</h2>
+
+<hr style="height: 1px; margin: 10px 0; border: 0; color: #D7EDFC; background-color: #D7EDFC" />
+
+<table cellpadding="0" cellspacing="0" border="0">
+<tr valign="top">
+<xen:if is="{$user.user_id}">
+<td style="font-size: 13px; line-height: 1.231; padding-{xen:if $emailIsRtl, left, right}: 20px">
+	<a href="{xen:link canonical:members, $user}" title="{$user.username}" style="color: #176093; text-decoration: none; font-size: 9px; display: block; background-color: #D7EDFC; border: 1px solid #D7EDFC; border-radius: 5px">
+		<span style="display: block; background-color: #F0F7FC; padding: 5px; border-radius: 4px">
+			<img src="{xen:helper avatar, $user, s, '', 1}" alt="{$user.username}" title="{$user.username}" style="display: block; width: 48px; height: 48px; background-color: #FCFCFF; border: 1px solid #A5CAE4; padding: 2px; border-radius: 4px" />
+		</span>
+		<span style="padding: 3px 5px; display: block"><!--{$user.username}-->&nbsp;</span>
+	</a>
+</td>
+</xen:if>
+<td style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 11pt; line-height: 1.4">
+	{xen:raw $message}
+</td>	
+</tr>
+</table>
+
+<hr style="height: 1px; margin: 10px 0; border: 0; color: #D7EDFC; background-color: #D7EDFC" />]]></body_html>
+    </template>
+  </email_templates>
+  <email_template_modifications/>
+  <optiongroups>
+    <group group_id="InactiveMembers" display_order="4000" debug_only="0"/>
+    <option option_id="inactiveMembersDays" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>30</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="7"/>
+    </option>
+    <option option_id="inactiveMembersExcludeUserId" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="6"/>
+    </option>
+    <option option_id="inactiveMembersIncludeForums" edit_format="textbox" data_type="string" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="5"/>
+    </option>
+    <option option_id="inactiveMembersLanguage" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params>min=0</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="9"/>
+    </option>
+    <option option_id="inactiveMembersLimit" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>25</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="8"/>
+    </option>
+    <option option_id="inactiveMembersMaximumDays" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>365</default_value>
+      <edit_format_params>min=1</edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="2"/>
+    </option>
+    <option option_id="inactiveMembersMaximumPosts" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>100000</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="4"/>
+    </option>
+    <option option_id="inactiveMembersMinimumDays" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>100</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="1"/>
+    </option>
+    <option option_id="inactiveMembersMinimumPosts" edit_format="spinbox" data_type="numeric" can_backup="1">
+      <default_value>0</default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="3"/>
+    </option>
+    <option option_id="inactiveMembersRunCron" edit_format="onoff" data_type="boolean" can_backup="1">
+      <default_value></default_value>
+      <edit_format_params></edit_format_params>
+      <sub_options></sub_options>
+      <relation group_id="InactiveMembers" display_order="10"/>
+    </option>
+  </optiongroups>
+  <permissions>
+    <permission_groups>
+      <permission_group permission_group_id="inactiveMembersGroupID"/>
+    </permission_groups>
+    <permissions>
+      <permission permission_group_id="inactiveMembersGroupID" permission_id="inactiveMembersID" permission_type="flag" default_value="unset" interface_group_id="inactiveMembersInterfaceGroupID" display_order="1"/>
+    </permissions>
+    <interface_groups>
+      <interface_group interface_group_id="inactiveMembersInterfaceGroupID" display_order="300"/>
+    </interface_groups>
+  </permissions>
+  <phrases>
+    <phrase title="cron_entry_InactiveMembers" version_id="1" version_string="2.1"><![CDATA[Inactive members]]></phrase>
+    <phrase title="inactivemembers_email_sent_to" version_id="1" version_string="1.6"><![CDATA[Email sent to:
+<br /><br />]]></phrase>
+    <phrase title="inactivemembers_error_email" version_id="1" version_string="1.0"><![CDATA[Options "Email From" information missing.]]></phrase>
+    <phrase title="inactivemembers_error_forums" version_id="1" version_string="1.0"><![CDATA[Options "Include Forums" information missing.]]></phrase>
+    <phrase title="inactivemembers_finished_press_back_button_to_return_to_previous_page" version_id="1" version_string="1.6"><![CDATA[Finished. Press back button to return to previous page.]]></phrase>
+    <phrase title="inactivemembers_forum" version_id="1" version_string="2.6"><![CDATA[Forum]]></phrase>
+    <phrase title="inactivemembers_inactive_members" version_id="1" version_string="1.0"><![CDATA[inactive members]]></phrase>
+    <phrase title="inactivemembers_maximum_days" version_id="1" version_string="1.0"><![CDATA[Maximum days:]]></phrase>
+    <phrase title="inactivemembers_maximum_posts" version_id="1" version_string="1.0"><![CDATA[Maximum posts:]]></phrase>
+    <phrase title="inactivemembers_message" version_id="1" version_string="2.6"><![CDATA[Hi {username},
+<br /><br />
+We look forward to seeing you at {board_title}.
+<br /><br />
+Some of our latest topics include:]]></phrase>
+    <phrase title="inactivemembers_minimum_days" version_id="1" version_string="1.0"><![CDATA[Minimum days:]]></phrase>
+    <phrase title="inactivemembers_minimum_posts" version_id="1" version_string="1.0"><![CDATA[Minimum posts:]]></phrase>
+    <phrase title="inactivemembers_sendsample_confirm" version_id="1" version_string="1.0"><![CDATA[Sample email sent.]]></phrase>
+    <phrase title="inactivemembers_send_batch_email_to" version_id="1" version_string="1.0"><![CDATA[Send batch emails to]]></phrase>
+    <phrase title="inactivemembers_send_sample_email_to" version_id="1" version_string="1.0"><![CDATA[Send sample email to]]></phrase>
+    <phrase title="inactivemembers_subject" version_id="1" version_string="2.6"><![CDATA[Latest topics.]]></phrase>
+    <phrase title="inactivemembers_title" version_id="1" version_string="2.6"><![CDATA[Title]]></phrase>
+    <phrase title="inactivemembers_total_number_of_emails_that_will_be_sent" version_id="1" version_string="1.0"><![CDATA[Total number of emails that will be sent:]]></phrase>
+    <phrase title="inactivemembers_to_change_the_selection_criteria" version_id="1" version_string="1.0"><![CDATA[To change the selections criteria, edit the Inactive Members Options page.]]></phrase>
+    <phrase title="inactivemembers_unsubscribe" version_id="1" version_string="1.0"><![CDATA[To stop receiving emails from {board_title}, please change your <a href="{unsubscribe_link}">Receive site mailings</a> setting. 
+<br /><br/>
+Click <a href="{forgotpassword_link}">here</a> if you forgot your password.]]></phrase>
+    <phrase title="option_group_InactiveMembers" version_id="1" version_string="1.0"><![CDATA[Inactive Members]]></phrase>
+    <phrase title="option_group_InactiveMembers_description" version_id="1" version_string="1.0"><![CDATA[Options here control the Inactive Members add-on.]]></phrase>
+    <phrase title="option_inactiveMembersDays" version_id="1" version_string="1.0"><![CDATA[Days]]></phrase>
+    <phrase title="option_inactiveMembersDays_explain" version_id="1" version_string="1.0"><![CDATA[Most popular threads created within the past X days.]]></phrase>
+    <phrase title="option_inactiveMembersExcludeUserId" version_id="1" version_string="2.1"><![CDATA[Exclude User ID]]></phrase>
+    <phrase title="option_inactiveMembersExcludeUserId_explain" version_id="1" version_string="2.1"><![CDATA[Enter the user ID you want to exclude. Separate each user ID with a comma.]]></phrase>
+    <phrase title="option_inactiveMembersIncludeForums" version_id="1" version_string="1.0"><![CDATA[Include Forums]]></phrase>
+    <phrase title="option_inactiveMembersIncludeForums_explain" version_id="1" version_string="1.0"><![CDATA[Enter the forum ID's you wish to query. Separate each forum ID with a comma. <b>(This field is required)</b>]]></phrase>
+    <phrase title="option_inactiveMembersLanguage" version_id="1" version_string="2.6"><![CDATA[Language]]></phrase>
+    <phrase title="option_inactiveMembersLanguage_explain" version_id="1" version_string="2.6"><![CDATA[All emails will be sent using this Language ID. Enter 0 for default language.]]></phrase>
+    <phrase title="option_inactiveMembersLimit" version_id="1" version_string="1.0"><![CDATA[Limit]]></phrase>
+    <phrase title="option_inactiveMembersLimit_explain" version_id="1" version_string="1.0"><![CDATA[The number of thread titles to include in the email.]]></phrase>
+    <phrase title="option_inactiveMembersMaximumDays" version_id="1" version_string="1.0"><![CDATA[Maximum Days]]></phrase>
+    <phrase title="option_inactiveMembersMaximumDays_explain" version_id="1" version_string="1.0"><![CDATA[Email will be sent if inactive less than or equal to this many days.]]></phrase>
+    <phrase title="option_inactiveMembersMaximumPosts" version_id="1" version_string="1.0"><![CDATA[Maximum Posts]]></phrase>
+    <phrase title="option_inactiveMembersMaximumPosts_explain" version_id="1" version_string="1.0"><![CDATA[Email will be sent if less than or equal to this many posts.]]></phrase>
+    <phrase title="option_inactiveMembersMinimumDays" version_id="1" version_string="1.0"><![CDATA[Minimum Days]]></phrase>
+    <phrase title="option_inactiveMembersMinimumDays_explain" version_id="1" version_string="1.0"><![CDATA[Email will be sent if inactive greater than or equal to this many days.]]></phrase>
+    <phrase title="option_inactiveMembersMinimumPosts" version_id="1" version_string="1.0"><![CDATA[Minimum Posts]]></phrase>
+    <phrase title="option_inactiveMembersMinimumPosts_explain" version_id="1" version_string="1.0"><![CDATA[Email will be sent if greater than or equal to this many posts.]]></phrase>
+    <phrase title="option_inactiveMembersRunCron" version_id="1" version_string="2.1"><![CDATA[Run Cron]]></phrase>
+    <phrase title="option_inactiveMembersRunCron_explain" version_id="1" version_string="2.1"><![CDATA[Run Cron entry.]]></phrase>
+    <phrase title="permission_group_inactiveMembersGroupID" version_id="1" version_string="1.7"><![CDATA[Inactive Members]]></phrase>
+    <phrase title="permission_inactiveMembersGroupID_inactiveMembersID" version_id="1" version_string="1.7"><![CDATA[Show Inactive Members]]></phrase>
+    <phrase title="permission_interface_inactiveMembersInterfaceGroupID" version_id="1" version_string="1.7"><![CDATA[Inactive Members]]></phrase>
+  </phrases>
+  <route_prefixes>
+    <route_type type="public">
+      <prefix original_prefix="inactivemembers" class="Andy_InactiveMembers_Route_Prefix_InactiveMembers" build_link="none"/>
+    </route_type>
+  </route_prefixes>
+  <style_properties/>
+  <templates>
+    <template title="andy_inactivemembers" version_id="1" version_string="1.0"><![CDATA[{xen:phrase inactivemembers_to_change_the_selection_criteria}
+
+<br /><br />
+
+{xen:phrase inactivemembers_minimum_days} {$minimumDays}
+
+<br /><br />
+
+{xen:phrase inactivemembers_maximum_days} {$maximumDays}
+
+<br /><br />
+
+{xen:phrase inactivemembers_minimum_posts} {$minimumPosts}
+
+<br /><br />
+
+{xen:phrase inactivemembers_maximum_posts} {$maximumPosts}
+
+<br /><br />
+
+{xen:phrase inactivemembers_total_number_of_emails_that_will_be_sent} {$emailCount}
+
+<br /><br />
+
+<a href="{xen:link 'inactivemembers/sendsample'}" rel="nofollow">{xen:phrase inactivemembers_send_sample_email_to} {$emailVisitor}</a>
+
+<br /><br />
+
+<a href="{xen:link 'inactivemembers/sendbatch'}" rel="nofollow">{xen:phrase inactivemembers_send_batch_email_to} {$emailCount} {xen:phrase inactivemembers_inactive_members}</a>]]></template>
+  </templates>
+  <public_template_modifications/>
+  <bb_code_media_sites/>
+  <bb_codes/>
+</addon>
