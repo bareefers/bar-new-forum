@@ -8,7 +8,7 @@ Version-controlled **XenForo 2.3.10** application tree and **ops** for [bareefer
 | **This git clone on server** | `/var/www/bareefers.org/bar-new-forum` |
 | **GitHub** | https://github.com/bareefers/bar-new-forum |
 
-New developers: start with **[docs/TEAM-SETUP.md](docs/TEAM-SETUP.md)** and **[CONTRIBUTING.md](CONTRIBUTING.md)**.
+New developers: start with **[docs/KNOWLEDGE-TRANSFER.md](docs/KNOWLEDGE-TRANSFER.md)** (full handoff), then **[docs/TEAM-SETUP.md](docs/TEAM-SETUP.md)** and **[CONTRIBUTING.md](CONTRIBUTING.md)**.
 
 ## Repository layout
 

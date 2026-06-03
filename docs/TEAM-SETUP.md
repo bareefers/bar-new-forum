@@ -67,13 +67,15 @@ Deploying to **live** `forum/` is a separate step — see [DEPLOY.md](DEPLOY.md)
 
 ## 6. Key documentation
 
+**Full handoff (start here for KT):** [KNOWLEDGE-TRANSFER.md](KNOWLEDGE-TRANSFER.md)
+
 | Doc | Topic |
 |-----|--------|
 | [../CONTRIBUTING.md](../CONTRIBUTING.md) | PR workflow |
 | [DEPLOY.md](DEPLOY.md) | Getting changes to production |
 | [../SECURITY.md](../SECURITY.md) | Secrets policy |
 | [../ops/docs/BAR-THREAD-LIST-LAYOUT.md](../ops/docs/BAR-THREAD-LIST-LAYOUT.md) | Thread list CSS |
-| [../ops/docs/BAREEFERS-STYLE16-BACKUP.md](../ops/docs/BAREEFERS-STYLE16-BACKUP.md) | Style snapshots before risky DB work |
+| [../ops/docs/BAREEFERS-STYLE16-BACKUP.md](../ops/docs/BAREEFERS-STYLE16-BACKUP.md) | Style snapshots before risky DB work (if present in clone) |
 | [PAYPAL-PAYMENT-MAY2026.md](PAYPAL-PAYMENT-MAY2026.md) | PayPal IPN + REST webhook incident, patches, monitoring |
 | [MOBILE-COMPAT.md](MOBILE-COMPAT.md) | Mobile/tablet CSS, deploy, Playwright audit |
 | [../ops/docs/BAR-THREAD-LIST-LAYOUT.md](../ops/docs/BAR-THREAD-LIST-LAYOUT.md) | Thread list + What's new desktop layout |
