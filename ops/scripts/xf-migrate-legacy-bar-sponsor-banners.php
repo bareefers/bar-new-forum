@@ -6,7 +6,7 @@
  * Idempotent: skips any row whose image_path already exists.
  *
  * Usage (forum root = argv[1]):
- *   php xenforo/scripts/xf-migrate-legacy-bar-sponsor-banners.php /var/www/bareefers.org/forum
+ *   php ops/scripts/xf-migrate-legacy-bar-sponsor-banners.php /var/www/bareefers.org/forum
  */
 use XF\Cli\App;
 

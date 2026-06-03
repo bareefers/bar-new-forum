@@ -1,5 +1,7 @@
 # BAR Sponsor Banners add-on
 
+**See also:** [KNOWLEDGE-TRANSFER.md](../../docs/KNOWLEDGE-TRANSFER.md) §9.1 (handoff summary).
+
 This add-on gives staff an **ACP-only library** for sponsor banner images and metadata (title, link, alt text, order, active). The **Appearance → Sponsor banners** screen is intentionally just that library — it does not configure where anything appears on the public forum.
 
 Separately, whoever handles **Appearance → Widgets** can place the **Sponsor banners** widget on the front end if you want them visible to members.
@@ -16,10 +18,13 @@ Optional front-end display uses **Appearance → Widgets** (widget) or an advanc
 
 If sponsors still live only in **Setup → Advertising** (template with `$adx.1` … `$adx.7`), they **do not** appear under **Appearance → Sponsor banners** until you copy them into the add-on’s database.
 
-1. Deploy add-on **`1.0.5`** (or newer) to the server.
+1. Deploy add-on **`1.0.5`** (or newer; production target **1.1.x**) to the server.
 2. From the forum root, run once (idempotent):
 
-   `php /path/to/barcode/xenforo/scripts/xf-migrate-legacy-bar-sponsor-banners.php /var/www/bareefers.org/forum`
+   ```bash
+   sudo -u www-data php /var/www/bareefers.org/bar-new-forum/ops/scripts/xf-migrate-legacy-bar-sponsor-banners.php \
+     /var/www/bareefers.org/forum
+   ```
 
 3. Confirm **Appearance → Sponsor banners** lists all sponsors.
 4. Under **Appearance → Widgets**, edit your **Sponsor banners** widget:
@@ -33,14 +38,18 @@ If sponsors still live only in **Setup → Advertising** (template with `$adx.1`
 
 After that, **only** **Appearance → Sponsor banners** is used to add/edit/disable sponsors; the advertisement slot only **embeds** the widget.
 
-## Add-on location in this repo
+## Add-on source and install
 
-`xenforo/addons/BAR/SponsorBanners`
+| Location | Path |
+|----------|------|
+| **Git (bar-new-forum, when vendored)** | `forum/src/addons/BAR/SponsorBanners/` |
+| **Git (parent barcode repo)** | `xenforo/addons/BAR/SponsorBanners/` |
+| **Live server** | `/var/www/bareefers.org/forum/src/addons/BAR/SponsorBanners` |
 
 ## Install on live server (`bareefers`)
 
 1. Copy files to server XenForo add-on path:
-   - source: `xenforo/addons/BAR/SponsorBanners`
+   - source: `bar-new-forum/forum/src/addons/BAR/SponsorBanners` (or `barcode/xenforo/addons/BAR/SponsorBanners`)
    - destination: `/var/www/bareefers.org/forum/src/addons/BAR/SponsorBanners`
 2. In ACP, go to **Add-ons** and install **BAR Sponsor Banners** (or from SSH: `php cmd.php xf-addon:install BAR/SponsorBanners`).
 3. Go to **Appearance → Sponsor banners** (ACP nav item).
@@ -62,8 +71,9 @@ Who can do this: an administrator account that has **Style properties and templa
    - **Target URL** — where the banner click goes (include `https://`). Leave blank if you do not want a link (widget will use `#`).
    - **Alt text** — accessibility text for the image.
    - **Display order** — lower numbers appear first when multiple banners are active.
-   - **Active** — checked so the widget will show it.
-5. Under **Banner image**, choose a file (`jpg`, `jpeg`, `png`, `gif`, or `webp`) and **Save**.
+   - **Active** — checked so the widget will show it; use the list’s inline toggle to hide without deleting.
+   - **Remote image URL** (optional) — if set, the public site uses this URL instead of an uploaded file.
+5. Under **Banner image**, choose a file (`jpg`, `jpeg`, `png`, `gif`, or `webp`) and **Save** (skip upload if you only use a remote URL).
 6. Repeat for additional sponsors.
 
 Files land on disk under:
@@ -95,6 +105,7 @@ XenForo does **not** allow loading banner rows from the database inside arbitrar
   - **`container_content_above`** / **`container_content_below`** — very wide placements; use only if you want site-wide visibility.
   Use **Position** dropdown search if your style exposes many positions; pick one that matches where you want sponsors seen.
 - **Max banner width (pixels)** — in the widget’s options block. Typical values: `300`–`600`. Use **`0`** for no limit (image can grow with the page layout). This only changes how large the image **looks**; it does not re-upload the file.
+- **Rotation** — **One at a time (rotate)** shows a single active sponsor per page load (time-based index, same idea as the old `($xf.time % N) + 1` ad). **Show all** lists every active banner in display order.
 
 4. **Display styling** — usually leave default unless you use a portal/style that requires a wrapper.
 5. **User group criteria** / **Node criteria** (if shown) — optional; leave blank to show to everyone, or restrict (e.g. guests only, registered only).
@@ -140,3 +151,7 @@ XenForo expects a phrase titled `admin_navigation.<navigation_id>`. `1.0.4` ship
 ### Banner size on the public site (`1.0.4`)
 
 Each **Sponsor banners** widget has **Max banner width (pixels)** in its widget options. Lower = smaller on screen; **0** = no CSS max-width (image can grow with the container). Different widgets can use different widths if you place multiple widgets.
+
+### Theme CSS (production)
+
+Mobile and layout rules for `.barSponsorBanners` live in `ops/scripts/extra-less-aurora16-source.less`. Deploy with `ops/scripts/xf-deploy-bareefers-extra-less.sh` after editing.

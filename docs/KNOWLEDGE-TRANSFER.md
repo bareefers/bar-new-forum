@@ -226,14 +226,115 @@ and match `$config['enableLivePayments']` in `src/config.php`.
 
 ---
 
-## 9. BAR XenForo addon and customizations
+## 9. BAR XenForo addons and customizations
 
 | Item | Notes |
 |------|--------|
-| **BAR addon** | `forum/src/addons/BAR/` — e.g. SponsorBanners widget, thread stat CSS classes (`barThreadStatView`, etc.) |
-| **Deploy addon** | rsync to live `src/addons/BAR/`, then ACP rebuild or `php cmd.php xf:addon-rebuild BAR` |
-| **Sponsor banners** | Widget + `barSponsorBanners` in templates; mobile rules in `extra.less` |
+| **BAR addon tree** | Live: `/var/www/bareefers.org/forum/src/addons/BAR/` — SponsorBanners, thread stat CSS helpers, etc. |
+| **Deploy addon code** | rsync from git clone → live, then `php cmd.php xf:addon-rebuild BAR/SponsorBanners` (see [DEPLOY.md](DEPLOY.md) §B) |
 | **Other addons** | XFMG, XFRM, XFES, SV ExpiringUserUpgrades, Tapatalk, etc. — verify after DB import |
+
+**Full sponsor-banner runbook:** [../ops/docs/SPONSOR-BANNERS-ADDON.md](../ops/docs/SPONSOR-BANNERS-ADDON.md)
+
+### 9.1 Sponsor banners (`BAR/SponsorBanners`)
+
+Custom add-on **BAR Sponsor Banners** (current version **1.1.x** in source). It splits responsibilities on purpose:
+
+| Layer | Where | What you do |
+|-------|--------|-------------|
+| **Banner library** | ACP → **Appearance → Sponsor banners** | Upload images, URLs, alt text, order, active/inactive |
+| **Where it shows** | ACP → **Appearance → Widgets** and/or **Setup → Advertising** | Place the **Sponsor banners** widget (or embed it in an ad slot) |
+
+The library screen does **not** choose page placement — only widgets/advertising do.
+
+#### Who can manage banners
+
+Administrators with XenForo **Style properties and templates** permission (`style` admin perm). Full super-admins already qualify.
+
+#### Part A — Add, edit, or disable a sponsor (routine)
+
+1. Open **ACP** → `https://bareefers.org/forum/admin.php`
+2. **Appearance → Sponsor banners**
+3. **Add banner** (or click a title to edit)
+4. Fields:
+   - **Title** — internal name; used in generated filenames
+   - **Target URL** — click destination (`https://…`). Blank → widget uses `#` (no navigation)
+   - **Alt text** — accessibility label on the image
+   - **Display order** — lower numbers sort first when multiple banners are active
+   - **Active** — unchecked banners are hidden from rotation (list shows “Hidden” status)
+   - **Banner image** — upload `jpg`, `jpeg`, `png`, `gif`, or `webp`
+   - **Remote image URL** (optional) — if set, the add-on uses this URL instead of the uploaded file (useful for CDN-hosted art without re-uploading)
+5. **Save**
+
+**On disk (uploads):** `/var/www/bareefers.org/forum/sponsor_banners/`  
+**In MySQL:** table `xf_bar_sponsor_banner` (paths like `sponsor_banners/1740000000-title.png`)
+
+From the banner list you can **toggle Active** inline without opening the full edit form.
+
+#### Part B — Show banners on the public site
+
+XenForo cannot load banner rows from the database inside arbitrary public templates; the supported path is the **Sponsor banners** widget (definition id `bar_sponsor_banners`).
+
+1. ACP → **Appearance → Widgets** → **Add widget**
+2. **Widget definition:** **Sponsor banners**
+3. Set:
+   - **Title** — staff label, e.g. `Sponsor banners (forum list)`
+   - **Widget key** — unique machine name (`bar_sponsor_banners_forum_list`). Lowercase, numbers, underscores only
+   - **Position** — e.g. `forum_list_above_nodes` (above forum index), `forum_list_below_nodes`, or an advertising-driven placement (below)
+   - **Options (on the widget):**
+     - **Max banner width (pixels)** — typical `300`–`468`; `0` = no CSS cap
+     - **Rotation → One at a time (rotate)** — one active sponsor per page load, cycling by time (replaces old `($xf.time % N) + 1` ad logic)
+     - **Rotation → Show all** — every active banner in display order
+4. **Save**, then verify on the **public** forum index (hard refresh / incognito)
+
+**Embed via advertising only (common on BAR):** In **Setup → Advertising** (e.g. “BAR Sponsors 2026”), the template body can be a single line:
+
+```html
+<xf:widget key="bar_sponsor_banners_forum_list" />
+```
+
+Use the **Widget key** from step B3. After migration, **edit sponsors only** under **Appearance → Sponsor banners**, not inside the ad template HTML.
+
+#### Legacy migration (one-time)
+
+If sponsors still exist only as `$adx.1` … `$adx.N` in an old **Advertising** template, they will **not** appear in **Appearance → Sponsor banners** until migrated:
+
+```bash
+ssh bareefers
+sudo -u www-data php /var/www/bareefers.org/bar-new-forum/ops/scripts/xf-migrate-legacy-bar-sponsor-banners.php \
+  /var/www/bareefers.org/forum
+```
+
+(Idempotent; safe to re-run.) Then point the ad slot at the widget key as above.
+
+#### Deploy add-on code updates
+
+Source in git (when vendored): `forum/src/addons/BAR/SponsorBanners/`. Canonical copy may also live in the parent **`barcode`** repo at `xenforo/addons/BAR/SponsorBanners/` until fully mirrored into `bar-new-forum`.
+
+```bash
+ssh bareefers 'sudo rsync -a /var/www/bareefers.org/bar-new-forum/forum/src/addons/BAR/SponsorBanners/ \
+  /var/www/bareefers.org/forum/src/addons/BAR/SponsorBanners/'
+ssh bareefers 'cd /var/www/bareefers.org/forum && sudo -u www-data php cmd.php xf:addon-upgrade BAR/SponsorBanners'
+```
+
+First install: ACP → **Add-ons** → install **BAR Sponsor Banners**, or  
+`php cmd.php xf-addon:install BAR/SponsorBanners` from forum root.
+
+#### Theme / mobile CSS
+
+Public markup uses classes `.barSponsorBanners` and `.barSponsorBanners-item`. Sizing and mobile containment are in `ops/scripts/extra-less-aurora16-source.less` (deploy via `xf-deploy-bareefers-extra-less.sh`). What's new header has extra rules so banners do not crush the page title.
+
+#### Troubleshooting
+
+| Symptom | Check |
+|---------|--------|
+| Nothing on forum home | At least one banner **Active** with image or remote URL; widget **enabled** and correct **Position** or ad `<xf:widget key="…" />` |
+| Old sponsors missing in ACP | Run legacy migrate script (above) |
+| Stale after edit | Hard refresh; flush guest **page cache** (`internal_data/page_cache`) if enabled |
+| Wrong size | Widget **Max banner width**; per-banner display dimensions in edit form |
+| Menu shows `admin_navigation.barSponsorBanners` | Upgrade add-on to **1.0.4+** (phrases fix) |
+
+Optional: `php ops/scripts/xf-rebuild-widget-cache-once.php /var/www/bareefers.org/forum` after widget definition changes.
 
 ---
 
@@ -270,11 +371,11 @@ When in doubt, prefer **bar-new-forum** for forum ops going forward; port script
 | [PAYPAL-PAYMENT-MAY2026.md](PAYPAL-PAYMENT-MAY2026.md) | Operators | PayPal IPN + REST |
 | [../ops/docs/BAR-THREAD-LIST-LAYOUT.md](../ops/docs/BAR-THREAD-LIST-LAYOUT.md) | Front-end | Thread list / What's new layout |
 | [../ops/docs/BAREEFERS-STYLE16-BACKUP.md](../ops/docs/BAREEFERS-STYLE16-BACKUP.md) | Operators | Style 16 snapshot / restore |
+| [../ops/docs/SPONSOR-BANNERS-ADDON.md](../ops/docs/SPONSOR-BANNERS-ADDON.md) | Operators / marketing | Sponsor banner ACP + widget |
 | [../ops/README.md](../ops/README.md) | Operators | Script quick reference |
 
 **Additional history in the parent `barcode` repo (if available):**
 
-- `xenforo/docs/SPONSOR-BANNERS-ADDON.md`  
 - Migration / cutover runbooks under `xenforo/docs/`
 
 ---
@@ -296,6 +397,7 @@ When in doubt, prefer **bar-new-forum** for forum ops going forward; port script
 | `xf-send-test-outbound-email.php` | CLI email smoke test |
 | `bareefers-mobile-audit.js` | Regression pass on mobile layouts |
 | `bareefers-thread-layout-probe.js` | Thread row layout regression |
+| `xf-migrate-legacy-bar-sponsor-banners.php` | One-time import from old Advertising `$adx.*` slots |
 
 Full table: [../ops/README.md](../ops/README.md).
 
@@ -322,6 +424,7 @@ Use this when transferring responsibility to a new lead or vendor.
 - [ ] `xf-payment-health.sh` exits 0  
 - [ ] `xf-job-health.sh` — pending jobs not growing unbounded  
 - [ ] Outbound email from ACP test  
+- [ ] ACP **Appearance → Sponsor banners** — can add/edit; public forum shows at least one active sponsor (widget or ad slot)
 
 ### Verify repo and server clone
 
@@ -355,6 +458,7 @@ Use this when transferring responsibility to a new lead or vendor.
 | Issue type | First look |
 |------------|------------|
 | Layout / CSS | `extra-less-aurora16-source.less`, MOBILE-COMPAT, BAR-THREAD-LIST-LAYOUT |
+| Sponsor banners | SPONSOR-BANNERS-ADDON, ACP library + widget key / ad slot |
 | Payment failed | PAYPAL-PAYMENT-MAY2026, `xf_payment_provider_log`, `xf-payment-health.sh` |
 | 500 after import | `xf-post-db-restore-repair.php`, `xf:upgrade`, `xf_error_log` |
 | Email broken | ACP email settings, `xf-send-test-outbound-email.php` |
