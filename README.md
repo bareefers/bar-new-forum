@@ -48,6 +48,7 @@ cd bar-new-forum
 | BAR custom addon | `forum/src/addons/BAR/` |
 | Pull latest on server | `sudo bash /var/www/bareefers.org/bar-new-forum/ops/scripts/bar-forum-git-pull.sh` |
 | Thread list layout notes | `ops/docs/BAR-THREAD-LIST-LAYOUT.md` |
+| PayPal / webhooks (May 2026 incident + monitoring) | [docs/PAYPAL-PAYMENT-MAY2026.md](docs/PAYPAL-PAYMENT-MAY2026.md) |
 
 ## Live vs git (important)
 

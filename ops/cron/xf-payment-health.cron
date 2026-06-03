@@ -1,0 +1,5 @@
+# XenForo PayPal / REST webhook health (read-only). Logs append; non-zero exit may mail root.
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
+
+0 6,18 * * * root /bin/bash /var/www/bareefers.org/bar-new-forum/ops/scripts/xf-payment-health.sh >> /var/log/xf-payment-health.log 2>&1

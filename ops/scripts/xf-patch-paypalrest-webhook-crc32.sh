@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # PayPal signs crc32 as unsigned 32-bit decimal; PHP crc32() can be negative on 64-bit.
-# Apply on server after XenForo upgrades (or keep in deploy notes).
+# Apply on server after XenForo upgrades (idempotent).
 set -euo pipefail
 ROOT="${1:-/var/www/bareefers.org/forum}"
 FILE="${ROOT}/src/XF/Payment/PayPalRest.php"

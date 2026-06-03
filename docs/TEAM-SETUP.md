@@ -74,6 +74,7 @@ Deploying to **live** `forum/` is a separate step — see [DEPLOY.md](DEPLOY.md)
 | [../SECURITY.md](../SECURITY.md) | Secrets policy |
 | [../ops/docs/BAR-THREAD-LIST-LAYOUT.md](../ops/docs/BAR-THREAD-LIST-LAYOUT.md) | Thread list CSS |
 | [../ops/docs/BAREEFERS-STYLE16-BACKUP.md](../ops/docs/BAREEFERS-STYLE16-BACKUP.md) | Style snapshots before risky DB work |
+| [PAYPAL-PAYMENT-MAY2026.md](PAYPAL-PAYMENT-MAY2026.md) | PayPal IPN + REST webhook incident, patches, monitoring |
 
 ## 7. XenForo version
 

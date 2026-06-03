@@ -77,6 +77,34 @@ Snippets live in `ops/nginx/`. Operators merge into server nginx config under `/
 - https://bareefers.org/forum/account/upgrades (payments — coordinate with lead)
 - ACP **Tools → Checks and tests** if you changed email or addons
 
+### PayPal / webhook monitoring (post–May 2026 cutover)
+
+**Full runbook:** [PAYPAL-PAYMENT-MAY2026.md](PAYPAL-PAYMENT-MAY2026.md) (root causes, replay IPNs, MySQL checks, timeline).
+
+After deploying payment fixes or any `xf:upgrade` that touches `src/XF/Payment/PayPalRest.php`:
+
+```bash
+# Re-apply patches if upgrade overwrote core (scripts are idempotent)
+sudo php /var/www/bareefers.org/bar-new-forum/ops/scripts/xf-patch-paypalrest-webhook-profile.php /var/www/bareefers.org/forum
+sudo bash /var/www/bareefers.org/bar-new-forum/ops/scripts/xf-patch-paypalrest-webhook-crc32.sh /var/www/bareefers.org/forum
+
+# Read-only health (exit 0 = OK for last 24h)
+sudo bash /var/www/bareefers.org/bar-new-forum/ops/scripts/xf-payment-health.sh
+```
+
+Install scheduled checks (twice daily, logs to `/var/log/xf-payment-health.log`):
+
+```bash
+sudo cp /var/www/bareefers.org/bar-new-forum/ops/cron/xf-payment-health.cron /etc/cron.d/xf-payment-health
+sudo chmod 644 /etc/cron.d/xf-payment-health
+```
+
+From Windows:
+
+```bash
+wsl bash -lc "ssh bareefers 'sudo bash /var/www/bareefers.org/bar-new-forum/ops/scripts/xf-payment-health.sh'"
+```
+
 ## 4. Before risky database work
 
 Run style snapshot (see `ops/docs/BAREEFERS-STYLE16-BACKUP.md`):

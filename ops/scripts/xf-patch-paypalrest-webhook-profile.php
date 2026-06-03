@@ -5,7 +5,9 @@
  * purchase request → payment_profile_id 1 (paypal), causing undefined webhook_id warnings
  * and failed signature verification.
  *
- *   sudo php /tmp/xf-patch-paypalrest-webhook-profile.php /var/www/bareefers.org/forum
+ *   sudo php /var/www/bareefers.org/bar-new-forum/ops/scripts/xf-patch-paypalrest-webhook-profile.php /var/www/bareefers.org/forum
+ *
+ * See docs/PAYPAL-PAYMENT-MAY2026.md
  */
 $root = $argv[1] ?? '/var/www/bareefers.org/forum';
 $path = rtrim($root, '/') . '/src/XF/Payment/PayPalRest.php';

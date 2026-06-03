@@ -7,6 +7,8 @@
  *   php xf-replay-paypal-invalid-business-ipn.php /var/www/bareefers.org/forum
  *   php xf-replay-paypal-invalid-business-ipn.php /var/www/bareefers.org/forum --execute
  *   php xf-replay-paypal-invalid-business-ipn.php /var/www/bareefers.org/forum --execute --days=365
+ *
+ * See docs/PAYPAL-PAYMENT-MAY2026.md
  */
 use XF\Cli\App;
 use XF\Entity\PaymentProvider;
@@ -118,7 +120,6 @@ foreach ($rows as $row) {
 	$request = new Request($app->inputFilterer(), $post, [], [], $server);
 
 	$state = $handler->setupCallback($request);
-	// Live IPNs use notify_url with ?_xfProvider=paypal (not legacy user_id,upgrade_id custom).
 	$state->legacy = false;
 	$state->_POST = $post;
 
