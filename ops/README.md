@@ -14,10 +14,14 @@ Scripts and docs for operating production XenForo. Run from a clone of **bar-new
 | `scripts/xf-payment-health.sh` | PayPal REST / IPN sanity (patches + 24h log counts); exit non-zero if failing |
 | `scripts/xf-patch-paypalrest-webhook-profile.php` | Re-apply PayPalRest profile fallback after `xf:upgrade` |
 | `scripts/xf-patch-paypalrest-webhook-crc32.sh` | Re-apply unsigned crc32 webhook body hash after `xf:upgrade` |
-| `scripts/bareefers-thread-layout-probe.js` | Headless layout check (optional Playwright) |
+| `scripts/bareefers-thread-layout-probe.js` | Headless thread-row layout check (optional Playwright) |
+| `scripts/bareefers-mobile-audit.js` | Mobile audit — 12 URLs at 390px + 768px (optional Playwright) |
+| `scripts/extra-less-aurora16-source.less` | Source for live `public:extra.less` (theme + mobile) |
 | `cron/xf-payment-health.cron` | Install to `/etc/cron.d/` — runs health check twice daily |
 
-**PayPal incident (May 2026):** full write-up in [../docs/PAYPAL-PAYMENT-MAY2026.md](../docs/PAYPAL-PAYMENT-MAY2026.md).
+**PayPal incident (May 2026):** [../docs/PAYPAL-PAYMENT-MAY2026.md](../docs/PAYPAL-PAYMENT-MAY2026.md).
+
+**Mobile / layout (June 2026):** [../docs/MOBILE-COMPAT.md](../docs/MOBILE-COMPAT.md), [docs/BAR-THREAD-LIST-LAYOUT.md](docs/BAR-THREAD-LIST-LAYOUT.md).
 
 ## From Windows
 

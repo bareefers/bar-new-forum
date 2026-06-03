@@ -13,9 +13,26 @@ On forum home and **What’s new → Posts** (`--withSidebar` / `--withSideNav`)
 - **Very narrow (`max-width: 640px`)**: hide **views** and **reactions** meta cells (BAR classes `barThreadStatView`, `barThreadStatRx`); keep replies. Longer labels still use existing **R / V / ★** rules tied to `@xf-responsiveMedium` in the same LESS file.
 - **Sidebar**: unchanged — still hidden below **1180px** for `--withSidebar`.
 
+## What's new (`/whats-new/`, `data-template="whats_new"`)
+
+This page uses **three columns**: left **side nav**, center **Latest posts** (`structItem--thread`), right **sidebar** (login, featured, members online, etc.). Around 1200px that squeezed the post list to ~250px titles.
+
+**Fix (in `extra-less-aurora16-source.less`):**
+
+- **Always** on What's new: **right sidebar** is a **full-width row below** Latest posts (not beside them). Wide viewports were the worst case (three columns side-by-side → ~240px titles).
+- Hide **views** and **reactions** meta columns on What's new only (keep replies).
+- **Sidebar `contentRow`** widgets (Featured content): flex + `min-width: 0` so titles do not collapse vertically.
+- Below **1180px**: existing rule still **hides** the right sidebar; side nav + posts use the full width.
+
 ## Deploy
 
-This repo is not live XenForo. After editing the LESS source, push **`public:extra.less`** via your normal flow (e.g. `wsl bash xenforo/scripts/xf-deploy-bareefers-extra-less.sh`), then flush guest/CSS cache if you use Redis for CSS.
+Edit **`ops/scripts/extra-less-aurora16-source.less`**, then:
+
+```bash
+wsl bash ops/scripts/xf-deploy-bareefers-extra-less.sh
+```
+
+Hard-refresh after deploy. Mobile rules are in [../../docs/MOBILE-COMPAT.md](../../docs/MOBILE-COMPAT.md).
 
 ## Automated check (no deploy required)
 

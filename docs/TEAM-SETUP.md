@@ -75,6 +75,8 @@ Deploying to **live** `forum/` is a separate step — see [DEPLOY.md](DEPLOY.md)
 | [../ops/docs/BAR-THREAD-LIST-LAYOUT.md](../ops/docs/BAR-THREAD-LIST-LAYOUT.md) | Thread list CSS |
 | [../ops/docs/BAREEFERS-STYLE16-BACKUP.md](../ops/docs/BAREEFERS-STYLE16-BACKUP.md) | Style snapshots before risky DB work |
 | [PAYPAL-PAYMENT-MAY2026.md](PAYPAL-PAYMENT-MAY2026.md) | PayPal IPN + REST webhook incident, patches, monitoring |
+| [MOBILE-COMPAT.md](MOBILE-COMPAT.md) | Mobile/tablet CSS, deploy, Playwright audit |
+| [../ops/docs/BAR-THREAD-LIST-LAYOUT.md](../ops/docs/BAR-THREAD-LIST-LAYOUT.md) | Thread list + What's new desktop layout |
 
 ## 7. XenForo version
 

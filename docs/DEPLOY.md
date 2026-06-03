@@ -42,6 +42,8 @@ This copies scripts + LESS to the server and updates the `public:extra.less` tem
 
 Hard-refresh the forum after deploy.
 
+**Mobile / thread layout:** see [MOBILE-COMPAT.md](MOBILE-COMPAT.md) and [../ops/docs/BAR-THREAD-LIST-LAYOUT.md](../ops/docs/BAR-THREAD-LIST-LAYOUT.md). After CSS changes, test forum home, What's new, and one category on a phone (or 390px / 768px emulator).
+
 ### B. BAR XenForo addon (`forum/src/addons/BAR/`)
 
 Copy addon files to live tree (example — adjust if your team uses a different rsync policy):
