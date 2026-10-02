@@ -123,32 +123,62 @@ class Fail2ban extends AbstractController
 		$result = $client->unbanIp($ip);
 		if (!$result['ok'])
 		{
-			return $this->error($result['error'] ?? 'Unban failed.');
+			return $this->error(\XF::phrase('bar_f2b_unban_failed', [
+				'ip' => $client->normalizeIp($ip) ?: $ip,
+				'reason' => $result['error'] ?? 'Unknown error',
+			]));
 		}
 
 		$unbanned = $result['unbanned'] ?? [];
-		if ($unbanned)
+		$failed = [];
+		foreach ($result['messages'] ?? [] as $line)
 		{
-			$message = \XF::phrase('bar_f2b_unbanned_from_x', [
-				'ip' => $result['ip'],
-				'jails' => implode(', ', $unbanned),
-			]);
-		}
-		else
-		{
-			$message = \XF::phrase('bar_f2b_not_banned', ['ip' => $result['ip']]);
+			if (str_starts_with($line, 'FAILED '))
+			{
+				$parts = explode(' ', $line, 3);
+				if (isset($parts[1]))
+				{
+					$failed[] = $parts[1];
+				}
+			}
 		}
 
 		$visitor = \XF::visitor();
 		error_log(sprintf(
-			'[bar-fail2ban] admin=%s(%d) unban=%s jails=%s',
+			'[bar-fail2ban] admin=%s(%d) unban=%s jails=%s failed=%s',
 			$visitor->username,
 			$visitor->user_id,
 			$result['ip'] ?? $ip,
-			implode(',', $unbanned)
+			implode(',', $unbanned),
+			implode(',', $failed)
 		));
 
-		return $this->redirect($this->buildLink('bar-fail2ban'), $message);
+		$displayIp = $result['ip'] ?? $ip;
+
+		if ($unbanned && !$failed)
+		{
+			$message = \XF::phrase('bar_f2b_unban_success', [
+				'ip' => $displayIp,
+				'jails' => implode(', ', $unbanned),
+			]);
+
+			return $this->redirect($this->buildLink('bar-fail2ban'), $message, 'success');
+		}
+
+		if ($unbanned && $failed)
+		{
+			$message = \XF::phrase('bar_f2b_unban_partial', [
+				'ip' => $displayIp,
+				'ok' => implode(', ', $unbanned),
+				'fail' => implode(', ', $failed),
+			]);
+
+			return $this->redirect($this->buildLink('bar-fail2ban'), $message, 'warning');
+		}
+
+		$message = \XF::phrase('bar_f2b_unban_not_banned', ['ip' => $displayIp]);
+
+		return $this->redirect($this->buildLink('bar-fail2ban'), $message, 'error');
 	}
 
 	/**

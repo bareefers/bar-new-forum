@@ -15,9 +15,13 @@
   <phrase title="bar_f2b_status" version_id="1000010" version_string="1.0.0"><![CDATA[fail2ban status]]></phrase>
   <phrase title="bar_f2b_banned" version_id="1000010" version_string="1.0.0"><![CDATA[Banned]]></phrase>
   <phrase title="bar_f2b_not_in_jails" version_id="1000010" version_string="1.0.0"><![CDATA[Not banned in monitored jails]]></phrase>
-  <phrase title="bar_f2b_unban" version_id="1000010" version_string="1.0.0"><![CDATA[Unban IP]]></phrase>
-  <phrase title="bar_f2b_unbanned_from_x" version_id="1000010" version_string="1.0.0"><![CDATA[Unbanned {ip} from: {jails}]]></phrase>
-  <phrase title="bar_f2b_not_banned" version_id="1000010" version_string="1.0.0"><![CDATA[{ip} was not currently banned in the monitored jails.]]></phrase>
+  <phrase title="bar_f2b_unban" version_id="1000012" version_string="1.0.2"><![CDATA[Unban IP]]></phrase>
+  <phrase title="bar_f2b_unbanned_from_x" version_id="1000012" version_string="1.0.2"><![CDATA[Success: unbanned {ip} from {jails}.]]></phrase>
+  <phrase title="bar_f2b_unban_success" version_id="1000012" version_string="1.0.2"><![CDATA[Success: {ip} was unbanned from {jails}.]]></phrase>
+  <phrase title="bar_f2b_unban_partial" version_id="1000012" version_string="1.0.2"><![CDATA[Partial success: {ip} was unbanned from {ok}, but failed for {fail}.]]></phrase>
+  <phrase title="bar_f2b_unban_not_banned" version_id="1000012" version_string="1.0.2"><![CDATA[Failed: {ip} was not banned in any monitored jail (nothing to remove).]]></phrase>
+  <phrase title="bar_f2b_unban_failed" version_id="1000012" version_string="1.0.2"><![CDATA[Failed: could not unban {ip}. {reason}]]></phrase>
+  <phrase title="bar_f2b_not_banned" version_id="1000012" version_string="1.0.2"><![CDATA[Failed: {ip} was not currently banned in the monitored jails.]]></phrase>
   <phrase title="bar_f2b_helper_missing" version_id="1000010" version_string="1.0.0"><![CDATA[Server helper not installed]]></phrase>
   <phrase title="bar_f2b_member" version_id="1000010" version_string="1.0.0"><![CDATA[Member]]></phrase>
   <phrase title="bar_f2b_jails_watched" version_id="1000010" version_string="1.0.0"><![CDATA[Monitored jails]]></phrase>

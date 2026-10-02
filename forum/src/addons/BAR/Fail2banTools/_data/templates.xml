@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="admin" title="bar_f2b_index" version_id="1000011" version_string="1.0.1"><![CDATA[<xf:title>{{ phrase('bar_f2b_title') }}</xf:title>
+  <template type="admin" title="bar_f2b_index" version_id="1000012" version_string="1.0.2"><![CDATA[<xf:title>{{ phrase('bar_f2b_title') }}</xf:title>
 
 <div class="blockMessage blockMessage--important">
 	{{ phrase('bar_f2b_explain') }}
@@ -91,9 +91,9 @@
 							</xf:cell>
 							<xf:cell class="dataList-cell--action">
 								<xf:if is="$helperAvailable">
-									<xf:form action="{{ link('bar-fail2ban/unban') }}" class="dataList-inlineForm">
+									<xf:form action="{{ link('bar-fail2ban/unban') }}" ajax="false">
 										<input type="hidden" name="ip" value="{$row.ip}" />
-										<xf:button type="submit" icon="delete" class="button--link">{{ phrase('bar_f2b_unban') }}</xf:button>
+										<xf:button type="submit" icon="delete" class="button--primary">{{ phrase('bar_f2b_unban') }}</xf:button>
 									</xf:form>
 								</xf:if>
 							</xf:cell>
