@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates>
+  <template type="admin" title="bar_f2b_index" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('bar_f2b_title') }}</xf:title>
+
+<div class="blockMessage blockMessage--important">
+	{{ phrase('bar_f2b_explain') }}
+</div>
+
+<xf:if is="!$helperAvailable">
+	<div class="blockMessage blockMessage--error">
+		<strong>{{ phrase('bar_f2b_helper_missing') }}</strong><br />
+		{$helperReason}
+	</div>
+</xf:if>
+
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-header">{{ phrase('bar_f2b_lookup') }}</h2>
+		<div class="block-body">
+			<xf:form action="{{ link('bar-fail2ban/lookup') }}" class="block">
+				<xf:textboxrow name="query" value="{$query}" label="{{ phrase('bar_f2b_query') }}"
+					explain="{{ phrase('bar_f2b_query_explain') }}"
+					autofocus="autofocus" />
+				<xf:submitrow sticky="true" icon="search" submit="{{ phrase('bar_f2b_lookup') }}" />
+			</xf:form>
+		</div>
+	</div>
+</div>
+
+<div class="block">
+	<div class="block-container">
+		<h2 class="block-header">{{ phrase('bar_f2b_jails_watched') }}</h2>
+		<div class="block-body">
+			<ul class="listPlain">
+				<xf:foreach loop="$jails" value="$jail">
+					<li><code>{$jail}</code></li>
+				</xf:foreach>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<xf:if is="$results is not empty">
+	<div class="block">
+		<div class="block-container">
+			<h2 class="block-header">
+				{{ phrase('bar_f2b_results') }}
+				<xf:if is="$user">
+					— {{ phrase('bar_f2b_member') }}: {$user.username}
+				</xf:if>
+			</h2>
+			<div class="block-body">
+				<xf:datalist>
+					<xf:datarow rowtype="header">
+						<xf:cell>{{ phrase('bar_f2b_ip') }}</xf:cell>
+						<xf:cell>{{ phrase('bar_f2b_last_seen') }}</xf:cell>
+						<xf:cell>{{ phrase('bar_f2b_status') }}</xf:cell>
+						<xf:cell class="dataList-cell--action">{{ phrase('action') }}</xf:cell>
+					</xf:datarow>
+					<xf:foreach loop="$results" value="$row">
+						<xf:datarow>
+							<xf:cell>
+								<code>{$row.ip}</code>
+							</xf:cell>
+							<xf:cell>
+								<xf:if is="$row.last_seen">
+									<xf:date time="{$row.last_seen}" />
+								<xf:else />
+									—
+								</xf:if>
+							</xf:cell>
+							<xf:cell>
+								<xf:if is="!$row.lookup_ok">
+									<span class="label label--red">{$row.lookup_error}</span>
+								<xf:elseif is="$row.is_banned" />
+									<span class="label label--red">{{ phrase('bar_f2b_banned') }}</span>
+									<div class="u-muted">
+										<ul class="listInline listInline--bullet">
+											<xf:foreach loop="$row.banned_jails" value="$jail">
+												<li><code>{$jail}</code></li>
+											</xf:foreach>
+										</ul>
+									</div>
+								<xf:else />
+									<span class="label label--green">{{ phrase('bar_f2b_not_in_jails') }}</span>
+								</xf:if>
+							</xf:cell>
+							<xf:cell class="dataList-cell--action">
+								<xf:if is="$helperAvailable">
+									<xf:form action="{{ link('bar-fail2ban/unban') }}" class="dataList-inlineForm">
+										<input type="hidden" name="ip" value="{$row.ip}" />
+										<xf:button type="submit" icon="delete" class="button--link">{{ phrase('bar_f2b_unban') }}</xf:button>
+									</xf:form>
+								</xf:if>
+							</xf:cell>
+						</xf:datarow>
+					</xf:foreach>
+				</xf:datalist>
+			</div>
+		</div>
+	</div>
+</xf:if>
+]]></template>
+</templates>

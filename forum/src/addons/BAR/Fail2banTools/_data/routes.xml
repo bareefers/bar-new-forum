@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<routes>
+  <route route_type="admin" route_prefix="bar-fail2ban" format="" controller="BAR\Fail2banTools:Fail2ban" context="barFail2ban"/>
+</routes>

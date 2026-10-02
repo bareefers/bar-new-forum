@@ -1,0 +1,7 @@
+# Allow XenForo PHP-FPM (www-data) to query/unban only via the locked helper.
+# Install:
+#   sudo install -m 0755 -o root -g root ops/fail2ban/bareefers-fail2ban-acl.sh /usr/local/sbin/bareefers-fail2ban-acl
+#   sudo install -m 0440 ops/fail2ban/sudoers.bareefers-fail2ban /etc/sudoers.d/bareefers-fail2ban
+#   sudo visudo -cf /etc/sudoers.d/bareefers-fail2ban
+
+www-data ALL=(root) NOPASSWD: /usr/local/sbin/bareefers-fail2ban-acl

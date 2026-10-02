@@ -133,6 +133,25 @@ sudo fail2ban-client status bareefers-nginx-botua
 sudo fail2ban-client set bareefers-nginx-whatsnew banip 1.2.3.4
 ```
 
+## ACP Tools page (XenForo)
+
+Addon: `forum/src/addons/BAR/Fail2banTools` — **Tools → Fail2ban IP unban** (requires ACP **Ban** permission).
+
+On the server, install the helper so PHP can call fail2ban safely:
+
+```bash
+cd /var/www/bareefers.org/bar-new-forum
+sudo install -m 0755 -o root -g root ops/fail2ban/bareefers-fail2ban-acl.sh /usr/local/sbin/bareefers-fail2ban-acl
+sudo install -m 0440 ops/fail2ban/sudoers.bareefers-fail2ban /etc/sudoers.d/bareefers-fail2ban
+sudo visudo -cf /etc/sudoers.d/bareefers-fail2ban
+# Install or upgrade the addon (from forum root):
+cd /var/www/bareefers.org/forum
+sudo -u www-data php cmd.php xf-addon:install BAR/Fail2banTools
+# or: sudo -u www-data php cmd.php xf-addon:upgrade BAR/Fail2banTools
+```
+
+Admins look up a **username** or **IP**, see which jails match, and click **Unban IP**.
+
 ## Limits
 
 Distributed scrapers that rotate IPs after a few hits still need nginx rate limits (and optionally Cloudflare). fail2ban stops the sticky / named bots and rate-limit abusers.

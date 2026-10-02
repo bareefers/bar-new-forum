@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phrases>
+  <phrase title="admin_navigation.barFail2ban" version_id="1000010" version_string="1.0.0"><![CDATA[Fail2ban IP unban]]></phrase>
+  <phrase title="bar_f2b_title" version_id="1000010" version_string="1.0.0"><![CDATA[Fail2ban IP unban]]></phrase>
+  <phrase title="bar_f2b_explain" version_id="1000010" version_string="1.0.0"><![CDATA[Look up a member or IP address and remove a false-positive ban from the server fail2ban jails (scrapers / rate limits). This does not change XenForo user bans.]]></phrase>
+  <phrase title="bar_f2b_query" version_id="1000010" version_string="1.0.0"><![CDATA[Username or IP]]></phrase>
+  <phrase title="bar_f2b_query_explain" version_id="1000010" version_string="1.0.0"><![CDATA[Enter a forum username to check their recent login/activity IPs, or paste an IPv4/IPv6 address directly.]]></phrase>
+  <phrase title="bar_f2b_lookup" version_id="1000010" version_string="1.0.0"><![CDATA[Look up]]></phrase>
+  <phrase title="bar_f2b_enter_username_or_ip" version_id="1000010" version_string="1.0.0"><![CDATA[Enter a username or IP address.]]></phrase>
+  <phrase title="bar_f2b_no_recent_ips" version_id="1000010" version_string="1.0.0"><![CDATA[No recent IP addresses were found for that member.]]></phrase>
+  <phrase title="bar_f2b_results" version_id="1000010" version_string="1.0.0"><![CDATA[Results]]></phrase>
+  <phrase title="bar_f2b_ip" version_id="1000010" version_string="1.0.0"><![CDATA[IP address]]></phrase>
+  <phrase title="bar_f2b_last_seen" version_id="1000010" version_string="1.0.0"><![CDATA[Last seen]]></phrase>
+  <phrase title="bar_f2b_status" version_id="1000010" version_string="1.0.0"><![CDATA[fail2ban status]]></phrase>
+  <phrase title="bar_f2b_banned" version_id="1000010" version_string="1.0.0"><![CDATA[Banned]]></phrase>
+  <phrase title="bar_f2b_not_in_jails" version_id="1000010" version_string="1.0.0"><![CDATA[Not banned in monitored jails]]></phrase>
+  <phrase title="bar_f2b_unban" version_id="1000010" version_string="1.0.0"><![CDATA[Unban IP]]></phrase>
+  <phrase title="bar_f2b_unbanned_from_x" version_id="1000010" version_string="1.0.0"><![CDATA[Unbanned {ip} from: {jails}]]></phrase>
+  <phrase title="bar_f2b_not_banned" version_id="1000010" version_string="1.0.0"><![CDATA[{ip} was not currently banned in the monitored jails.]]></phrase>
+  <phrase title="bar_f2b_helper_missing" version_id="1000010" version_string="1.0.0"><![CDATA[Server helper not installed]]></phrase>
+  <phrase title="bar_f2b_member" version_id="1000010" version_string="1.0.0"><![CDATA[Member]]></phrase>
+  <phrase title="bar_f2b_jails_watched" version_id="1000010" version_string="1.0.0"><![CDATA[Monitored jails]]></phrase>
+</phrases>
