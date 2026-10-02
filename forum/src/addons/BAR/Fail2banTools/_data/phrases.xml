@@ -2,7 +2,8 @@
 <phrases>
   <phrase title="admin_navigation.barFail2ban" version_id="1000010" version_string="1.0.0"><![CDATA[Fail2ban IP unban]]></phrase>
   <phrase title="bar_f2b_title" version_id="1000010" version_string="1.0.0"><![CDATA[Fail2ban IP unban]]></phrase>
-  <phrase title="bar_f2b_explain" version_id="1000010" version_string="1.0.0"><![CDATA[Look up a member or IP address and remove a false-positive ban from the server fail2ban jails (scrapers / rate limits). This does not change XenForo user bans.]]></phrase>
+  <phrase title="bar_f2b_explain" version_id="1000011" version_string="1.0.1"><![CDATA[Look up a member or IP address and remove a false-positive ban from the server fail2ban jails (scrapers / rate limits). This does not change XenForo user bans.]]></phrase>
+  <phrase title="bar_f2b_need_ip_note" version_id="1000011" version_string="1.0.1"><![CDATA[Important: the blocked person must tell you their current IP address (for example from whatismyip.com on the same phone/computer and network that cannot reach the forum). Looking up their username only shows recent IPs XenForo has logged — that may not be the address fail2ban banned. Always unban the IP they provide.]]></phrase>
   <phrase title="bar_f2b_query" version_id="1000010" version_string="1.0.0"><![CDATA[Username or IP]]></phrase>
   <phrase title="bar_f2b_query_explain" version_id="1000010" version_string="1.0.0"><![CDATA[Enter a forum username to check their recent login/activity IPs, or paste an IPv4/IPv6 address directly.]]></phrase>
   <phrase title="bar_f2b_lookup" version_id="1000010" version_string="1.0.0"><![CDATA[Look up]]></phrase>

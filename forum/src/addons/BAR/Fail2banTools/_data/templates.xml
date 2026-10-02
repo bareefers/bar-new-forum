@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="admin" title="bar_f2b_index" version_id="1000010" version_string="1.0.0"><![CDATA[<xf:title>{{ phrase('bar_f2b_title') }}</xf:title>
+  <template type="admin" title="bar_f2b_index" version_id="1000011" version_string="1.0.1"><![CDATA[<xf:title>{{ phrase('bar_f2b_title') }}</xf:title>
 
 <div class="blockMessage blockMessage--important">
 	{{ phrase('bar_f2b_explain') }}
+</div>
+
+<div class="blockMessage blockMessage--accent">
+	{{ phrase('bar_f2b_need_ip_note') }}
 </div>
 
 <xf:if is="!$helperAvailable">
