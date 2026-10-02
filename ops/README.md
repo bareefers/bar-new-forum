@@ -18,6 +18,7 @@ Scripts and docs for operating production XenForo. Run from a clone of **bar-new
 | `scripts/bareefers-mobile-audit.js` | Mobile audit — 12 URLs at 390px + 768px (optional Playwright) |
 | `scripts/extra-less-aurora16-source.less` | Source for live `public:extra.less` (theme + mobile) |
 | `cron/xf-payment-health.cron` | Install to `/etc/cron.d/` — runs health check twice daily |
+| `fail2ban/` | Scraper / rate-limit fail2ban jails + [unban runbook](fail2ban/README.md) |
 
 **PayPal incident (May 2026):** [../docs/PAYPAL-PAYMENT-MAY2026.md](../docs/PAYPAL-PAYMENT-MAY2026.md).
 

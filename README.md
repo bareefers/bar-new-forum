@@ -18,6 +18,7 @@ New developers: start with **[docs/KNOWLEDGE-TRANSFER.md](docs/KNOWLEDGE-TRANSFE
 | `ops/scripts/` | Deploy, backup, repair, LESS/CSS, cutover helpers (`xf-*`, `bar-*`) |
 | `ops/docs/` | Operator runbooks (layout, migration, style backup, etc.) |
 | `ops/nginx/` | nginx snippets for bareefers.org |
+| `ops/fail2ban/` | fail2ban jails/filters + false-positive unban runbook |
 | `config.php.example` | Template only — **never** commit real `forum/src/config.php` |
 
 ## Not in git (by design)
@@ -50,6 +51,7 @@ cd bar-new-forum
 | Thread list layout notes | `ops/docs/BAR-THREAD-LIST-LAYOUT.md` |
 | Mobile / tablet compatibility | [docs/MOBILE-COMPAT.md](docs/MOBILE-COMPAT.md) |
 | PayPal / webhooks (May 2026 incident + monitoring) | [docs/PAYPAL-PAYMENT-MAY2026.md](docs/PAYPAL-PAYMENT-MAY2026.md) |
+| fail2ban (find / unban a blocked IP) | [ops/fail2ban/README.md](ops/fail2ban/README.md) |
 
 ## Live vs git (important)
 
