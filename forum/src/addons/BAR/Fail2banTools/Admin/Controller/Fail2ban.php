@@ -162,7 +162,7 @@ class Fail2ban extends AbstractController
 				'jails' => implode(', ', $unbanned),
 			]);
 
-			return $this->redirect($this->buildLink('bar-fail2ban'), $message, 'success');
+			return $this->redirect($this->buildLink('bar-fail2ban'), $message);
 		}
 
 		if ($unbanned && $failed)
@@ -173,12 +173,11 @@ class Fail2ban extends AbstractController
 				'fail' => implode(', ', $failed),
 			]);
 
-			return $this->redirect($this->buildLink('bar-fail2ban'), $message, 'warning');
+			// Still a completed action with a warning-style note in the redirect message.
+			return $this->redirect($this->buildLink('bar-fail2ban'), $message);
 		}
 
-		$message = \XF::phrase('bar_f2b_unban_not_banned', ['ip' => $displayIp]);
-
-		return $this->redirect($this->buildLink('bar-fail2ban'), $message, 'error');
+		return $this->error(\XF::phrase('bar_f2b_unban_not_banned', ['ip' => $displayIp]));
 	}
 
 	/**
