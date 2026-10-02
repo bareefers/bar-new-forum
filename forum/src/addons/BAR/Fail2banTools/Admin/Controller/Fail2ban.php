@@ -24,6 +24,7 @@ class Fail2ban extends AbstractController
 			'jails' => Fail2banClient::JAILS,
 			'query' => '',
 			'results' => null,
+			'notice' => $this->pullNotice(),
 		]);
 	}
 
@@ -105,6 +106,7 @@ class Fail2ban extends AbstractController
 			'query' => $query,
 			'user' => $user,
 			'results' => $results,
+			'notice' => $this->pullNotice(),
 		]);
 	}
 
@@ -117,16 +119,23 @@ class Fail2ban extends AbstractController
 
 		if (!$client->isAvailable())
 		{
-			return $this->error($client->getUnavailableReason());
+			$this->setNotice('error', \XF::phrase('bar_f2b_unban_failed', [
+				'ip' => $ip,
+				'reason' => $client->getUnavailableReason(),
+			]));
+
+			return $this->redirect($this->buildLink('bar-fail2ban'));
 		}
 
 		$result = $client->unbanIp($ip);
 		if (!$result['ok'])
 		{
-			return $this->error(\XF::phrase('bar_f2b_unban_failed', [
+			$this->setNotice('error', \XF::phrase('bar_f2b_unban_failed', [
 				'ip' => $client->normalizeIp($ip) ?: $ip,
 				'reason' => $result['error'] ?? 'Unknown error',
 			]));
+
+			return $this->redirect($this->buildLink('bar-fail2ban'));
 		}
 
 		$unbanned = $result['unbanned'] ?? [];
@@ -157,27 +166,65 @@ class Fail2ban extends AbstractController
 
 		if ($unbanned && !$failed)
 		{
-			$message = \XF::phrase('bar_f2b_unban_success', [
+			$this->setNotice('success', \XF::phrase('bar_f2b_unban_success', [
 				'ip' => $displayIp,
 				'jails' => implode(', ', $unbanned),
-			]);
-
-			return $this->redirect($this->buildLink('bar-fail2ban'), $message);
+			]));
 		}
-
-		if ($unbanned && $failed)
+		else if ($unbanned && $failed)
 		{
-			$message = \XF::phrase('bar_f2b_unban_partial', [
+			$this->setNotice('warning', \XF::phrase('bar_f2b_unban_partial', [
 				'ip' => $displayIp,
 				'ok' => implode(', ', $unbanned),
 				'fail' => implode(', ', $failed),
-			]);
-
-			// Still a completed action with a warning-style note in the redirect message.
-			return $this->redirect($this->buildLink('bar-fail2ban'), $message);
+			]));
+		}
+		else
+		{
+			$this->setNotice('error', \XF::phrase('bar_f2b_unban_not_banned', [
+				'ip' => $displayIp,
+			]));
 		}
 
-		return $this->error(\XF::phrase('bar_f2b_unban_not_banned', ['ip' => $displayIp]));
+		return $this->redirect($this->buildLink('bar-fail2ban'));
+	}
+
+	/**
+	 * @param string $type success|error|warning
+	 * @param \XF\Phrase|string $message
+	 */
+	protected function setNotice(string $type, $message): void
+	{
+		$this->session()->set('barF2bNotice', [
+			'type' => $type,
+			'message' => (string) $message,
+		]);
+	}
+
+	/**
+	 * @return array{type: string, message: string}|null
+	 */
+	protected function pullNotice(): ?array
+	{
+		$session = $this->session();
+		$notice = $session->get('barF2bNotice');
+		if (is_array($notice) && !empty($notice['message']))
+		{
+			$session->remove('barF2bNotice');
+
+			return [
+				'type' => $notice['type'] ?? 'success',
+				'message' => (string) $notice['message'],
+				'class' => match ($notice['type'] ?? 'success')
+				{
+					'error' => 'blockMessage--error',
+					'warning' => 'blockMessage--important',
+					default => 'blockMessage--success',
+				},
+			];
+		}
+
+		return null;
 	}
 
 	/**
