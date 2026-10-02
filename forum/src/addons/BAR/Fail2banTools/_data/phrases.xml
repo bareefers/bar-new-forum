@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <phrases>
-  <phrase title="admin_navigation.barFail2ban" version_id="1000010" version_string="1.0.0"><![CDATA[Fail2ban IP unban]]></phrase>
-  <phrase title="bar_f2b_title" version_id="1000010" version_string="1.0.0"><![CDATA[Fail2ban IP unban]]></phrase>
-  <phrase title="bar_f2b_explain" version_id="1000011" version_string="1.0.1"><![CDATA[Look up a member or IP address and remove a false-positive ban from the server fail2ban jails (scrapers / rate limits). This does not change XenForo user bans.]]></phrase>
-  <phrase title="bar_f2b_need_ip_note" version_id="1000011" version_string="1.0.1"><![CDATA[Important: the blocked person must tell you their current IP address (for example from whatismyip.com on the same phone/computer and network that cannot reach the forum). Looking up their username only shows recent IPs XenForo has logged — that may not be the address fail2ban banned. Always unban the IP they provide.]]></phrase>
-  <phrase title="bar_f2b_query" version_id="1000010" version_string="1.0.0"><![CDATA[Username or IP]]></phrase>
-  <phrase title="bar_f2b_query_explain" version_id="1000010" version_string="1.0.0"><![CDATA[Enter a forum username to check their recent login/activity IPs, or paste an IPv4/IPv6 address directly.]]></phrase>
-  <phrase title="bar_f2b_lookup" version_id="1000010" version_string="1.0.0"><![CDATA[Look up]]></phrase>
-  <phrase title="bar_f2b_enter_username_or_ip" version_id="1000010" version_string="1.0.0"><![CDATA[Enter a username or IP address.]]></phrase>
-  <phrase title="bar_f2b_no_recent_ips" version_id="1000010" version_string="1.0.0"><![CDATA[No recent IP addresses were found for that member.]]></phrase>
-  <phrase title="bar_f2b_results" version_id="1000010" version_string="1.0.0"><![CDATA[Results]]></phrase>
-  <phrase title="bar_f2b_ip" version_id="1000010" version_string="1.0.0"><![CDATA[IP address]]></phrase>
-  <phrase title="bar_f2b_last_seen" version_id="1000010" version_string="1.0.0"><![CDATA[Last seen]]></phrase>
-  <phrase title="bar_f2b_status" version_id="1000010" version_string="1.0.0"><![CDATA[fail2ban status]]></phrase>
-  <phrase title="bar_f2b_banned" version_id="1000010" version_string="1.0.0"><![CDATA[Banned]]></phrase>
-  <phrase title="bar_f2b_not_in_jails" version_id="1000010" version_string="1.0.0"><![CDATA[Not banned in monitored jails]]></phrase>
-  <phrase title="bar_f2b_unban" version_id="1000012" version_string="1.0.2"><![CDATA[Unban IP]]></phrase>
-  <phrase title="bar_f2b_unbanned_from_x" version_id="1000012" version_string="1.0.2"><![CDATA[Success: unbanned {ip} from {jails}.]]></phrase>
-  <phrase title="bar_f2b_unban_success" version_id="1000012" version_string="1.0.2"><![CDATA[Success: {ip} was unbanned from {jails}.]]></phrase>
-  <phrase title="bar_f2b_unban_partial" version_id="1000012" version_string="1.0.2"><![CDATA[Partial success: {ip} was unbanned from {ok}, but failed for {fail}.]]></phrase>
-  <phrase title="bar_f2b_unban_not_banned" version_id="1000012" version_string="1.0.2"><![CDATA[Failed: {ip} was not banned in any monitored jail (nothing to remove).]]></phrase>
-  <phrase title="bar_f2b_unban_failed" version_id="1000012" version_string="1.0.2"><![CDATA[Failed: could not unban {ip}. {reason}]]></phrase>
-  <phrase title="bar_f2b_not_banned" version_id="1000012" version_string="1.0.2"><![CDATA[Failed: {ip} was not currently banned in the monitored jails.]]></phrase>
-  <phrase title="bar_f2b_helper_missing" version_id="1000010" version_string="1.0.0"><![CDATA[Server helper not installed]]></phrase>
-  <phrase title="bar_f2b_member" version_id="1000010" version_string="1.0.0"><![CDATA[Member]]></phrase>
-  <phrase title="bar_f2b_jails_watched" version_id="1000010" version_string="1.0.0"><![CDATA[Monitored jails]]></phrase>
+  <phrase title="admin_navigation.barFail2ban" version_id="1000015" version_string="1.0.5"><![CDATA[Fail2ban IP unban]]></phrase>
+  <phrase title="bar_f2b_title" version_id="1000015" version_string="1.0.5"><![CDATA[Unblock a locked-out member (fail2ban)]]></phrase>
+  <phrase title="bar_f2b_explain" version_id="1000015" version_string="1.0.5"><![CDATA[Use this when someone cannot open the forum because our automatic anti-bot shield blocked their network address. This does <b>not</b> remove a normal XenForo user ban.]]></phrase>
+  <phrase title="bar_f2b_steps_title" version_id="1000015" version_string="1.0.5"><![CDATA[Steps]]></phrase>
+  <phrase title="bar_f2b_steps_body" version_id="1000015" version_string="1.0.5"><![CDATA[<ol>
+<li>Ask the person to open <a href="https://www.whatismyip.com/" target="_blank" rel="noopener">whatismyip.com</a> on the <b>same device and network</b> that cannot reach the forum, and send you the <b>IPv4</b> address (example: 69.153.247.253).</li>
+<li>Paste that IP below and click <b>Look up</b>.</li>
+<li>If status shows <b>Banned</b>, click <b>Unban IP</b>.</li>
+<li>Wait for the green <b>Success</b> message, then ask them to try the forum again.</li>
+</ol>]]></phrase>
+  <phrase title="bar_f2b_need_ip_note" version_id="1000015" version_string="1.0.5"><![CDATA[Important: always use the IP address they send you from whatismyip.com. Looking up their username only shows older addresses and may not be the one that is blocked.]]></phrase>
+  <phrase title="bar_f2b_query" version_id="1000015" version_string="1.0.5"><![CDATA[Username or IP]]></phrase>
+  <phrase title="bar_f2b_query_explain" version_id="1000015" version_string="1.0.5"><![CDATA[Prefer pasting the IP they gave you. Username lookup is optional and only shows recent IPs XenForo already knows.]]></phrase>
+  <phrase title="bar_f2b_lookup" version_id="1000015" version_string="1.0.5"><![CDATA[Look up]]></phrase>
+  <phrase title="bar_f2b_enter_username_or_ip" version_id="1000015" version_string="1.0.5"><![CDATA[Enter a username or IP address.]]></phrase>
+  <phrase title="bar_f2b_no_recent_ips" version_id="1000015" version_string="1.0.5"><![CDATA[No recent IP addresses were found for that member. Ask them for their current IP from whatismyip.com instead.]]></phrase>
+  <phrase title="bar_f2b_results" version_id="1000015" version_string="1.0.5"><![CDATA[Results]]></phrase>
+  <phrase title="bar_f2b_ip" version_id="1000015" version_string="1.0.5"><![CDATA[IP address]]></phrase>
+  <phrase title="bar_f2b_last_seen" version_id="1000015" version_string="1.0.5"><![CDATA[Last seen on forum]]></phrase>
+  <phrase title="bar_f2b_status" version_id="1000015" version_string="1.0.5"><![CDATA[Block status]]></phrase>
+  <phrase title="bar_f2b_banned" version_id="1000015" version_string="1.0.5"><![CDATA[Banned — click Unban IP]]></phrase>
+  <phrase title="bar_f2b_not_in_jails" version_id="1000015" version_string="1.0.5"><![CDATA[Not blocked here]]></phrase>
+  <phrase title="bar_f2b_unban" version_id="1000015" version_string="1.0.5"><![CDATA[Unban IP]]></phrase>
+  <phrase title="bar_f2b_unbanned_from_x" version_id="1000015" version_string="1.0.5"><![CDATA[Success: unbanned {ip} from {jails}.]]></phrase>
+  <phrase title="bar_f2b_unban_success" version_id="1000015" version_string="1.0.5"><![CDATA[Success: {ip} was unbanned from {jails}. Ask them to try the forum again.]]></phrase>
+  <phrase title="bar_f2b_unban_partial" version_id="1000015" version_string="1.0.5"><![CDATA[Partial success: {ip} was unbanned from {ok}, but failed for {fail}. Tell a technical admin if they are still locked out.]]></phrase>
+  <phrase title="bar_f2b_unban_not_banned" version_id="1000015" version_string="1.0.5"><![CDATA[Failed: {ip} was not on the block list (nothing to remove). Confirm you used the IP from whatismyip.com, or check for a normal XenForo user ban.]]></phrase>
+  <phrase title="bar_f2b_unban_failed" version_id="1000015" version_string="1.0.5"><![CDATA[Failed: could not unban {ip}. {reason}]]></phrase>
+  <phrase title="bar_f2b_not_banned" version_id="1000015" version_string="1.0.5"><![CDATA[Failed: {ip} was not currently banned in the monitored jails.]]></phrase>
+  <phrase title="bar_f2b_helper_missing" version_id="1000015" version_string="1.0.5"><![CDATA[Server helper not installed — ask a technical admin to finish setup.]]></phrase>
+  <phrase title="bar_f2b_member" version_id="1000015" version_string="1.0.5"><![CDATA[Member]]></phrase>
+  <phrase title="bar_f2b_jails_watched" version_id="1000015" version_string="1.0.5"><![CDATA[Protection lists checked (technical names)]]></phrase>
+  <phrase title="bar_f2b_full_guide" version_id="1000015" version_string="1.0.5"><![CDATA[Full written guide for admins (GitHub)]]></phrase>
 </phrases>

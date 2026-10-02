@@ -1,5 +1,15 @@
 # fail2ban for bareefers.org
 
+## For board / non-technical admins
+
+**Start here:** [docs/FAIL2BAN-UNBAN-FOR-ADMINS.md](../../docs/FAIL2BAN-UNBAN-FOR-ADMINS.md)
+
+Short version: get their IP from [whatismyip.com](https://www.whatismyip.com/), then ACP → **Tools → Fail2ban IP unban** → paste IP → **Unban IP**.
+
+---
+
+## For technical operators
+
 Blocks repeat scrapers that overwhelm PHP-FPM (502s). Complements nginx `limit_req` — rate limits slow them down; fail2ban bans the repeat offenders.
 
 Live paths on the server:

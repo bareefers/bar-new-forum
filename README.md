@@ -51,7 +51,8 @@ cd bar-new-forum
 | Thread list layout notes | `ops/docs/BAR-THREAD-LIST-LAYOUT.md` |
 | Mobile / tablet compatibility | [docs/MOBILE-COMPAT.md](docs/MOBILE-COMPAT.md) |
 | PayPal / webhooks (May 2026 incident + monitoring) | [docs/PAYPAL-PAYMENT-MAY2026.md](docs/PAYPAL-PAYMENT-MAY2026.md) |
-| fail2ban (find / unban a blocked IP) | [ops/fail2ban/README.md](ops/fail2ban/README.md) |
+| fail2ban — unblock a member (non-technical) | [docs/FAIL2BAN-UNBAN-FOR-ADMINS.md](docs/FAIL2BAN-UNBAN-FOR-ADMINS.md) |
+| fail2ban — server / CLI details | [ops/fail2ban/README.md](ops/fail2ban/README.md) |
 
 ## Live vs git (important)
 

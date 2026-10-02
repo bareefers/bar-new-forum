@@ -79,8 +79,9 @@ ssh bareefers 'hostname && php -v | head -1'
 
 ### 3.3 XenForo ACP
 
-- URL: `https://bareefers.org/forum/admin.php`  
-- Used for: payment profiles, addons, style properties, user upgrades, **Tools → Checks and tests** (email), error log viewer  
+- URL: `https://bareefers.org/forum/admin.php`
+- Used for: payment profiles, addons, style properties, user upgrades, **Tools → Checks and tests** (email), error log viewer
+- **Member locked out by anti-bot (fail2ban):** plain-language steps in **[FAIL2BAN-UNBAN-FOR-ADMINS.md](FAIL2BAN-UNBAN-FOR-ADMINS.md)** — ACP **Tools → Fail2ban IP unban**. Requires Ban permission. Always get the member’s current IP from whatismyip.com.
 
 ---
 
@@ -230,11 +231,22 @@ and match `$config['enableLivePayments']` in `src/config.php`.
 
 | Item | Notes |
 |------|--------|
-| **BAR addon tree** | Live: `/var/www/bareefers.org/forum/src/addons/BAR/` — SponsorBanners, thread stat CSS helpers, etc. |
+| **BAR addon tree** | Live: `/var/www/bareefers.org/forum/src/addons/BAR/` — SponsorBanners, Fail2banTools, thread stat CSS helpers, etc. |
 | **Deploy addon code** | rsync from git clone → live, then `php cmd.php xf:addon-rebuild BAR/SponsorBanners` (see [DEPLOY.md](DEPLOY.md) §B) |
 | **Other addons** | XFMG, XFRM, XFES, SV ExpiringUserUpgrades, Tapatalk, etc. — verify after DB import |
 
-**Full sponsor-banner runbook:** [../ops/docs/SPONSOR-BANNERS-ADDON.md](../ops/docs/SPONSOR-BANNERS-ADDON.md)
+**Full sponsor-banner runbook:** [../ops/docs/SPONSOR-BANNERS-ADDON.md](../ops/docs/SPONSOR-BANNERS-ADDON.md)  
+**Unblock member locked out by anti-bot (non-technical):** [FAIL2BAN-UNBAN-FOR-ADMINS.md](FAIL2BAN-UNBAN-FOR-ADMINS.md) — ACP **Tools → Fail2ban IP unban**
+
+### 9.0 Fail2ban IP unban (`BAR/Fail2banTools`)
+
+When scrapers hammer the site, automatic IP blocks can also catch real members. Board admins with **Ban** permission can clear those blocks without SSH:
+
+1. Get the member’s current IP from [whatismyip.com](https://www.whatismyip.com/)
+2. ACP → **Tools → Fail2ban IP unban**
+3. Paste IP → **Look up** → **Unban IP** → confirm green Success banner
+
+Full steps + copy/paste message for members: [FAIL2BAN-UNBAN-FOR-ADMINS.md](FAIL2BAN-UNBAN-FOR-ADMINS.md). Server CLI: [../ops/fail2ban/README.md](../ops/fail2ban/README.md).
 
 ### 9.1 Sponsor banners (`BAR/SponsorBanners`)
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
-  <template type="admin" title="bar_f2b_index" version_id="1000014" version_string="1.0.4"><![CDATA[<xf:title>{{ phrase('bar_f2b_title') }}</xf:title>
+  <template type="admin" title="bar_f2b_index" version_id="1000015" version_string="1.0.5"><![CDATA[<xf:title>{{ phrase('bar_f2b_title') }}</xf:title>
 
 <xf:if is="$notice">
 	<div class="blockMessage {$notice.class}">
@@ -14,6 +14,12 @@
 </div>
 
 <div class="blockMessage blockMessage--accent">
+	<h3 class="blockMessage-header">{{ phrase('bar_f2b_steps_title') }}</h3>
+	{{ phrase('bar_f2b_steps_body') }}
+	<p><a href="https://github.com/bareefers/bar-new-forum/blob/main/docs/FAIL2BAN-UNBAN-FOR-ADMINS.md" target="_blank" rel="noopener">{{ phrase('bar_f2b_full_guide') }}</a></p>
+</div>
+
+<div class="blockMessage blockMessage--important">
 	{{ phrase('bar_f2b_need_ip_note') }}
 </div>
 
